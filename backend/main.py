@@ -5,6 +5,7 @@ import os
 from fastapi import FastAPI, HTTPException
 from backend.schemas import FinalEstimationInput, FinalEstimationOutput
 from backend.estimation_logic import calculate_final_estimate
+from backend.blueprint_processor import process_blueprint, cleanup_file
 
 # Import the blueprint processing function
 from backend.blueprint_processor import process_blueprint, cleanup_file
@@ -33,27 +34,29 @@ async def final_estimate(input: FinalEstimationInput):
 
 @app.post("/upload-blueprint")
 async def upload_blueprint(file: UploadFile = File(...)):
-    # Ensure the uploaded file is a PDF
+    print("Received file upload request.")
+    
     if file.content_type != "application/pdf":
         raise HTTPException(status_code=400, detail="Only PDF files are allowed.")
-
-    # Create a unique filename and save the file to a temporary location
+    
     temp_filename = f"temp_{uuid.uuid4()}.pdf"
     temp_filepath = os.path.join("backend", temp_filename)
-    
-    with open(temp_filepath, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    print(f"Saving file to: {temp_filepath}")
     
     try:
-        # Process the blueprint file to extract key details
+        with open(temp_filepath, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        print("File saved successfully.")
+        
+        # Process the file
         extracted_data = process_blueprint(temp_filepath)
+        print("Blueprint processed:", extracted_data)
     except Exception as e:
-        # Clean up the file on error as well
+        print("Exception during processing:", e)
         cleanup_file(temp_filepath)
         raise HTTPException(status_code=500, detail=f"Error processing file: {e}")
     
-    # Clean up the temporary file after processing
     cleanup_file(temp_filepath)
+    print("Temporary file cleaned up.")
     
-    # Return the extracted blueprint data
     return {"extracted_data": extracted_data, "message": "Blueprint processed successfully."}
