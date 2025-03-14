@@ -9,15 +9,46 @@
 <body>
   <h1>Construction Estimator</h1>
   
+  <!-- Section for Blueprint Upload -->
   <h2>Upload Blueprint</h2>
   <form id="blueprintForm" enctype="multipart/form-data">
     <label for="file">Select PDF Blueprint:</label>
     <input type="file" id="file" name="file" accept="application/pdf" required>
     <button type="submit">Upload and Process</button>
   </form>
-  
   <div id="blueprintResult"></div>
 
+  <!-- Section for Additional Input and Final Estimate -->
+  <h2>Provide Project Details</h2>
+  <form id="estimateForm">
+    <label for="project_name">Project Name:</label>
+    <input type="text" id="project_name" name="project_name" required><br><br>
+    
+    <label for="project_type">Project Type:</label>
+    <select id="project_type" name="project_type">
+      <option value="residential">Residential</option>
+      <option value="commercial">Commercial</option>
+      <option value="industrial">Industrial</option>
+    </select><br><br>
+    
+    <label for="condition_multiplier">Condition Multiplier (e.g., 1.0):</label>
+    <input type="number" id="condition_multiplier" name="condition_multiplier" step="0.1" value="1.0" required><br><br>
+    
+    <!-- For simplicity, we pre-fill blueprint fields from the earlier upload response.
+         In a real app, you might store this data and allow the user to adjust it. -->
+    <label for="number_of_floors">Number of Floors:</label>
+    <input type="number" id="number_of_floors" name="number_of_floors" required><br><br>
+    
+    <label for="total_floor_area_sqft">Total Floor Area (sqft):</label>
+    <input type="number" id="total_floor_area_sqft" name="total_floor_area_sqft" required><br><br>
+    
+    <label for="roof_area_sqft">Roof Area (sqft):</label>
+    <input type="number" id="roof_area_sqft" name="roof_area_sqft" required><br><br>
+    
+    <button type="submit">Get Final Estimate</button>
+  </form>
+  
+  <div id="estimateResult"></div>
   <script src="js/app.js"></script>
 </body>
 </html>
