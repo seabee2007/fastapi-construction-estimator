@@ -58,3 +58,22 @@ document.getElementById("estimateForm").addEventListener("submit", async functio
     document.getElementById("estimateResult").innerText = "Error processing final estimate.";
   }
 });
+document.getElementById("blueprintForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  
+  try {
+    const response = await fetch("/upload-blueprint", {
+      method: "POST",
+      body: formData,
+    });
+    const responseText = await response.text();
+    console.log("Raw response:", responseText);
+    const result = JSON.parse(responseText);
+    document.getElementById("blueprintResult").innerText = JSON.stringify(result, null, 2);
+  } catch (error) {
+    console.error("Error uploading blueprint:", error);
+    document.getElementById("blueprintResult").innerText = "Error processing blueprint.";
+  }
+});
