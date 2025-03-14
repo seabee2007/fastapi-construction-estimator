@@ -10,12 +10,6 @@ async def read_root():
 
 @app.post("/estimate", response_model=EstimationOutput)
 async def estimate_project(input: EstimationInput):
-    # Use the estimation logic to calculate the estimate
     result = calculate_estimate(input.area_sqft, input.material_type)
-    
-    # Prepare the output data, including the project name from input
-    output = {
-        "project": input.project_name,
-        **result  # Unpack the calculated fields
-    }
+    output = {"project": input.project_name, **result}
     return output
