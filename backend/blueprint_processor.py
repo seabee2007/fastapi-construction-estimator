@@ -1,22 +1,13 @@
 import os
 
 def process_blueprint(file_path: str) -> dict:
-    """
-    Process the blueprint PDF and extract key data.
+    print(f"Processing file: {file_path}")
+    # Check if the file exists
+    import os
+    if not os.path.exists(file_path):
+        raise Exception("File not found: " + file_path)
     
-    This stub function simulates interpreting a blueprint file.
-    In a real implementation, you would parse the PDF,
-    run OCR if necessary, and extract details such as:
-      - Floor plan dimensions or number of floors
-      - Roof plan area
-      - Elevations and site work details
-      - Electrical and plumbing layout counts
-      
-    Returns:
-        A dictionary with extracted data.
-    """
-    # TODO: Integrate a PDF processing library (e.g., pdfplumber, PyMuPDF) and OCR if needed.
-    # For now, return dummy data:
+    # Dummy processing: you can add further logging here
     extracted_data = {
         "floor_plans": {
             "number_of_floors": 2,
@@ -30,6 +21,7 @@ def process_blueprint(file_path: str) -> dict:
         "plumbing": "Detected plumbing layout data (stub)",
         "site_work": "Detected site work info (stub)"
     }
+    print("Extraction successful:", extracted_data)
     return extracted_data
 
 def cleanup_file(file_path: str):
