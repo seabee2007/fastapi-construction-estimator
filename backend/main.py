@@ -2,6 +2,9 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 import shutil
 import uuid
 import os
+from fastapi import FastAPI, HTTPException
+from backend.schemas import FinalEstimationInput, FinalEstimationOutput
+from backend.estimation_logic import calculate_final_estimate
 
 # Import the blueprint processing function
 from backend.blueprint_processor import process_blueprint, cleanup_file
@@ -11,6 +14,22 @@ app = FastAPI()
 @app.get("/")
 async def read_root():
     return {"message": "Welcome to the Construction Estimator API!"}
+    
+@app.post("/final-estimate", response_model=FinalEstimationOutput)
+async def final_estimate(input: FinalEstimationInput):
+    try:
+        # Calculate the final estimate using the provided blueprint data and inputs
+        result = calculate_final_estimate(
+            project_type=input.project_type,
+            blueprint_data=input.blueprint_data.dict(),
+            condition_multiplier=input.condition_multiplier
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+    # Prepare and return the output, including the project name
+    output = {"project": input.project_name, **result}
+    return output
 
 @app.post("/upload-blueprint")
 async def upload_blueprint(file: UploadFile = File(...)):
