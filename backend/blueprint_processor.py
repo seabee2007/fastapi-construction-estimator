@@ -2,12 +2,11 @@ import os
 
 def process_blueprint(file_path: str) -> dict:
     print(f"Processing file: {file_path}")
-    # Check if the file exists
     import os
     if not os.path.exists(file_path):
         raise Exception("File not found: " + file_path)
     
-    # Dummy processing: you can add further logging here
+    # Dummy extracted data for testing purposes
     extracted_data = {
         "floor_plans": {
             "number_of_floors": 2,
@@ -23,6 +22,7 @@ def process_blueprint(file_path: str) -> dict:
     }
     print("Extraction successful:", extracted_data)
     return extracted_data
+
 
 def cleanup_file(file_path: str):
     """Optionally remove temporary files after processing."""
