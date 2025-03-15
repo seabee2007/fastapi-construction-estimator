@@ -185,3 +185,110 @@
     { "name": "Front-End Loader", "rate_per_hour": null }
   ]
 }
+[
+  {
+    "id": "CT-20TN",
+    "description": "20 Ton Mobile Truck Crane with Outriggers, hydraulically operated",
+    "uom": "unit",
+    "hourlyRate": 200,
+    "details": {
+      "capacity": "20 tons",
+      "type": "Mobile Truck Crane"
+    }
+  },
+  {
+    "id": "FEL-2CY",
+    "description": "Front End Loader with 2 CY Bucket, diesel-powered",
+    "uom": "unit",
+    "hourlyRate": 180,
+    "details": {
+      "bucketCapacity": "2 CY",
+      "type": "Front End Loader"
+    }
+  },
+  {
+    "id": "BHL-15TN",
+    "description": "Backhoe Loader, 15-ton capacity, versatile for excavation and loading",
+    "uom": "unit",
+    "hourlyRate": 150,
+    "details": {
+      "capacity": "15 tons",
+      "type": "Backhoe Loader"
+    }
+  },
+  {
+    "id": "SSL-075",
+    "description": "Skid Steer Loader with 0.75 CY Bucket",
+    "uom": "unit",
+    "hourlyRate": 85,
+    "details": {
+      "bucketCapacity": "0.75 CY",
+      "type": "Skid Steer Loader"
+    }
+  },
+  {
+    "id": "DT-30000",
+    "description": "Dump Truck 6x6, 30000 GVW",
+    "uom": "unit",
+    "hourlyRate": 90,
+    "details": {
+      "gvw": "30000 GVW",
+      "type": "Dump Truck"
+    }
+  },
+  {
+    "id": "CMT-1",
+    "description": "Concrete Mixer Truck, standard capacity",
+    "uom": "unit",
+    "hourlyRate": 95,
+    "details": {
+      "capacity": "Standard",
+      "type": "Concrete Mixer Truck"
+    }
+  },
+  {
+    "id": "CP-1",
+    "description": "Concrete Pump, hydraulic, for high-rise placements",
+    "uom": "unit",
+    "hourlyRate": 130,
+    "details": {
+      "type": "Concrete Pump"
+    }
+  },
+  {
+    "id": "FL-1",
+    "description": "Forklift, electric or diesel powered",
+    "uom": "unit",
+    "hourlyRate": 70,
+    "details": {
+      "type": "Forklift"
+    }
+  },
+  {
+    "id": "AC-1",
+    "description": "Air Compressor, portable",
+    "uom": "unit",
+    "hourlyRate": 60,
+    "details": {
+      "type": "Air Compressor"
+    }
+  },
+  {
+    "id": "HB-1",
+    "description": "Hydraulic Breaker for demolition",
+    "uom": "unit",
+    "hourlyRate": 95,
+    "details": {
+      "type": "Hydraulic Breaker"
+    }
+  },
+  {
+    "id": "RR-1",
+    "description": "Road Roller, vibratory, for compaction",
+    "uom": "unit",
+    "hourlyRate": 100,
+    "details": {
+      "type": "Road Roller"
+    }
+  }
+]
