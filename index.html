@@ -869,7 +869,7 @@
       if (activeEquipmentRow) {
         activeEquipmentRow.innerHTML = `
           <input type="text" name="equipment_search" class="form-control" value="${id} - ${description}" readonly>
-          <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+          <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="1" min="0" required>
           <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
         `;
         activeEquipmentRow = null;
