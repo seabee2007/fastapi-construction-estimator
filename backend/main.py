@@ -3,7 +3,6 @@ import json
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -11,11 +10,7 @@ app = FastAPI()
 # Set repository root (assumed to be os.getcwd())
 root_dir = os.getcwd()
 
-# Mount static directories for CSS and JS from the repository root.
-app.mount("/css", StaticFiles(directory=os.path.join(root_dir, "css")), name="css")
-app.mount("/js", StaticFiles(directory=os.path.join(root_dir, "js")), name="js")
-
-# Serve the index.html file from the repository root.
+# Serve the monolithic index.html file from the repository root.
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
     index_path = os.path.join(root_dir, "index.html")
@@ -158,4 +153,4 @@ async def final_estimate(input_data: FinalEstimationInput):
 # ---------------------------
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
