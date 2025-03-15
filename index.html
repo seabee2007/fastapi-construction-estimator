@@ -22,7 +22,7 @@
       color: #fff;
       padding: 20px 0;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     header h1 {
       margin: 0;
@@ -38,7 +38,7 @@
       background: #ffffff;
       padding: 20px 30px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
     fieldset {
       border: none;
@@ -67,7 +67,7 @@
     select:focus,
     textarea:focus {
       border-color: #86b7fe;
-      box-shadow: 0 0 8px rgba(134,183,254,0.5);
+      box-shadow: 0 0 8px rgba(134, 183, 254, 0.5);
     }
     /* Button Styles */
     .btn {
@@ -136,14 +136,14 @@
     }
     #libraryModalBody tr.library-row:hover {
       transform: scale(1.02);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       background-color: #f0f0f0;
     }
     /* Make the code column wider */
     #libraryModalBody td:first-child {
       min-width: 150px;
     }
-    /* Additional CAS Summary Styles */
+    /* Additional CAS Summary Styles (unchanged from previous version) */
     #casSummary {
       margin-top: 40px;
       padding: 20px;
@@ -242,12 +242,77 @@
         <button type="button" class="btn btn-outline-warning mb-3" onclick="addEquipment()">Add Equipment</button>
       </fieldset>
       
+      <!-- New Section: Production Efficiency Factors -->
+      <fieldset class="mb-4">
+        <legend>Production Efficiency Factors</legend>
+        <div id="efficiencyFactorsContainer" class="mb-3">
+          <!-- For each factor, a drop down will be generated -->
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Workload</strong></div>
+            <div class="col-md-3"><select id="factor-workload" class="form-select"></select></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Site Area</strong></div>
+            <div class="col-md-3"><select id="factor-site" class="form-select"></select></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Labor</strong></div>
+            <div class="col-md-3"><select id="factor-labor" class="form-select"></select></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Supervision</strong></div>
+            <div class="col-md-3"><select id="factor-supervision" class="form-select"></select></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Job Condition</strong></div>
+            <div class="col-md-3"><select id="factor-job" class="form-select"></select></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Weather</strong></div>
+            <div class="col-md-3"><select id="factor-weather" class="form-select"></select></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Equipment</strong></div>
+            <div class="col-md-3"><select id="factor-equipment" class="form-select"></select></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3"><strong>Tactical/Logistical</strong></div>
+            <div class="col-md-3"><select id="factor-tactical" class="form-select"></select></div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <p><strong>Product Efficiency Factor:</strong> <span id="product-efficiency">67</span></p>
+          <p><strong>Resulting Delay Factor:</strong> <span id="delay-factor">1.00</span></p>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-3"><strong>Availability Factor</strong></div>
+          <div class="col-md-3">
+            <select id="availability-factor" class="form-select">
+              <!-- Options in increments of 5% from 0% to 100% -->
+            </select>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-3"><strong>Manday Equivalent</strong></div>
+          <div class="col-md-3">
+            <select id="manday-equivalent" class="form-select">
+              <!-- Example options -->
+              <option value="1.00">1.00</option>
+              <option value="1.125" selected>1.125</option>
+              <option value="1.25">1.25</option>
+              <option value="1.375">1.375</option>
+              <option value="1.50">1.50</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      
       <div class="d-grid gap-2">
         <button type="submit" class="btn btn-lg btn-success">Get Final Estimate</button>
       </div>
     </form>
 
-    <!-- New Section: Construction Activity Summary Sheet -->
+    <!-- New Section: Construction Activity Summary Sheet (CAS) -->
     <div id="casSummary">
       <h2>Construction Activity Summary Sheet</h2>
       
@@ -291,69 +356,14 @@
             <td>1</td>
             <td></td>
           </tr>
-          <!-- Additional rows as needed -->
         </tbody>
       </table>
       <p><strong>Total Labor:</strong> <span id="casTotalLabor">2</span></p>
       
-      <!-- Production Efficiency Factor -->
+      <!-- Production Efficiency Factor Section -->
       <div class="section-header">PRODUCTION EFFICIENCY FACTOR</div>
-      <p><strong>Production Element Factor</strong></p>
-      <table>
-        <thead>
-          <tr>
-            <th>Element</th>
-            <th>Factor</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Workload</td>
-            <td>67</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Site Area</td>
-            <td>60</td>
-            <td>CRAMPED AREA</td>
-          </tr>
-          <tr>
-            <td>Labor</td>
-            <td>55</td>
-            <td>INEXPERIENCED</td>
-          </tr>
-          <tr>
-            <td>Supervisor</td>
-            <td>70</td>
-            <td>EXPERIENCED</td>
-          </tr>
-          <tr>
-            <td>Job Conditions</td>
-            <td>67</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Weather</td>
-            <td>50</td>
-            <td>RAINY SEASON</td>
-          </tr>
-          <tr>
-            <td>Equipment</td>
-            <td>67</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Tactical/Logistical</td>
-            <td>67</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-      <p><strong>Product Efficiency Factor:</strong> 63.875 &nbsp;&nbsp;
-         <strong>Resulting Delay Factor:</strong> 1.049 &nbsp;&nbsp;
-         <strong>Availability Factor:</strong> 75% &nbsp;&nbsp;
-         <strong>Manday Equivalent:</strong> 1.125</p>
+      <p><strong>Product Efficiency Factor:</strong> <span id="casProductEfficiency">67</span></p>
+      <p><strong>Resulting Delay Factor:</strong> <span id="casDelayFactor">1.00</span></p>
       
       <!-- CA # 02200-2: Work Elements, Tools, Equipment, Materials -->
       <div class="section-header">CA # 02200-2</div>
@@ -538,6 +548,75 @@
       activeWorkElementRow = row;
     }
 
+    // Populate dropdowns for the eight production efficiency factors (0–100)
+    function populateFactorDropdowns() {
+      const factorIds = [
+        "factor-workload",
+        "factor-site",
+        "factor-labor",
+        "factor-supervision",
+        "factor-job",
+        "factor-weather",
+        "factor-equipment",
+        "factor-tactical"
+      ];
+      factorIds.forEach(id => {
+        const select = document.getElementById(id);
+        select.innerHTML = "";
+        for (let i = 0; i <= 100; i++) {
+          const opt = document.createElement("option");
+          opt.value = i;
+          opt.textContent = i;
+          if (i === 67) opt.selected = true;
+          select.appendChild(opt);
+        }
+        // Add change event to recalc efficiency
+        select.addEventListener("change", recalcEfficiency);
+      });
+    }
+
+    // Populate Availability Factor dropdown (0% to 100% in steps of 5, default 75)
+    function populateAvailabilityDropdown() {
+      const availSelect = document.getElementById("availability-factor");
+      availSelect.innerHTML = "";
+      for (let i = 0; i <= 100; i += 5) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i + "%";
+        if (i === 75) opt.selected = true;
+        availSelect.appendChild(opt);
+      }
+      availSelect.addEventListener("change", function() {
+        // You can add additional logic here if needed.
+      });
+    }
+
+    // Recalculate Product Efficiency Factor and Delay Factor in real time.
+    function recalcEfficiency() {
+      const factorIds = [
+        "factor-workload",
+        "factor-site",
+        "factor-labor",
+        "factor-supervision",
+        "factor-job",
+        "factor-weather",
+        "factor-equipment",
+        "factor-tactical"
+      ];
+      let sum = 0;
+      factorIds.forEach(id => {
+        sum += parseInt(document.getElementById(id).value, 10);
+      });
+      const avg = sum / factorIds.length;
+      document.getElementById("product-efficiency").textContent = avg.toFixed(1);
+      // Resulting Delay Factor = 67 / average
+      const delay = (avg !== 0) ? (67 / avg) : 0;
+      document.getElementById("delay-factor").textContent = delay.toFixed(2);
+      // Also update CAS summary fields
+      document.getElementById("casProductEfficiency").textContent = avg.toFixed(1);
+      document.getElementById("casDelayFactor").textContent = delay.toFixed(2);
+    }
+
     // On load, fetch activity numbers and populate the activity dropdown.
     window.addEventListener("load", async () => {
       try {
@@ -553,6 +632,10 @@
       } catch (error) {
         console.error("Error fetching activities:", error);
       }
+      // Populate efficiency factor dropdowns and availability dropdown
+      populateFactorDropdowns();
+      populateAvailabilityDropdown();
+      recalcEfficiency();
     });
 
     // Function to add a dynamic Labor Resource row.
@@ -575,8 +658,6 @@
     window.addLaborResource = addLaborResource;
     
     // Function to add a new (empty) Work Element row.
-    // This row now includes spans for U/M and Multiplier (initially empty)
-    // and an onblur event on the search input to auto-populate those details.
     function addWorkElement() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
