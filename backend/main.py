@@ -3,6 +3,23 @@ import json
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+import os
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+app = FastAPI()
+
+# Use an absolute path to the frontend folder
+static_dir = os.path.join(os.getcwd(), "frontend")
+app.mount("/static", StaticFiles(directory=static_dir, html=True), name="static")
+
+# Serve index.html at the root
+@app.get("/", response_class=FileResponse)
+async def serve_index():
+    index_path = os.path.join(static_dir, "index.html")
+    return index_path
+
 
 # Load NTRP data from the JSON file in the project root
 DATA_FILE = os.path.join(os.getcwd(), "ntrp_data.json")
