@@ -179,6 +179,8 @@
       <fieldset class="mb-4">
         <legend>Work Elements</legend>
         <div id="workElementsContainer"></div>
+        <!-- Datalist for auto-suggestions -->
+        <datalist id="workElementsSuggestions"></datalist>
         <button type="button" class="btn btn-outline-primary mb-3" onclick="addWorkElement()">Add Work Element</button>
       </fieldset>
       
@@ -251,13 +253,15 @@
     }
     window.addLaborResource = addLaborResource;
     
-    // Function to add a dynamic Work Element row
+    // Function to add a dynamic Work Element row.
+    // The input now references a datalist for work element suggestions
+    // and calls searchWorkElement on input.
     function addWorkElement() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
       row.innerHTML = `
-        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" required>
+        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" list="workElementsSuggestions" oninput="searchWorkElement(this)" required>
         <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
         <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
       `;
@@ -279,14 +283,22 @@
     }
     window.addEquipment = addEquipment;
     
-    // Example search function for work elements; currently logs results
+    // Updated search function for work elements.
+    // When the user types in the work element input,
+    // fetch suggestions from the /work-elements endpoint and update the datalist.
     async function searchWorkElement(inputElem) {
       const query = inputElem.value;
       if (query.length < 2) return;
       try {
         const res = await fetch(`/work-elements?query=${encodeURIComponent(query)}`);
         const results = await res.json();
-        console.log("Work element search results:", results);
+        const dataList = document.getElementById('workElementsSuggestions');
+        dataList.innerHTML = "";
+        results.forEach(item => {
+          const option = document.createElement('option');
+          option.value = `${item.code} - ${item.description}`;
+          dataList.appendChild(option);
+        });
       } catch (error) {
         console.error("Error searching work elements:", error);
       }
