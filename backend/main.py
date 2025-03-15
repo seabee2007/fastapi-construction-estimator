@@ -1,35 +1,32 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+import os
 import shutil
 import uuid
-import os
-from fastapi import FastAPI, HTTPException
+
+from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.staticfiles import StaticFiles
+
+# Import your modules and schemas
 from backend.schemas import FinalEstimationInput, FinalEstimationOutput
 from backend.estimation_logic import calculate_final_estimate
 from backend.blueprint_processor import process_blueprint, cleanup_file
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 
+# Create a single FastAPI instance
 app = FastAPI()
 
-# Mount the 'frontend' directory to serve static files.
-# The html=True option tells FastAPI to look for an "index.html" file to serve at the root.
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+# Use an absolute path for static files (adjust if needed)
+static_dir = os.path.join(os.getcwd(), "frontend")
+app.mount("/static", StaticFiles(directory=static_dir, html=True), name="static")
 
+# If you want to serve the static index at the root, you can add a route like:
+@app.get("/", response_class=FileResponse)
+async def serve_index():
+    index_path = os.path.join(static_dir, "index.html")
+    return index_path
 
-
-# Import the blueprint processing function
-from backend.blueprint_processor import process_blueprint, cleanup_file
-
-app = FastAPI()
-
-@app.get("/")
-async def read_root():
-    return {"message": "Welcome to the Construction Estimator API!"}
-    
+# Endpoint for final estimate
 @app.post("/final-estimate", response_model=FinalEstimationOutput)
 async def final_estimate(input: FinalEstimationInput):
     try:
-        # Calculate the final estimate using the provided blueprint data and inputs
         result = calculate_final_estimate(
             project_type=input.project_type,
             blueprint_data=input.blueprint_data.dict(),
@@ -38,10 +35,10 @@ async def final_estimate(input: FinalEstimationInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-    # Prepare and return the output, including the project name
     output = {"project": input.project_name, **result}
     return output
 
+# Endpoint for blueprint upload
 @app.post("/upload-blueprint")
 async def upload_blueprint(file: UploadFile = File(...)):
     print("Received file upload request.")
@@ -58,7 +55,6 @@ async def upload_blueprint(file: UploadFile = File(...)):
             shutil.copyfileobj(file.file, buffer)
         print("File saved successfully.")
         
-        # Process the file
         extracted_data = process_blueprint(temp_filepath)
         print("Blueprint processed:", extracted_data)
     except Exception as e:
