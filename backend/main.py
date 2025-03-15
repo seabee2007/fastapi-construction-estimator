@@ -4,22 +4,21 @@ from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-# Path to the NTRP data file; ensure that ntrp_data.json is in your project root.
+# Load NTRP data from the JSON file in the project root
 DATA_FILE = os.path.join(os.getcwd(), "ntrp_data.json")
-
 try:
     with open(DATA_FILE, "r") as f:
         ntrp_data = json.load(f)
 except Exception as e:
     ntrp_data = {}
     print("Error loading NTRP data:", e)
-    # Optionally, raise an error if this file is critical:
+    # Optionally raise an error if this file is required:
     # raise e
 
 app = FastAPI()
 
 # ---------------------------
-# Define Pydantic Models
+# Pydantic Models
 # ---------------------------
 class LaborRow(BaseModel):
     skill: str = Field(..., example="Builder (Carpenter)")
@@ -66,7 +65,7 @@ async def get_activities():
 async def get_work_elements(query: Optional[str] = None):
     """
     Return a list of work elements.
-    If a query parameter is provided, filter the results based on the description.
+    If a query parameter is provided, filter results based on the description.
     """
     work_elements = ntrp_data.get("work_elements", [])
     if query:
@@ -95,37 +94,39 @@ async def get_equipment():
 # ---------------------------
 def calculate_estimate(input_data: FinalEstimationInput) -> dict:
     """
-    A simple calculation:
-    - For each labor resource row, look up the hourly rate from ntrp_data and multiply by the quantity.
-    - For each work element row, look up the element by its code and calculate cost = (man_hours_per_unit * cost_factor) * quantity.
-    - For each equipment row, look up the hourly rate and multiply by quantity.
+    Calculate a simple estimate based on:
+      - Labor cost: Sum over each labor resource (quantity x hourly rate)
+      - Material cost: Sum over each work element (man_hours_per_unit x cost factor x quantity)
+      - Equipment cost: Sum over each equipment row (quantity x hourly rate)
     
-    (Cost factors and rates here are examples; adjust based on your NTRP formulas and actual data.)
+    * Note: Hourly rates and cost factors here are sample values.
     """
-    # Calculate labor cost
+    # Calculate labor cost:
     labor_cost = 0
     for lr in input_data.labor_resources:
-        # Look up the rate; assume ntrp_data stores labor resources with keys "role" and "hourlyRate"
-        rate = next((item["hourlyRate"] for item in ntrp_data.get("laborResources", []) if item["role"] == lr.skill), None)
+        rate = next((item["hourlyRate"] for item in ntrp_data.get("laborResources", [])
+                     if item["role"] == lr.skill), None)
         if rate is None:
-            rate = 20  # default rate if not found
+            rate = 20  # default rate
         labor_cost += rate * lr.quantity
 
-    # Calculate material cost from work elements
+    # Calculate material cost from work elements:
     material_cost = 0
     for we in input_data.work_elements:
-        element = next((item for item in ntrp_data.get("work_elements", []) if item["code"] == we.code), None)
+        element = next((item for item in ntrp_data.get("work_elements", [])
+                        if item["code"] == we.code), None)
         if element:
-            # Example: cost = (man_hours_per_unit * 100) * quantity
+            # Assume cost factor of 100 per man-hour for demonstration
             cost = (element.get("man_hours_per_unit", 0) * 100) * we.quantity
             material_cost += cost
 
-    # Calculate equipment cost
+    # Calculate equipment cost:
     equipment_cost = 0
     for eq in input_data.equipment:
-        rate = next((item["hourlyRate"] for item in ntrp_data.get("equipment", []) if item["name"] == eq.name), None)
+        rate = next((item["hourlyRate"] for item in ntrp_data.get("equipment", [])
+                     if item["name"] == eq.name), None)
         if rate is None:
-            rate = 50  # default if not found
+            rate = 50  # default rate
         equipment_cost += rate * eq.quantity
 
     total_cost = labor_cost + material_cost + equipment_cost
