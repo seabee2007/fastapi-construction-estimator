@@ -2,56 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Construction Estimator</title>
-  <!-- Updated to reference static assets under /static -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Construction Estimator</title>
+  <!-- External CSS from static folder -->
   <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Bootstrap CSS from CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Optional: Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
-  <h1>Construction Estimator</h1>
+  <header class="py-4 bg-dark text-white text-center">
+    <div class="container">
+      <h1>Digital Construction Estimator</h1>
+    </div>
+  </header>
   
-  <!-- Section for Blueprint Upload -->
-  <h2>Upload Blueprint</h2>
-  <!-- Added method="POST" and enctype -->
-  <form id="blueprintForm" method="POST" enctype="multipart/form-data">
-    <label for="file">Select PDF Blueprint:</label>
-    <input type="file" id="file" name="file" accept="application/pdf" required>
-    <button type="submit">Upload and Process</button>
-  </form>
-  <div id="blueprintResult"></div>
-
-  <!-- Section for Additional Input and Final Estimate -->
-  <h2>Provide Project Details</h2>
-  <!-- Added method="POST" for consistency -->
-  <form id="estimateForm" method="POST">
-    <label for="project_name">Project Name:</label>
-    <input type="text" id="project_name" name="project_name" required><br><br>
-    
-    <label for="project_type">Project Type:</label>
-    <select id="project_type" name="project_type">
-      <option value="residential">Residential</option>
-      <option value="commercial">Commercial</option>
-      <option value="industrial">Industrial</option>
-    </select><br><br>
-    
-    <label for="condition_multiplier">Condition Multiplier (e.g., 1.0):</label>
-    <input type="number" id="condition_multiplier" name="condition_multiplier" step="0.1" value="1.0" required><br><br>
-    
-    <label for="number_of_floors">Number of Floors:</label>
-    <input type="number" id="number_of_floors" name="number_of_floors" required><br><br>
-    
-    <label for="total_floor_area_sqft">Total Floor Area (sqft):</label>
-    <input type="number" id="total_floor_area_sqft" name="total_floor_area_sqft" required><br><br>
-    
-    <label for="roof_area_sqft">Roof Area (sqft):</label>
-    <input type="number" id="roof_area_sqft" name="roof_area_sqft" required><br><br>
-    
-    <button type="submit">Get Final Estimate</button>
-  </form>
+  <div class="container my-5">
+    <form id="estimatorForm" class="p-4 bg-white rounded shadow">
+      <!-- Project Information -->
+      <fieldset class="mb-4">
+        <legend>Project Information</legend>
+        <div class="mb-3">
+          <label for="project_name" class="form-label">Project Name/Number:</label>
+          <input type="text" id="project_name" name="project_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="project_date" class="form-label">Project Date:</label>
+          <input type="date" id="project_date" name="project_date" class="form-control" required>
+        </div>
+      </fieldset>
+      
+      <!-- Activity Details -->
+      <fieldset class="mb-4">
+        <legend>Activity Details</legend>
+        <div class="mb-3">
+          <label for="activity_code" class="form-label">Activity Number:</label>
+          <select id="activity_code" name="activity_code" class="form-select" required>
+            <!-- Options populated dynamically -->
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="description_of_work" class="form-label">Description of Work:</label>
+          <textarea id="description_of_work" name="description_of_work" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="method_of_construction" class="form-label">Method of Construction:</label>
+          <textarea id="method_of_construction" name="method_of_construction" class="form-control" rows="3" required></textarea>
+        </div>
+      </fieldset>
+      
+      <!-- Labor Resources -->
+      <fieldset class="mb-4">
+        <legend>Labor Resources</legend>
+        <div id="laborResourcesContainer"></div>
+        <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
+      </fieldset>
+      
+      <!-- Work Elements -->
+      <fieldset class="mb-4">
+        <legend>Work Elements</legend>
+        <div id="workElementsContainer"></div>
+        <button type="button" class="btn btn-outline-primary mb-3" onclick="addWorkElement()">Add Work Element</button>
+      </fieldset>
+      
+      <!-- Equipment -->
+      <fieldset class="mb-4">
+        <legend>Equipment</legend>
+        <div id="equipmentContainer"></div>
+        <button type="button" class="btn btn-outline-warning mb-3" onclick="addEquipment()">Add Equipment</button>
+      </fieldset>
+      
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-lg btn-success">Get Final Estimate</button>
+      </div>
+    </form>
+  </div>
   
-  <div id="estimateResult"></div>
+  <!-- Modal for Final Estimate -->
+  <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resultModalLabel">Final Estimate</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="resultContent">
+          <!-- Final estimate result will be injected here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   
-  <!-- Reference JS file from /static -->
+  <!-- External JS from static folder -->
   <script src="/static/js/app.js"></script>
+  <!-- Bootstrap Bundle with Popper from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
