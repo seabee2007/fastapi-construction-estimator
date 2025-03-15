@@ -38,7 +38,7 @@
       background: #ffffff;
       padding: 20px 30px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     fieldset {
       border: none;
@@ -120,24 +120,27 @@
       100% { opacity: 1; transform: translateY(0); }
     }
     /* Library modal body scrollable */
-    #libraryModalBody {
+    #libraryModalBody, #equipmentModalBody {
       max-height: 400px;
       overflow-y: auto;
     }
     /* Hover effects for modal table rows */
-    #libraryModalBody tr.library-row {
+    #libraryModalBody tr.library-row,
+    #equipmentModalBody tr.equipment-row {
       position: relative;
       z-index: 1;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     }
-    #libraryModalBody tr.library-row:hover {
+    #libraryModalBody tr.library-row:hover,
+    #equipmentModalBody tr.equipment-row:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       background-color: #f0f0f0;
       z-index: 10;
     }
     /* Make the code column wider */
-    #libraryModalBody td:first-child {
+    #libraryModalBody td:first-child,
+    #equipmentModalBody td:first-child {
       min-width: 150px;
     }
     /* Additional CAS Summary Styles (unchanged) */
@@ -221,7 +224,6 @@
       <fieldset class="mb-4">
         <legend>Work Elements</legend>
         <div id="workElementsContainer"></div>
-        <!-- Datalist for auto-suggestions (still available if needed) -->
         <datalist id="workElementsSuggestions"></datalist>
         <button type="button" class="btn btn-outline-primary mb-3" onclick="openLibraryModal()">Add Work Element</button>
       </fieldset>
@@ -230,7 +232,7 @@
       <fieldset class="mb-4">
         <legend>Equipment</legend>
         <div id="equipmentContainer"></div>
-        <button type="button" class="btn btn-outline-warning mb-3" onclick="addEquipment()">Add Equipment</button>
+        <button type="button" class="btn btn-outline-warning mb-3" onclick="openEquipmentModal()">Add Equipment</button>
       </fieldset>
       
       <!-- Production Efficiency Factors Section -->
@@ -469,6 +471,31 @@
     </div>
   </div>
   
+  <!-- Equipment Modal -->
+  <div class="modal fade" id="equipmentModal" tabindex="-1" aria-labelledby="equipmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="equipmentModalLabel">Equipment Library</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Search input for equipment modal -->
+          <div class="mb-3">
+            <input type="text" id="equipmentModalSearchInput" class="form-control" placeholder="Search equipment..." oninput="filterEquipmentModalTable()">
+          </div>
+          <div id="equipmentModalBody">
+            <!-- Equipment table will be injected here -->
+            <p>Loading equipment...</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- Modal for Work Elements Library -->
   <div class="modal fade" id="libraryModal" tabindex="-1" aria-labelledby="libraryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -478,12 +505,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Search input in modal body -->
           <div class="mb-3">
             <input type="text" id="modalSearchInput" class="form-control" placeholder="Search work elements..." oninput="filterModalTable()">
           </div>
           <div id="libraryModalBody">
-            <!-- Table will be injected here -->
+            <!-- Work elements table will be injected here -->
             <p>Loading work elements...</p>
           </div>
         </div>
@@ -515,12 +541,12 @@
   <!-- Inline JavaScript -->
   <script>
     let activeWorkElementRow = null;
-
+    
     function setActiveWorkElementRow(row) {
       activeWorkElementRow = row;
     }
-
-    // Populate dropdowns for Production Efficiency Factors
+    
+    // Populate dropdowns for Production Efficiency Factors.
     function populateFactorDropdowns() {
       const factorIds = [
         "factor-workload",
@@ -545,7 +571,7 @@
         select.addEventListener("change", recalcEfficiency);
       });
     }
-
+    
     function populateAvailabilityDropdown() {
       const availSelect = document.getElementById("availability-factor");
       availSelect.innerHTML = "";
@@ -557,7 +583,7 @@
         availSelect.appendChild(opt);
       }
     }
-
+    
     function recalcEfficiency() {
       const factorIds = [
         "factor-workload",
@@ -580,7 +606,7 @@
       document.getElementById("casProductEfficiency").textContent = avg.toFixed(1);
       document.getElementById("casDelayFactor").textContent = delay.toFixed(2);
     }
-
+    
     window.addEventListener("load", async () => {
       try {
         const res = await fetch("/activities");
@@ -599,7 +625,7 @@
       populateAvailabilityDropdown();
       recalcEfficiency();
     });
-
+    
     function addLaborResource() {
       const container = document.getElementById("laborResourcesContainer");
       const row = document.createElement("div");
@@ -620,26 +646,22 @@
       container.appendChild(row);
     }
     window.addLaborResource = addLaborResource;
-
-    // Instead of adding a new row directly, "Add Work Element" now opens the modal.
+    
+    // For Work Elements, "Add Work Element" now directly opens the work element modal.
     function openLibraryModal() {
-      // Set activeWorkElementRow to a new row placeholder.
       addWorkElementPlaceholder();
-      const modalSearch = document.getElementById("modalSearchInput");
-      modalSearch.value = "";
-      filterModalTable(); // clear any previous filters
+      document.getElementById("modalSearchInput").value = "";
+      filterModalTable();
       fetchWorkElementsForModal();
       const modal = new bootstrap.Modal(document.getElementById("libraryModal"));
       modal.show();
     }
     window.openLibraryModal = openLibraryModal;
-
-    // Creates a placeholder row in the Work Elements container and sets it as active.
+    
     function addWorkElementPlaceholder() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
-      // Initially empty placeholders for U/M and Multiplier
       row.innerHTML = `
         <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" readonly>
         <span class="input-group-text">U/M: <span class="um-field"></span></span>
@@ -647,11 +669,10 @@
         <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
         <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
       `;
-      container.appendChild(row);
+      document.getElementById("workElementsContainer").appendChild(row);
       activeWorkElementRow = row;
     }
-
-    // Fetch all work elements for modal display.
+    
     async function fetchWorkElementsForModal() {
       try {
         const res = await fetch("/work-elements");
@@ -661,8 +682,7 @@
         console.error("Error fetching work elements library:", error);
       }
     }
-
-    // Populate the modal table with given work element data.
+    
     function populateModalTable(data) {
       let tableHTML = `
         <table class="table table-striped" id="modalTable">
@@ -691,14 +711,13 @@
         </table>`;
       document.getElementById("libraryModalBody").innerHTML = tableHTML;
     }
-
-    // Filter the modal table based on the search input.
+    
     function filterModalTable() {
       const searchValue = document.getElementById("modalSearchInput").value.toLowerCase();
       const table = document.getElementById("modalTable");
       if (!table) return;
       const rows = table.getElementsByTagName("tr");
-      for (let i = 1; i < rows.length; i++) { // skip header row
+      for (let i = 1; i < rows.length; i++) {
         const cells = rows[i].getElementsByTagName("td");
         let rowText = "";
         for (let j = 0; j < cells.length; j++) {
@@ -707,8 +726,7 @@
         rows[i].style.display = rowText.indexOf(searchValue) > -1 ? "" : "none";
       }
     }
-
-    // Function to populate U/M and Multiplier when the user types in a work element (if applicable).
+    
     async function populateWorkElementDetails(inputElem) {
       let value = inputElem.value.trim();
       if (!value) return;
@@ -734,8 +752,7 @@
       }
     }
     window.populateWorkElementDetails = populateWorkElementDetails;
-
-    // When a user selects a row from the modal, update the active work element row.
+    
     function selectWorkElement(code, description, uom, multiplier) {
       if (activeWorkElementRow) {
         activeWorkElementRow.innerHTML = `
@@ -764,7 +781,115 @@
       if (modal) modal.hide();
     }
     window.selectWorkElement = selectWorkElement;
-
+    
+    // ----------------- Equipment Modal Functions -----------------
+    let activeEquipmentRow = null;
+    
+    // When "Add Equipment" is clicked, open the Equipment Modal.
+    function openEquipmentModal() {
+      addEquipmentPlaceholder();
+      document.getElementById("equipmentModalSearchInput").value = "";
+      filterEquipmentModalTable();
+      fetchEquipmentForModal();
+      const modal = new bootstrap.Modal(document.getElementById("equipmentModal"));
+      modal.show();
+    }
+    window.openEquipmentModal = openEquipmentModal;
+    
+    // Create a placeholder equipment row.
+    function addEquipmentPlaceholder() {
+      const container = document.getElementById("equipmentContainer");
+      const row = document.createElement("div");
+      row.className = "input-group mb-2";
+      // Initially, the equipment field is readonly; it will be populated via modal.
+      row.innerHTML = `
+        <input type="text" name="equipment_search" class="form-control" placeholder="Equipment name" readonly>
+        <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      container.appendChild(row);
+      activeEquipmentRow = row;
+    }
+    
+    // Fetch equipment list for modal (assumes /equipment returns a full list when no query is provided).
+    async function fetchEquipmentForModal() {
+      try {
+        const res = await fetch("/equipment");
+        const results = await res.json();
+        populateEquipmentModalTable(results);
+      } catch (error) {
+        console.error("Error fetching equipment list:", error);
+      }
+    }
+    
+    // Populate the equipment modal table.
+    function populateEquipmentModalTable(data) {
+      let tableHTML = `
+        <table class="table table-striped" id="equipmentModalTable">
+          <thead>
+            <tr>
+              <th>ID #</th>
+              <th>Description</th>
+              <th>Qty Available</th>
+            </tr>
+          </thead>
+          <tbody>`;
+      data.forEach(item => {
+        tableHTML += `
+          <tr class="equipment-row" style="cursor:pointer" onclick="selectEquipment('${item.id}', '${item.description}')">
+            <td>${item.id}</td>
+            <td>${item.description}</td>
+            <td>${item.quantity ? item.quantity : 'N/A'}</td>
+          </tr>`;
+      });
+      tableHTML += `
+          </tbody>
+        </table>`;
+      document.getElementById("equipmentModalBody").innerHTML = tableHTML;
+    }
+    
+    // Filter the equipment modal table.
+    function filterEquipmentModalTable() {
+      const searchValue = document.getElementById("equipmentModalSearchInput").value.toLowerCase();
+      const table = document.getElementById("equipmentModalTable");
+      if (!table) return;
+      const rows = table.getElementsByTagName("tr");
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        let rowText = "";
+        for (let j = 0; j < cells.length; j++) {
+          rowText += cells[j].textContent.toLowerCase() + " ";
+        }
+        rows[i].style.display = rowText.indexOf(searchValue) > -1 ? "" : "none";
+      }
+    }
+    
+    // When an equipment row is clicked, populate the active equipment row.
+    function selectEquipment(id, description) {
+      if (activeEquipmentRow) {
+        activeEquipmentRow.innerHTML = `
+          <input type="text" name="equipment_search" class="form-control" value="${id} - ${description}" readonly>
+          <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+        `;
+        activeEquipmentRow = null;
+      } else {
+        const container = document.getElementById("equipmentContainer");
+        const row = document.createElement("div");
+        row.className = "input-group mb-2";
+        row.innerHTML = `
+          <input type="text" name="equipment_search" class="form-control" value="${id} - ${description}" readonly>
+          <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+        `;
+        container.appendChild(row);
+      }
+      const modalEl = document.getElementById("equipmentModal");
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+    }
+    window.selectEquipment = selectEquipment;
+    
     // Handle form submission.
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
