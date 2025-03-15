@@ -176,16 +176,6 @@
     { "name": "Steelworker", "rate_per_hour": null }
   ],
   "equipment": [
-    { "name": "Concrete Mixer (16 CF)", "rate_per_hour": null },
-    { "name": "Concrete Mixer (11 CF)", "rate_per_hour": null },
-    { "name": "Transit Mix Truck (8 CY)", "rate_per_hour": null },
-    { "name": "Concrete Pump", "rate_per_hour": null },
-    { "name": "Crane and Bucket", "rate_per_hour": null },
-    { "name": "Wheelbarrow (Concrete Cart)", "rate_per_hour": null },
-    { "name": "Front-End Loader", "rate_per_hour": null }
-  ]
-}
-[
   {
     "id": "CT-20TN",
     "description": "20 Ton Mobile Truck Crane with Outriggers, hydraulically operated",
@@ -302,3 +292,5 @@
     }
   }
 ]
+
+}
