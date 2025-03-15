@@ -8,15 +8,18 @@ from pydantic import BaseModel, Field
 
 app = FastAPI()
 
-# Mount the repository root as static files under the URL path "/assets"
-assets_dir = os.getcwd()  # This is the repository root
-app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+# Set repository root (assumed to be os.getcwd())
+root_dir = os.getcwd()
 
-# Serve index.html at the root URL
+# Mount static directories for CSS and JS from the repository root.
+app.mount("/css", StaticFiles(directory=os.path.join(root_dir, "css")), name="css")
+app.mount("/js", StaticFiles(directory=os.path.join(root_dir, "js")), name="js")
+
+# Serve the index.html file from the repository root.
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    index_path = os.path.join(os.getcwd(), "index.html")
-    print("Working Directory:", os.getcwd())
+    index_path = os.path.join(root_dir, "index.html")
+    print("Working Directory:", root_dir)
     print("Index Path:", index_path)
     try:
         with open(index_path, "r", encoding="utf-8") as f:
@@ -26,11 +29,8 @@ async def read_index():
         print("Error reading index.html:", e)
         raise HTTPException(status_code=404, detail="Index file not found")
 
-# (Your other endpoints, Pydantic models, and calculation logic remain unchanged)
-
-
 # Load NTRP data from the JSON file in the repository root.
-DATA_FILE = os.path.join(os.getcwd(), "ntrp_data.json")
+DATA_FILE = os.path.join(root_dir, "ntrp_data.json")
 try:
     with open(DATA_FILE, "r") as f:
         ntrp_data = json.load(f)
@@ -76,7 +76,6 @@ class FinalEstimationOutput(BaseModel):
 # ---------------------------
 @app.get("/activities")
 async def get_activities():
-    """Return a list of concrete-related activities."""
     activities = ntrp_data.get("activities", [])
     if not activities:
         raise HTTPException(status_code=404, detail="No activities found.")
@@ -84,10 +83,6 @@ async def get_activities():
 
 @app.get("/work-elements")
 async def get_work_elements(query: Optional[str] = None):
-    """
-    Return a list of work elements.
-    If a query parameter is provided, filter results based on the description.
-    """
     work_elements = ntrp_data.get("work_elements", [])
     if query:
         filtered = [we for we in work_elements if query.lower() in we["description"].lower()]
@@ -96,7 +91,6 @@ async def get_work_elements(query: Optional[str] = None):
 
 @app.get("/labor-resources")
 async def get_labor_resources():
-    """Return the list of labor resource types."""
     labor_resources = ntrp_data.get("laborResources", [])
     if not labor_resources:
         raise HTTPException(status_code=404, detail="No labor resources found.")
@@ -104,7 +98,6 @@ async def get_labor_resources():
 
 @app.get("/equipment")
 async def get_equipment():
-    """Return the list of equipment items."""
     equipment = ntrp_data.get("equipment", [])
     if not equipment:
         raise HTTPException(status_code=404, detail="No equipment found.")
@@ -114,38 +107,31 @@ async def get_equipment():
 # Estimation Calculation Logic
 # ---------------------------
 def calculate_estimate(input_data: FinalEstimationInput) -> dict:
-    """
-    Calculate a simple estimate based on NTRP guidelines:
-      - Labor Cost: Sum each labor resource (quantity * hourly rate).
-      - Material Cost: Sum each work element (man_hours_per_unit * cost factor * quantity).
-      - Equipment Cost: Sum each equipment row (quantity * hourly rate).
-    Adjust cost factors and default rates as needed.
-    """
-    # Calculate labor cost:
+    # Calculate labor cost.
     labor_cost = 0
     for lr in input_data.labor_resources:
         rate = next((item["hourlyRate"] for item in ntrp_data.get("laborResources", [])
                      if item["role"] == lr.skill), None)
         if rate is None:
-            rate = 20  # default hourly rate if not found
+            rate = 20
         labor_cost += rate * lr.quantity
 
-    # Calculate material cost from work elements:
+    # Calculate material cost from work elements.
     material_cost = 0
-    cost_factor = 100  # example cost factor converting man-hours to dollars
+    cost_factor = 100  # Example factor converting man-hours to dollars.
     for we in input_data.work_elements:
         element = next((item for item in ntrp_data.get("work_elements", [])
                         if item["code"] == we.code), None)
         if element:
             material_cost += (element.get("man_hours_per_unit", 0) * cost_factor) * we.quantity
 
-    # Calculate equipment cost:
+    # Calculate equipment cost.
     equipment_cost = 0
     for eq in input_data.equipment:
         rate = next((item["hourlyRate"] for item in ntrp_data.get("equipment", [])
                      if item["name"] == eq.name), None)
         if rate is None:
-            rate = 50  # default equipment hourly rate if not found
+            rate = 50
         equipment_cost += rate * eq.quantity
 
     total_cost = labor_cost + material_cost + equipment_cost
