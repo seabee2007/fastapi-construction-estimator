@@ -185,6 +185,7 @@
     { "name": "Front-End Loader", "rate_per_hour": null }
   ]
 }
+[
   {
     "id": "CT-20TN",
     "description": "20 Ton Mobile Truck Crane with Outriggers, hydraulically operated",
@@ -255,6 +256,16 @@
     }
   },
   {
+    "id": "EXC-1",
+    "description": "Hydraulic Excavator, 1.5 CY bucket, crawler type",
+    "uom": "unit",
+    "hourlyRate": 160,
+    "details": {
+      "bucketCapacity": "1.5 CY",
+      "type": "Hydraulic Excavator"
+    }
+  },
+  {
     "id": "FL-1",
     "description": "Forklift, electric or diesel powered",
     "uom": "unit",
@@ -265,7 +276,7 @@
   },
   {
     "id": "AC-1",
-    "description": "Air Compressor, portable",
+    "description": "Portable Air Compressor",
     "uom": "unit",
     "hourlyRate": 60,
     "details": {
@@ -283,11 +294,11 @@
   },
   {
     "id": "RR-1",
-    "description": "Road Roller, vibratory, for compaction",
+    "description": "Vibratory Road Roller for compaction",
     "uom": "unit",
     "hourlyRate": 100,
     "details": {
       "type": "Road Roller"
     }
   }
-
+]
