@@ -4,25 +4,33 @@ from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import os
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
-@app.get("/", response_class=FileResponse)
+@app.get("/", response_class=HTMLResponse)
 async def read_index():
-    # Build the absolute path to the index.html file
-    index_path = os.path.join(os.getcwd(), "frontend", "index.html")
-    return FileResponse(index_path)
+    # Compute the absolute path to the index.html file.
+    # This assumes that the "frontend" folder is in the repository root.
+    static_dir = os.path.join(os.getcwd(), "frontend")
+    index_path = os.path.join(static_dir, "index.html")
+    
+    # Debug: print the paths (check Render logs)
+    print("Working Directory:", os.getcwd())
+    print("Static Directory:", static_dir)
+    print("Index Path:", index_path)
+    
+    # Attempt to read the file
+    try:
+        with open(index_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return HTMLResponse(content=content, status_code=200)
+    except Exception as e:
+        # Log the error and return a 404 response with error details.
+        print("Error reading index.html:", e)
+        raise HTTPException(status_code=404, detail="Index file not found")
 
-@app.get("/", response_class=FileResponse)
-async def read_index():
-    current_dir = os.getcwd()
-    index_path = os.path.join(current_dir, "frontend", "index.html")
-    print("Working Directory:", current_dir)
-    print("Serving index.html from:", index_path)
-    return FileResponse(index_path)
 
 
 # Load NTRP data from the JSON file in the project root
