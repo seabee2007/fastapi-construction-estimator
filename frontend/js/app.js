@@ -1,79 +1,154 @@
-// Handler for blueprint upload (as in Step 1)
-document.getElementById("blueprintForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-
-  const form = e.target;
-  const formData = new FormData(form);
-  
+// When the page loads, fetch activity numbers and populate the dropdown
+window.addEventListener("load", async () => {
   try {
-    const response = await fetch("/upload-blueprint", {
-      method: "POST",
-      body: formData,
+    const res = await fetch("/activities");
+    const activities = await res.json();
+    const select = document.getElementById("activity_code");
+    activities.forEach(act => {
+      const opt = document.createElement("option");
+      opt.value = act.code;
+      opt.textContent = `${act.code} - ${act.title}`;
+      select.appendChild(opt);
     });
-    const result = await response.json();
-    // Display the extracted blueprint data (for now, dummy data)
-    document.getElementById("blueprintResult").innerText = JSON.stringify(result.extracted_data, null, 2);
-    
-    // Optionally, auto-fill the additional form with data from the blueprint
-    if (result.extracted_data.floor_plans) {
-      document.getElementById("number_of_floors").value = result.extracted_data.floor_plans.number_of_floors;
-      document.getElementById("total_floor_area_sqft").value = result.extracted_data.floor_plans.total_floor_area_sqft;
-    }
-    if (result.extracted_data.roof_plans) {
-      document.getElementById("roof_area_sqft").value = result.extracted_data.roof_plans.roof_area_sqft;
-    }
   } catch (error) {
-    console.error("Error uploading blueprint:", error);
-    document.getElementById("blueprintResult").innerText = "Error processing blueprint.";
+    console.error("Error fetching activities:", error);
   }
 });
 
-// Handler for final estimate submission
-document.getElementById("estimateForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  
-  // Gather data from the form fields
-  const finalData = {
-    project_name: document.getElementById("project_name").value,
-    project_type: document.getElementById("project_type").value,
-    condition_multiplier: parseFloat(document.getElementById("condition_multiplier").value),
-    blueprint_data: {
-      number_of_floors: parseInt(document.getElementById("number_of_floors").value, 10),
-      total_floor_area_sqft: parseFloat(document.getElementById("total_floor_area_sqft").value),
-      roof_area_sqft: parseFloat(document.getElementById("roof_area_sqft").value)
-    }
-  };
-  
+// Function to add a dynamic Labor Resource row
+function addLaborResource() {
+  const container = document.getElementById("laborResourcesContainer");
+  const row = document.createElement("div");
+  row.className = "input-group mb-2";
+  row.innerHTML = `
+    <select name="labor_skill" class="form-select">
+      <option value="Builder (Carpenter)">Builder (Carpenter)</option>
+      <option value="Construction Electrician">Construction Electrician</option>
+      <option value="Equipment Operator">Equipment Operator</option>
+      <option value="Unskilled Laborer/Other">Unskilled Laborer/Other</option>
+    </select>
+    <input type="number" name="labor_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+    <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+  `;
+  container.appendChild(row);
+}
+
+// Function to add a dynamic Work Element row
+function addWorkElement() {
+  const container = document.getElementById("workElementsContainer");
+  const row = document.createElement("div");
+  row.className = "input-group mb-2";
+  row.innerHTML = `
+    <input type="text" name="work_element_search" class="form-control" placeholder="Search work element" required onkeyup="searchWorkElement(this)">
+    <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+    <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+  `;
+  container.appendChild(row);
+}
+
+// Function to add a dynamic Equipment row
+function addEquipment() {
+  const container = document.getElementById("equipmentContainer");
+  const row = document.createElement("div");
+  row.className = "input-group mb-2";
+  row.innerHTML = `
+    <input type="text" name="equipment_search" class="form-control" placeholder="Search equipment" required onkeyup="searchEquipment(this)">
+    <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+    <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+  `;
+  container.appendChild(row);
+}
+
+// Example search function for work elements – currently logs results
+async function searchWorkElement(inputElem) {
+  const query = inputElem.value;
+  if (query.length < 2) return;
   try {
-    const response = await fetch("/final-estimate", {
+    const res = await fetch(`/work-elements?query=${encodeURIComponent(query)}`);
+    const results = await res.json();
+    console.log("Work element search results:", results);
+    // Optionally, implement auto-suggestions here.
+  } catch (error) {
+    console.error("Error searching work elements:", error);
+  }
+}
+
+// Example search function for equipment – currently logs results
+async function searchEquipment(inputElem) {
+  const query = inputElem.value;
+  if (query.length < 2) return;
+  try {
+    const res = await fetch(`/equipment?query=${encodeURIComponent(query)}`);
+    const results = await res.json();
+    console.log("Equipment search results:", results);
+    // Optionally, implement auto-suggestions here.
+  } catch (error) {
+    console.error("Error searching equipment:", error);
+  }
+}
+
+// Handle form submission
+document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Assemble data from the form
+  const form = e.target;
+  const data = {
+    project_name: form.project_name.value,
+    project_date: form.project_date.value,
+    activity_code: form.activity_code.value,
+    description_of_work: form.description_of_work.value,
+    method_of_construction: form.method_of_construction.value,
+    labor_resources: [],
+    work_elements: [],
+    equipment: []
+  };
+
+  // Gather Labor Resources from dynamic rows
+  const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
+  laborRows.forEach(row => {
+    const skill = row.querySelector("select[name='labor_skill']").value;
+    const quantity = parseFloat(row.querySelector("input[name='labor_quantity']").value);
+    data.labor_resources.push({ skill, quantity });
+  });
+
+  // Gather Work Elements from dynamic rows
+  const workRows = document.querySelectorAll("#workElementsContainer .input-group");
+  workRows.forEach(row => {
+    const code = row.querySelector("input[name='work_element_search']").value;
+    const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value);
+    data.work_elements.push({ code, description: code, quantity });
+  });
+
+  // Gather Equipment from dynamic rows
+  const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
+  equipRows.forEach(row => {
+    const name = row.querySelector("input[name='equipment_search']").value;
+    const quantity = parseFloat(row.querySelector("input[name='equipment_quantity']").value);
+    data.equipment.push({ name, quantity });
+  });
+
+  console.log("Payload:", data);
+
+  try {
+    const res = await fetch("/final-estimate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(finalData)
+      body: JSON.stringify(data)
     });
+    const result = await res.json();
+    console.log("Final Estimate:", result);
     
-    const result = await response.json();
-    document.getElementById("estimateResult").innerText = JSON.stringify(result, null, 2);
+    // If a Bootstrap modal exists, display the result in the modal
+    if (document.getElementById("resultModal")) {
+      document.getElementById("resultContent").innerText = JSON.stringify(result, null, 2);
+      const modal = new bootstrap.Modal(document.getElementById("resultModal"));
+      modal.show();
+    } else {
+      // Otherwise, show in a result container (if one exists)
+      document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+    }
   } catch (error) {
     console.error("Error getting final estimate:", error);
-    document.getElementById("estimateResult").innerText = "Error processing final estimate.";
-  }
-});
-document.getElementById("blueprintForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const formData = new FormData(form);
-  
-  try {
-    const response = await fetch("/upload-blueprint", {
-      method: "POST",
-      body: formData,
-    });
-    const responseText = await response.text();
-    console.log("Raw response:", responseText);
-    const result = JSON.parse(responseText);
-    document.getElementById("blueprintResult").innerText = JSON.stringify(result, null, 2);
-  } catch (error) {
-    console.error("Error uploading blueprint:", error);
-    document.getElementById("blueprintResult").innerText = "Error processing blueprint.";
   }
 });
