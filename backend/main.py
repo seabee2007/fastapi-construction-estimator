@@ -6,6 +6,15 @@ from fastapi import FastAPI, HTTPException
 from backend.schemas import FinalEstimationInput, FinalEstimationOutput
 from backend.estimation_logic import calculate_final_estimate
 from backend.blueprint_processor import process_blueprint, cleanup_file
+from fastapi.responses import FileResponse
+
+app = FastAPI()
+
+@app.get("/")
+async def read_index():
+    index_path = os.path.join("frontend", "index.html")
+    return FileResponse(index_path)
+
 
 # Import the blueprint processing function
 from backend.blueprint_processor import process_blueprint, cleanup_file
