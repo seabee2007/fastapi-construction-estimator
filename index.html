@@ -301,12 +301,15 @@
     window.addLaborResource = addLaborResource;
     
     // Function to add a new (empty) Work Element row.
+    // Now the row includes placeholders for U/M and Multiplier, matching the library format.
     function addWorkElement() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
       row.innerHTML = `
         <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" list="workElementsSuggestions" oninput="searchWorkElement(this)" onfocus="setActiveWorkElementRow(this.parentElement)" required>
+        <span class="input-group-text">U/M: <span class="um-field"></span></span>
+        <span class="input-group-text">Multiplier: <span class="multiplier-field"></span></span>
         <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
         <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
       `;
