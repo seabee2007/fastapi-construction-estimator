@@ -6,16 +6,23 @@ from pydantic import BaseModel, Field
 import os
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+
+
 app = FastAPI()
 
-# Determine the absolute path to your "frontend" folder.
-# This assumes the "frontend" folder is in the project root.
-static_dir = os.path.join(os.getcwd(), "frontend")
-print("Static directory:", static_dir)  # For debugging; check logs on Render
+@app.get("/", response_class=FileResponse)
+async def read_index():
+    # Build the absolute path to the index.html file
+    index_path = os.path.join(os.getcwd(), "frontend", "index.html")
+    return FileResponse(index_path)
 
-# Mount the static files at the root URL
-app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
-
+@app.get("/", response_class=FileResponse)
+async def read_index():
+    current_dir = os.getcwd()
+    index_path = os.path.join(current_dir, "frontend", "index.html")
+    print("Working Directory:", current_dir)
+    print("Serving index.html from:", index_path)
+    return FileResponse(index_path)
 
 
 # Load NTRP data from the JSON file in the project root
