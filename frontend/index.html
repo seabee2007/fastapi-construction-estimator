@@ -4,14 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Construction Estimator</title>
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Updated to reference static assets under /static -->
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
   <h1>Construction Estimator</h1>
   
   <!-- Section for Blueprint Upload -->
   <h2>Upload Blueprint</h2>
-  <form id="blueprintForm" enctype="multipart/form-data">
+  <!-- Added method="POST" and enctype -->
+  <form id="blueprintForm" method="POST" enctype="multipart/form-data">
     <label for="file">Select PDF Blueprint:</label>
     <input type="file" id="file" name="file" accept="application/pdf" required>
     <button type="submit">Upload and Process</button>
@@ -20,7 +22,8 @@
 
   <!-- Section for Additional Input and Final Estimate -->
   <h2>Provide Project Details</h2>
-  <form id="estimateForm">
+  <!-- Added method="POST" for consistency -->
+  <form id="estimateForm" method="POST">
     <label for="project_name">Project Name:</label>
     <input type="text" id="project_name" name="project_name" required><br><br>
     
@@ -34,8 +37,6 @@
     <label for="condition_multiplier">Condition Multiplier (e.g., 1.0):</label>
     <input type="number" id="condition_multiplier" name="condition_multiplier" step="0.1" value="1.0" required><br><br>
     
-    <!-- For simplicity, we pre-fill blueprint fields from the earlier upload response.
-         In a real app, you might store this data and allow the user to adjust it. -->
     <label for="number_of_floors">Number of Floors:</label>
     <input type="number" id="number_of_floors" name="number_of_floors" required><br><br>
     
@@ -49,6 +50,8 @@
   </form>
   
   <div id="estimateResult"></div>
-  <script src="js/app.js"></script>
+  
+  <!-- Reference JS file from /static -->
+  <script src="/static/js/app.js"></script>
 </body>
 </html>
