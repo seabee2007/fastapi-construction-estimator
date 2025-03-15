@@ -217,11 +217,13 @@
       </fieldset>
       
       <!-- Labor Resources -->
-      <fieldset class="mb-4">
-        <legend>Labor Resources</legend>
-        <div id="laborResourcesContainer"></div>
-        <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
-      </fieldset>
+<!-- Labor Resources -->
+<fieldset class="mb-4">
+  <legend>Labor Resources</legend>
+  <div id="laborResourcesContainer"></div>
+  <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
+</fieldset>
+
       
       <!-- Work Elements -->
       <fieldset class="mb-4">
@@ -639,23 +641,27 @@
     });
 
     // Function to add a dynamic Labor Resource row.
-    function addLaborResource() {
-      const container = document.getElementById("laborResourcesContainer");
-      const row = document.createElement("div");
-      row.className = "input-group mb-2";
-      row.innerHTML = `
-        <select name="labor_skill" class="form-select">
-          <option value="Builder (Carpenter)">Builder (Carpenter)</option>
-          <option value="Construction Electrician">Construction Electrician</option>
-          <option value="Equipment Operator">Equipment Operator</option>
-          <option value="Unskilled Laborer/Other">Unskilled Laborer/Other</option>
-        </select>
-        <input type="number" name="labor_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
-        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
-      `;
-      container.appendChild(row);
-    }
-    window.addLaborResource = addLaborResource;
+   function addLaborResource() {
+  const container = document.getElementById("laborResourcesContainer");
+  const row = document.createElement("div");
+  row.className = "input-group mb-2";
+  row.innerHTML = `
+    <select name="labor_skill" class="form-select">
+      <option value="Builder">Builder</option>
+      <option value="Steel Worker">Steel Worker</option>
+      <option value="Utilitiesman">Utilitiesman</option>
+      <option value="Engineering Aid">Engineering Aid</option>
+      <option value="Construction Electrician">Construction Electrician</option>
+      <option value="Equipment Operator">Equipment Operator</option>
+      <option value="Construction Mechanic">Construction Mechanic</option>
+    </select>
+    <input type="number" name="labor_quantity" class="form-control" placeholder="Quantity" step="1" min="0" required>
+    <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+  `;
+  container.appendChild(row);
+}
+window.addLaborResource = addLaborResource;
+
     
     // Function to add a new (empty) Work Element row.
     function addWorkElement() {
