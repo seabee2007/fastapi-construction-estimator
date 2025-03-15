@@ -130,6 +130,18 @@
       max-height: 400px;
       overflow-y: auto;
     }
+    /* Hover effects for modal table rows */
+    #libraryModalBody tr.library-row {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #libraryModalBody tr.library-row:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    /* Make the code column wider */
+    #libraryModalBody td:first-child {
+      min-width: 150px;
+    }
   </style>
 </head>
 <body>
@@ -289,7 +301,6 @@
     window.addLaborResource = addLaborResource;
     
     // Function to add a new (empty) Work Element row.
-    // The work element input now includes an onfocus event to register the active row.
     function addWorkElement() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
@@ -318,7 +329,6 @@
     window.addEquipment = addEquipment;
     
     // Updated search function for work elements.
-    // Fetches suggestions from the /work-elements endpoint and updates the datalist.
     async function searchWorkElement(inputElem) {
       const query = inputElem.value;
       if (query.length < 2) return;
@@ -339,7 +349,6 @@
     window.searchWorkElement = searchWorkElement;
     
     // Function to open the Work Elements Library modal.
-    // If no active row exists, create a new one.
     async function openLibraryModal() {
       if (!activeWorkElementRow) {
         addWorkElement();
@@ -363,7 +372,7 @@
             <tbody>`;
         results.forEach(item => {
           tableHTML += `
-            <tr style="cursor:pointer" onclick="selectWorkElement('${item.code}', '${item.description}', '${item.uom ? item.uom : 'N/A'}', '${item.multiplier ? item.multiplier : 'N/A'}')">
+            <tr class="library-row" style="cursor:pointer" onclick="selectWorkElement('${item.code}', '${item.description}', '${item.uom ? item.uom : 'N/A'}', '${item.multiplier ? item.multiplier : 'N/A'}')">
               <td>${item.code}</td>
               <td>${item.description}</td>
               <td>${item.man_hours_per_unit !== undefined ? item.man_hours_per_unit : 'N/A'}</td>
@@ -384,7 +393,6 @@
     window.openLibraryModal = openLibraryModal;
     
     // Function to handle selection of a work element from the library modal.
-    // It updates the active row (or creates a new one if needed) with the selected data.
     function selectWorkElement(code, description, uom, multiplier) {
       if (activeWorkElementRow) {
         activeWorkElementRow.innerHTML = `
