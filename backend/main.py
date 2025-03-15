@@ -3,16 +3,20 @@ import json
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 app = FastAPI()
 
-# Serve the index.html file from the repository root.
+# Mount the repository root as static files under the URL path "/assets"
+assets_dir = os.getcwd()  # This is the repository root
+app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+# Serve index.html at the root URL
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    current_dir = os.getcwd()  # This should be the repository root.
-    index_path = os.path.join(current_dir, "index.html")
-    print("Working Directory:", current_dir)
+    index_path = os.path.join(os.getcwd(), "index.html")
+    print("Working Directory:", os.getcwd())
     print("Index Path:", index_path)
     try:
         with open(index_path, "r", encoding="utf-8") as f:
@@ -21,6 +25,9 @@ async def read_index():
     except Exception as e:
         print("Error reading index.html:", e)
         raise HTTPException(status_code=404, detail="Index file not found")
+
+# (Your other endpoints, Pydantic models, and calculation logic remain unchanged)
+
 
 # Load NTRP data from the JSON file in the repository root.
 DATA_FILE = os.path.join(os.getcwd(), "ntrp_data.json")
