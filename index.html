@@ -22,7 +22,7 @@
       color: #fff;
       padding: 20px 0;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     header h1 {
       margin: 0;
@@ -38,7 +38,7 @@
       background: #ffffff;
       padding: 20px 30px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     fieldset {
       border: none;
@@ -67,7 +67,7 @@
     select:focus,
     textarea:focus {
       border-color: #86b7fe;
-      box-shadow: 0 0 8px rgba(134, 183, 254, 0.5);
+      box-shadow: 0 0 8px rgba(134,183,254,0.5);
     }
     /* Button Styles */
     .btn {
@@ -136,12 +136,41 @@
     }
     #libraryModalBody tr.library-row:hover {
       transform: scale(1.02);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       background-color: #f0f0f0;
     }
     /* Make the code column wider */
     #libraryModalBody td:first-child {
       min-width: 150px;
+    }
+    /* Additional CAS Summary Styles */
+    #casSummary {
+      margin-top: 40px;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #casSummary h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #casSummary .section-header {
+      font-weight: bold;
+      background: #e9ecef;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+    #casSummary table {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    #casSummary table, #casSummary th, #casSummary td {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+      padding: 5px;
     }
   </style>
 </head>
@@ -153,6 +182,7 @@
   </header>
   
   <div class="container my-5">
+    <!-- Existing Form Section -->
     <form id="estimatorForm" class="p-4 bg-white rounded shadow">
       <!-- Project Information -->
       <fieldset class="mb-4">
@@ -216,6 +246,249 @@
         <button type="submit" class="btn btn-lg btn-success">Get Final Estimate</button>
       </div>
     </form>
+
+    <!-- New Section: Construction Activity Summary Sheet -->
+    <div id="casSummary">
+      <h2>Construction Activity Summary Sheet</h2>
+      
+      <!-- Project & Activity Info -->
+      <div class="section-header">Project & Activity Information</div>
+      <p><strong>Project Number:</strong> <span id="casProjectNumber">PH5-800</span> &nbsp;&nbsp; 
+         <strong>Project Title:</strong> <span id="casProjectTitle">CONSTRUCT SHED</span></p>
+      <p><strong>Activity Number:</strong> <span id="casActivityNumber">02200</span> &nbsp;&nbsp; 
+         <strong>Activity Title:</strong> <span id="casActivityTitle">EXCAVATE FOR FOOTERS</span></p>
+      
+      <!-- CA # 02200-1 -->
+      <div class="section-header">CA # 02200-1</div>
+      <p><strong>DESCRIPTION OF WORK:</strong></p>
+      <p id="casDescription">EXCAVATE TRENCH 12" DEEP BY 18" WIDE. TOTAL LINEAR FEET IS 70.</p>
+      <p><strong>METHOD OF CONSTRUCTION/ASSUMPTIONS:</strong></p>
+      <p id="casMethod">[Enter Method of Construction]</p>
+      
+      <!-- Labor Resources -->
+      <div class="section-header">LABOR RESOURCES</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Skill Required</th>
+            <th>Qty</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody id="casLaborTable">
+          <tr>
+            <td>Builder</td>
+            <td>0</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Construction Electrician</td>
+            <td>1</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Equipment Operator</td>
+            <td>1</td>
+            <td></td>
+          </tr>
+          <!-- Additional rows as needed -->
+        </tbody>
+      </table>
+      <p><strong>Total Labor:</strong> <span id="casTotalLabor">2</span></p>
+      
+      <!-- Production Efficiency Factor -->
+      <div class="section-header">PRODUCTION EFFICIENCY FACTOR</div>
+      <p><strong>Production Element Factor</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Factor</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Workload</td>
+            <td>67</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Site Area</td>
+            <td>60</td>
+            <td>CRAMPED AREA</td>
+          </tr>
+          <tr>
+            <td>Labor</td>
+            <td>55</td>
+            <td>INEXPERIENCED</td>
+          </tr>
+          <tr>
+            <td>Supervisor</td>
+            <td>70</td>
+            <td>EXPERIENCED</td>
+          </tr>
+          <tr>
+            <td>Job Conditions</td>
+            <td>67</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Weather</td>
+            <td>50</td>
+            <td>RAINY SEASON</td>
+          </tr>
+          <tr>
+            <td>Equipment</td>
+            <td>67</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tactical/Logistical</td>
+            <td>67</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Product Efficiency Factor:</strong> 63.875 &nbsp;&nbsp;
+         <strong>Resulting Delay Factor:</strong> 1.049 &nbsp;&nbsp;
+         <strong>Availability Factor:</strong> 75% &nbsp;&nbsp;
+         <strong>Manday Equivalent:</strong> 1.125</p>
+      
+      <!-- CA # 02200-2: Work Elements, Tools, Equipment, Materials -->
+      <div class="section-header">CA # 02200-2</div>
+      <p><strong>WORK ELEMENTS</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>U/M</th>
+            <th>Qty</th>
+            <th>ManHrs Per Unit</th>
+            <th>Work Multi</th>
+            <th>Est. MDs</th>
+          </tr>
+        </thead>
+        <tbody id="casWorkElements">
+          <tr>
+            <td>1302</td>
+            <td>EXCAVATE USING, TRACTOR MTD. BACKHOE</td>
+            <td>CD</td>
+            <td>4</td>
+            <td>0</td>
+            <td>1.00</td>
+            <td>0.05</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>HAND EXCAVATE TO DEPTH</td>
+            <td>EA</td>
+            <td>1</td>
+            <td>6</td>
+            <td>1.00</td>
+            <td>0.79</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p><strong>TOOLS</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>ID #</th>
+            <th>Description</th>
+            <th>Qty</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>6078</td>
+            <td>SHOVEL SPOON TELEGRAPH EASTERN PATTERN 93N HANDLE</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p><strong>EQUIPMENT</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>ID #</th>
+            <th>Description</th>
+            <th>Qty</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>058700</td>
+            <td>TRUCK DUMP 6X6 30000 GVW</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>434000</td>
+            <td>EXCAVATOR WHEEL MOUNTED HYD OPERATED</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>453100</td>
+            <td>LOADER SCOOP WHEEL MOUNTED 4X4</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>064300</td>
+            <td>TRUCK STAKE 6X6 DED 46000 GVW</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p><strong>MATERIALS</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>BM LI</th>
+            <th>Description</th>
+            <th>Unit</th>
+            <th>Qty</th>
+            <th>LL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>CAUTION TAPE</td>
+            <td>RL</td>
+            <td>1</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>PLASTIC SHEET</td>
+            <td>RL</td>
+            <td>1</td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <!-- Safety, Quality, Environmental -->
+      <div class="section-header">SAFETY PLAN</div>
+      <p><strong>Safety Hazard:</strong> OPEN TRENCHES &nbsp;&nbsp; <strong>Control Measure:</strong> CLEARLY MARKED/BARRICADED</p>
+      <p><strong>Safety Hazard:</strong> UNDERGROUND/UTILITIES &nbsp;&nbsp; <strong>Control Measure:</strong> MARKED TO ENSURE VISIBILITY</p>
+      
+      <div class="section-header">QUALITY CONTROL PLAN</div>
+      <p><strong>Requirement:</strong> SIZE OF EXCAVATION &nbsp;&nbsp; <strong>Action:</strong> EXCAVATE TO DIMENSIONS SHOWN ON PRINTS ONLY</p>
+      <p><strong>Requirement:</strong> OVER EXCAVATION &nbsp;&nbsp; <strong>Action:</strong> FILL OVER EXCAVATED AREAS WITH CONCRETE</p>
+      <p><strong>Requirement:</strong> SPOIL STORAGE &nbsp;&nbsp; <strong>Action:</strong> STORE SPOIL MATERIAL TO PREVENT CONTAMINATION</p>
+      
+      <div class="section-header">ENVIRONMENTAL PLAN</div>
+      <p><strong>Hazard:</strong> EQUIPMENT SPILL &nbsp;&nbsp; <strong>Action:</strong> MAINTAIN SPILL KIT AND SPILL PLAN ON SITE</p>
+      
+      <!-- Comments -->
+      <div class="section-header">CA # 02200-3: COMMENTS</div>
+      <p id="casComments">DUE TO RAINY SEASONS PUMPS MAY BE REQUIRED. EXCAVATION TO BE COVERED EACH NIGHT AND MARKED WITH CAUTION TAPE.</p>
+    </div>
   </div>
   
   <!-- Modal for Final Estimate -->
