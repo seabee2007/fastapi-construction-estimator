@@ -132,11 +132,12 @@
     }
     /* Hover effects for modal table rows */
     #libraryModalBody tr.library-row {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     }
     #libraryModalBody tr.library-row:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background-color: #f0f0f0;
     }
     /* Make the code column wider */
     #libraryModalBody td:first-child {
@@ -301,13 +302,14 @@
     window.addLaborResource = addLaborResource;
     
     // Function to add a new (empty) Work Element row.
-    // Now the row includes placeholders for U/M and Multiplier, matching the library format.
+    // This row now includes spans for U/M and Multiplier (initially empty)
+    // and an onblur event on the search input to auto-populate those details.
     function addWorkElement() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
       row.innerHTML = `
-        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" list="workElementsSuggestions" oninput="searchWorkElement(this)" onfocus="setActiveWorkElementRow(this.parentElement)" required>
+        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" list="workElementsSuggestions" oninput="searchWorkElement(this)" onblur="populateWorkElementDetails(this)" onfocus="setActiveWorkElementRow(this.parentElement)" required>
         <span class="input-group-text">U/M: <span class="um-field"></span></span>
         <span class="input-group-text">Multiplier: <span class="multiplier-field"></span></span>
         <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
@@ -350,6 +352,36 @@
       }
     }
     window.searchWorkElement = searchWorkElement;
+    
+    // Function to populate U/M and Multiplier when user types in a work element.
+    async function populateWorkElementDetails(inputElem) {
+      let value = inputElem.value.trim();
+      if (!value) return;
+      // Assume format "CODE - Description"
+      let parts = value.split(" - ");
+      if (parts.length < 1) return;
+      let code = parts[0].trim();
+      try {
+        const res = await fetch("/work-elements?query=" + encodeURIComponent(code));
+        const results = await res.json();
+        // Look for an exact match on code.
+        let record = results.find(item => item.code === code);
+        if (record) {
+          let parentRow = inputElem.parentElement;
+          let umSpan = parentRow.querySelector("span.um-field");
+          let multiplierSpan = parentRow.querySelector("span.multiplier-field");
+          if (umSpan) {
+            umSpan.textContent = record.uom ? record.uom : "N/A";
+          }
+          if (multiplierSpan) {
+            multiplierSpan.textContent = record.multiplier ? record.multiplier : "N/A";
+          }
+        }
+      } catch(e) {
+        console.error("Error populating work element details", e);
+      }
+    }
+    window.populateWorkElementDetails = populateWorkElementDetails;
     
     // Function to open the Work Elements Library modal.
     async function openLibraryModal() {
@@ -400,8 +432,8 @@
       if (activeWorkElementRow) {
         activeWorkElementRow.innerHTML = `
           <input type="text" name="work_element_search" class="form-control" value="${code} - ${description}" readonly>
-          <span class="input-group-text">U/M: ${uom}</span>
-          <span class="input-group-text">Multiplier: ${multiplier}</span>
+          <span class="input-group-text">U/M: <span class="um-field">${uom}</span></span>
+          <span class="input-group-text">Multiplier: <span class="multiplier-field">${multiplier}</span></span>
           <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
           <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
         `;
@@ -412,8 +444,8 @@
         row.className = "input-group mb-2";
         row.innerHTML = `
           <input type="text" name="work_element_search" class="form-control" value="${code} - ${description}" readonly>
-          <span class="input-group-text">U/M: ${uom}</span>
-          <span class="input-group-text">Multiplier: ${multiplier}</span>
+          <span class="input-group-text">U/M: <span class="um-field">${uom}</span></span>
+          <span class="input-group-text">Multiplier: <span class="multiplier-field">${multiplier}</span></span>
           <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
           <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
         `;
