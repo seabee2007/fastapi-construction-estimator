@@ -67,7 +67,7 @@
     select:focus,
     textarea:focus {
       border-color: #86b7fe;
-      box-shadow: 0 0 8px rgba(134, 183, 254, 0.5);
+      box-shadow: 0 0 8px rgba(134,183,254,0.5);
     }
     /* Button Styles */
     .btn {
@@ -116,14 +116,8 @@
     }
     /* Animations */
     @keyframes fadeInDown {
-      0% {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
     /* Library modal body scrollable */
     #libraryModalBody {
@@ -138,7 +132,7 @@
     }
     #libraryModalBody tr.library-row:hover {
       transform: scale(1.02);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       background-color: #f0f0f0;
       z-index: 10;
     }
@@ -153,12 +147,9 @@
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    #casSummary h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+    #casSummary h2 { text-align: center; margin-bottom: 20px; }
     #casSummary .section-header {
       font-weight: bold;
       background: #e9ecef;
@@ -230,12 +221,9 @@
       <fieldset class="mb-4">
         <legend>Work Elements</legend>
         <div id="workElementsContainer"></div>
-        <!-- Datalist for auto-suggestions -->
+        <!-- Datalist for auto-suggestions (still available if needed) -->
         <datalist id="workElementsSuggestions"></datalist>
-        <div class="d-flex gap-2">
-          <button type="button" class="btn btn-outline-primary mb-3" onclick="addWorkElement()">Add Work Element</button>
-          <button type="button" class="btn btn-info mb-3" onclick="openLibraryModal()">Library</button>
-        </div>
+        <button type="button" class="btn btn-outline-primary mb-3" onclick="openLibraryModal()">Add Work Element</button>
       </fieldset>
       
       <!-- Equipment -->
@@ -245,7 +233,7 @@
         <button type="button" class="btn btn-outline-warning mb-3" onclick="addEquipment()">Add Equipment</button>
       </fieldset>
       
-      <!-- New Section: Production Efficiency Factors -->
+      <!-- Production Efficiency Factors Section -->
       <fieldset class="mb-4">
         <legend>Production Efficiency Factors</legend>
         <div id="efficiencyFactorsContainer" class="mb-3">
@@ -289,9 +277,7 @@
         <div class="row mb-2">
           <div class="col-md-3"><strong>Availability Factor</strong></div>
           <div class="col-md-3">
-            <select id="availability-factor" class="form-select">
-              <!-- Options in 5% increments, default 75% -->
-            </select>
+            <select id="availability-factor" class="form-select"></select>
           </div>
         </div>
         <div class="row mb-2">
@@ -313,10 +299,9 @@
       </div>
     </form>
 
-    <!-- New Section: Construction Activity Summary Sheet (CAS) -->
+    <!-- CAS Summary Section (unchanged) -->
     <div id="casSummary">
       <h2>Construction Activity Summary Sheet</h2>
-      <!-- CAS content (as previously defined) -->
       <div class="section-header">Project & Activity Information</div>
       <p><strong>Project Number:</strong> <span id="casProjectNumber">PH5-800</span> &nbsp;&nbsp; 
          <strong>Project Title:</strong> <span id="casProjectTitle">CONSTRUCT SHED</span></p>
@@ -484,6 +469,31 @@
     </div>
   </div>
   
+  <!-- Modal for Work Elements Library -->
+  <div class="modal fade" id="libraryModal" tabindex="-1" aria-labelledby="libraryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="libraryModalLabel">Work Elements Library</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Search input in modal body -->
+          <div class="mb-3">
+            <input type="text" id="modalSearchInput" class="form-control" placeholder="Search work elements..." oninput="filterModalTable()">
+          </div>
+          <div id="libraryModalBody">
+            <!-- Table will be injected here -->
+            <p>Loading work elements...</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- Modal for Final Estimate -->
   <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -502,36 +512,15 @@
     </div>
   </div>
   
-  <!-- Modal for Work Elements Library -->
-  <div class="modal fade" id="libraryModal" tabindex="-1" aria-labelledby="libraryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="libraryModalLabel">Work Elements Library</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" id="libraryModalBody">
-          <!-- Work elements library content will be injected here -->
-          <p>Loading work elements...</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
   <!-- Inline JavaScript -->
   <script>
-    // Global variable to track the currently active work element row.
     let activeWorkElementRow = null;
-    
-    // When a work element input gains focus, set its parent row as active.
+
     function setActiveWorkElementRow(row) {
       activeWorkElementRow = row;
     }
-    
-    // Populate dropdowns for the eight production efficiency factors (0–100)
+
+    // Populate dropdowns for Production Efficiency Factors
     function populateFactorDropdowns() {
       const factorIds = [
         "factor-workload",
@@ -556,8 +545,7 @@
         select.addEventListener("change", recalcEfficiency);
       });
     }
-    
-    // Populate Availability Factor dropdown (0% to 100% in steps of 5, default 75)
+
     function populateAvailabilityDropdown() {
       const availSelect = document.getElementById("availability-factor");
       availSelect.innerHTML = "";
@@ -569,8 +557,7 @@
         availSelect.appendChild(opt);
       }
     }
-    
-    // Recalculate Product Efficiency Factor and Delay Factor in real time.
+
     function recalcEfficiency() {
       const factorIds = [
         "factor-workload",
@@ -590,12 +577,10 @@
       document.getElementById("product-efficiency").textContent = avg.toFixed(1);
       const delay = (avg !== 0) ? (67 / avg) : 0;
       document.getElementById("delay-factor").textContent = delay.toFixed(2);
-      // Update CAS summary fields
       document.getElementById("casProductEfficiency").textContent = avg.toFixed(1);
       document.getElementById("casDelayFactor").textContent = delay.toFixed(2);
     }
-    
-    // On load, fetch activity numbers, populate efficiency dropdowns and availability dropdown.
+
     window.addEventListener("load", async () => {
       try {
         const res = await fetch("/activities");
@@ -614,8 +599,7 @@
       populateAvailabilityDropdown();
       recalcEfficiency();
     });
-    
-    // Function to add a dynamic Labor Resource row (quantities as whole numbers).
+
     function addLaborResource() {
       const container = document.getElementById("laborResourcesContainer");
       const row = document.createElement("div");
@@ -636,58 +620,95 @@
       container.appendChild(row);
     }
     window.addLaborResource = addLaborResource;
-    
-    // Function to add a new (empty) Work Element row.
-    function addWorkElement() {
+
+    // Instead of adding a new row directly, "Add Work Element" now opens the modal.
+    function openLibraryModal() {
+      // Set activeWorkElementRow to a new row placeholder.
+      addWorkElementPlaceholder();
+      const modalSearch = document.getElementById("modalSearchInput");
+      modalSearch.value = "";
+      filterModalTable(); // clear any previous filters
+      fetchWorkElementsForModal();
+      const modal = new bootstrap.Modal(document.getElementById("libraryModal"));
+      modal.show();
+    }
+    window.openLibraryModal = openLibraryModal;
+
+    // Creates a placeholder row in the Work Elements container and sets it as active.
+    function addWorkElementPlaceholder() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
+      // Initially empty placeholders for U/M and Multiplier
       row.innerHTML = `
-        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" list="workElementsSuggestions" oninput="searchWorkElement(this)" onblur="populateWorkElementDetails(this)" onfocus="setActiveWorkElementRow(this.parentElement)" required>
+        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" readonly>
         <span class="input-group-text">U/M: <span class="um-field"></span></span>
         <span class="input-group-text">Multiplier: <span class="multiplier-field"></span></span>
         <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
         <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
       `;
       container.appendChild(row);
+      activeWorkElementRow = row;
     }
-    window.addWorkElement = addWorkElement;
-    
-    // Function to add a dynamic Equipment row.
-    function addEquipment() {
-      const container = document.getElementById("equipmentContainer");
-      const row = document.createElement("div");
-      row.className = "input-group mb-2";
-      row.innerHTML = `
-        <input type="text" name="equipment_search" class="form-control" placeholder="Equipment name" required>
-        <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
-        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
-      `;
-      container.appendChild(row);
-    }
-    window.addEquipment = addEquipment;
-    
-    // Updated search function for work elements.
-    async function searchWorkElement(inputElem) {
-      const query = inputElem.value;
-      if (query.length < 2) return;
+
+    // Fetch all work elements for modal display.
+    async function fetchWorkElementsForModal() {
       try {
-        const res = await fetch(`/work-elements?query=${encodeURIComponent(query)}`);
+        const res = await fetch("/work-elements");
         const results = await res.json();
-        const dataList = document.getElementById('workElementsSuggestions');
-        dataList.innerHTML = "";
-        results.forEach(item => {
-          const option = document.createElement('option');
-          option.value = `${item.code} - ${item.description}`;
-          dataList.appendChild(option);
-        });
+        populateModalTable(results);
       } catch (error) {
-        console.error("Error searching work elements:", error);
+        console.error("Error fetching work elements library:", error);
       }
     }
-    window.searchWorkElement = searchWorkElement;
-    
-    // Function to populate U/M and Multiplier when user types in a work element.
+
+    // Populate the modal table with given work element data.
+    function populateModalTable(data) {
+      let tableHTML = `
+        <table class="table table-striped" id="modalTable">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Man Hours/Unit</th>
+              <th>U/M</th>
+              <th>Multiplier</th>
+            </tr>
+          </thead>
+          <tbody>`;
+      data.forEach(item => {
+        tableHTML += `
+          <tr class="library-row" style="cursor:pointer" onclick="selectWorkElement('${item.code}', '${item.description}', '${item.uom ? item.uom : 'N/A'}', '${item.multiplier ? item.multiplier : 'N/A'}')">
+            <td>${item.code}</td>
+            <td>${item.description}</td>
+            <td>${item.man_hours_per_unit !== undefined ? item.man_hours_per_unit : 'N/A'}</td>
+            <td>${item.uom ? item.uom : 'N/A'}</td>
+            <td>${item.multiplier ? item.multiplier : 'N/A'}</td>
+          </tr>`;
+      });
+      tableHTML += `
+          </tbody>
+        </table>`;
+      document.getElementById("libraryModalBody").innerHTML = tableHTML;
+    }
+
+    // Filter the modal table based on the search input.
+    function filterModalTable() {
+      const searchValue = document.getElementById("modalSearchInput").value.toLowerCase();
+      const table = document.getElementById("modalTable");
+      if (!table) return;
+      const rows = table.getElementsByTagName("tr");
+      for (let i = 1; i < rows.length; i++) { // skip header row
+        const cells = rows[i].getElementsByTagName("td");
+        let rowText = "";
+        for (let j = 0; j < cells.length; j++) {
+          rowText += cells[j].textContent.toLowerCase() + " ";
+        }
+        rows[i].style.display = rowText.indexOf(searchValue) > -1 ? "" : "none";
+      }
+    }
+
+    // Function to populate U/M and Multiplier when the user types in a work element (if applicable).
     async function populateWorkElementDetails(inputElem) {
       let value = inputElem.value.trim();
       if (!value) return;
@@ -702,12 +723,8 @@
         let umSpan = parentRow.querySelector("span.um-field");
         let multiplierSpan = parentRow.querySelector("span.multiplier-field");
         if (record) {
-          if (umSpan) {
-            umSpan.textContent = record.uom ? record.uom : "N/A";
-          }
-          if (multiplierSpan) {
-            multiplierSpan.textContent = record.multiplier ? record.multiplier : "N/A";
-          }
+          if (umSpan) { umSpan.textContent = record.uom ? record.uom : "N/A"; }
+          if (multiplierSpan) { multiplierSpan.textContent = record.multiplier ? record.multiplier : "N/A"; }
         } else {
           if (umSpan) { umSpan.textContent = ""; }
           if (multiplierSpan) { multiplierSpan.textContent = ""; }
@@ -717,52 +734,8 @@
       }
     }
     window.populateWorkElementDetails = populateWorkElementDetails;
-    
-    // Function to open the Work Elements Library modal.
-    async function openLibraryModal() {
-      if (!activeWorkElementRow) {
-        addWorkElement();
-        activeWorkElementRow = document.querySelector("#workElementsContainer .input-group:last-child");
-      }
-      try {
-        const res = await fetch("/work-elements");
-        const results = await res.json();
-        const modalBody = document.getElementById("libraryModalBody");
-        let tableHTML = `
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Description</th>
-                <th>Man Hours/Unit</th>
-                <th>U/M</th>
-                <th>Multiplier</th>
-              </tr>
-            </thead>
-            <tbody>`;
-        results.forEach(item => {
-          tableHTML += `
-            <tr class="library-row" style="cursor:pointer" onclick="selectWorkElement('${item.code}', '${item.description}', '${item.uom ? item.uom : 'N/A'}', '${item.multiplier ? item.multiplier : 'N/A'}')">
-              <td>${item.code}</td>
-              <td>${item.description}</td>
-              <td>${item.man_hours_per_unit !== undefined ? item.man_hours_per_unit : 'N/A'}</td>
-              <td>${item.uom ? item.uom : 'N/A'}</td>
-              <td>${item.multiplier ? item.multiplier : 'N/A'}</td>
-            </tr>`;
-        });
-        tableHTML += `
-            </tbody>
-          </table>`;
-        modalBody.innerHTML = tableHTML;
-        const modal = new bootstrap.Modal(document.getElementById("libraryModal"));
-        modal.show();
-      } catch (error) {
-        console.error("Error fetching work elements library:", error);
-      }
-    }
-    window.openLibraryModal = openLibraryModal;
-    
-    // Function to handle selection of a work element from the library modal.
+
+    // When a user selects a row from the modal, update the active work element row.
     function selectWorkElement(code, description, uom, multiplier) {
       if (activeWorkElementRow) {
         activeWorkElementRow.innerHTML = `
@@ -791,11 +764,10 @@
       if (modal) modal.hide();
     }
     window.selectWorkElement = selectWorkElement;
-    
+
     // Handle form submission.
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      
       const form = e.target;
       const data = {
         project_name: form.project_name.value,
@@ -807,30 +779,25 @@
         work_elements: [],
         equipment: []
       };
-    
       const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
       laborRows.forEach(row => {
         const skill = row.querySelector("select[name='labor_skill']").value;
         const quantity = parseInt(row.querySelector("input[name='labor_quantity']").value, 10);
         data.labor_resources.push({ skill, quantity });
       });
-    
       const workRows = document.querySelectorAll("#workElementsContainer .input-group");
       workRows.forEach(row => {
         const codeAndDescription = row.querySelector("input[name='work_element_search']").value;
         const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value);
         data.work_elements.push({ code: codeAndDescription, description: codeAndDescription, quantity });
       });
-    
       const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
       equipRows.forEach(row => {
         const name = row.querySelector("input[name='equipment_search']").value;
         const quantity = parseFloat(row.querySelector("input[name='equipment_quantity']").value);
         data.equipment.push({ name, quantity });
       });
-    
       console.log("Payload:", data);
-     
       try {
         const res = await fetch("/final-estimate", {
           method: "POST",
