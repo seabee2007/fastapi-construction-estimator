@@ -125,6 +125,11 @@
         transform: translateY(0);
       }
     }
+    /* Library modal body scrollable */
+    #libraryModalBody {
+      max-height: 400px;
+      overflow-y: auto;
+    }
   </style>
 </head>
 <body>
@@ -181,7 +186,10 @@
         <div id="workElementsContainer"></div>
         <!-- Datalist for auto-suggestions -->
         <datalist id="workElementsSuggestions"></datalist>
-        <button type="button" class="btn btn-outline-primary mb-3" onclick="addWorkElement()">Add Work Element</button>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-outline-primary mb-3" onclick="addWorkElement()">Add Work Element</button>
+          <button type="button" class="btn btn-info mb-3" onclick="openLibraryModal()">Library</button>
+        </div>
       </fieldset>
       
       <!-- Equipment -->
@@ -207,6 +215,25 @@
         </div>
         <div class="modal-body" id="resultContent">
           <!-- Final estimate result will be injected here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal for Work Elements Library -->
+  <div class="modal fade" id="libraryModal" tabindex="-1" aria-labelledby="libraryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="libraryModalLabel">Work Elements Library</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="libraryModalBody">
+          <!-- Work elements library content will be injected here -->
+          <p>Loading work elements...</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -254,8 +281,7 @@
     window.addLaborResource = addLaborResource;
     
     // Function to add a dynamic Work Element row.
-    // The input now references a datalist for work element suggestions
-    // and calls searchWorkElement on input.
+    // The input references a datalist for work element suggestions and calls searchWorkElement on input.
     function addWorkElement() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
@@ -284,8 +310,7 @@
     window.addEquipment = addEquipment;
     
     // Updated search function for work elements.
-    // When the user types in the work element input,
-    // fetch suggestions from the /work-elements endpoint and update the datalist.
+    // Fetch suggestions from the /work-elements endpoint and update the datalist.
     async function searchWorkElement(inputElem) {
       const query = inputElem.value;
       if (query.length < 2) return;
@@ -305,19 +330,43 @@
     }
     window.searchWorkElement = searchWorkElement;
     
-    // Example search function for equipment; currently logs results
-    async function searchEquipment(inputElem) {
-      const query = inputElem.value;
-      if (query.length < 2) return;
+    // Function to open the Work Elements Library modal.
+    // Fetches all work elements and displays them in a scrollable table with extra JSON data.
+    async function openLibraryModal() {
       try {
-        const res = await fetch(`/equipment?query=${encodeURIComponent(query)}`);
+        const res = await fetch("/work-elements");
         const results = await res.json();
-        console.log("Equipment search results:", results);
+        const modalBody = document.getElementById("libraryModalBody");
+        // Build table headers including extra info (e.g., Man Hours per Unit)
+        let tableHTML = `
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Description</th>
+                <th>Man Hours/Unit</th>
+              </tr>
+            </thead>
+            <tbody>`;
+        results.forEach(item => {
+          tableHTML += `
+            <tr>
+              <td>${item.code}</td>
+              <td>${item.description}</td>
+              <td>${item.man_hours_per_unit !== undefined ? item.man_hours_per_unit : 'N/A'}</td>
+            </tr>`;
+        });
+        tableHTML += `
+            </tbody>
+          </table>`;
+        modalBody.innerHTML = tableHTML;
+        const modal = new bootstrap.Modal(document.getElementById("libraryModal"));
+        modal.show();
       } catch (error) {
-        console.error("Error searching equipment:", error);
+        console.error("Error fetching work elements library:", error);
       }
     }
-    window.searchEquipment = searchEquipment;
+    window.openLibraryModal = openLibraryModal;
     
     // Handle form submission
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
