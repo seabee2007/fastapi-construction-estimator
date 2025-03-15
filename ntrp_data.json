@@ -1,188 +1,1134 @@
 {
   "activities": [
-    { "code": "03100", "title": "Concrete Placement" },
-    { "code": "03200", "title": "Concrete Finishing" },
-    { "code": "03300", "title": "Formwork & Reinforcement" }
+    { "number": "03 11 00", "description": "Formwork" },
+    { "number": "03 20 00", "description": "Concrete Reinforcing" },
+    { "number": "03 30 00", "description": "Cast-in-Place Concrete (Ready-Mix)" },
+    { "number": "03 35 00", "description": "Concrete Finishing" },
+    { "number": "03 39 00", "description": "Curing and Protection" },
+    { "number": "03 40 00", "description": "Precast Concrete" }
   ],
-  "work_elements": [
-    { "code": "03 11 13.35", "multiplier": "0010", "description": "Flat plate, job-built form, to 15 ft high", "uom": "SF", "man_hours_per_unit": 0.156 },
-    { "code": "03 11 13.35", "multiplier": "0020", "description": "Box out for slab openings (contact area)", "uom": "SF", "man_hours_per_unit": 0.336 },
-    { "code": "03 11 13.35", "multiplier": "0030", "description": "Bulkhead forms for slab", "uom": "LF", "man_hours_per_unit": 0.127 },
-    { "code": "03 11 13.35", "multiplier": "0040", "description": "Slab bulkhead form, 4½\" high", "uom": "LF", "man_hours_per_unit": 0.036 },
-    { "code": "03 11 13.35", "multiplier": "0050", "description": "Curb forms, wood, 6–12\" high (contact area)", "uom": "SF", "man_hours_per_unit": 0.237 },
-    { "code": "03 11 13.35", "multiplier": "0060", "description": "Edge forms to 6\" high", "uom": "LF", "man_hours_per_unit": 0.085 },
-    { "code": "03 11 13.35", "multiplier": "0070", "description": "Perimeter deck and rail", "uom": "LF", "man_hours_per_unit": 0.473 },
-    { "code": "03 11 13.45", "multiplier": "0010", "description": "Continuous wall footing form, plywood, one use (contact area)", "uom": "SF", "man_hours_per_unit": 0.113 },
-    { "code": "03 11 13.45", "multiplier": "0020", "description": "Dowel supports for footings or beams", "uom": "LF", "man_hours_per_unit": 0.085 },
-    { "code": "03 11 13.45", "multiplier": "0030", "description": "Keyway, tapered wood 2×4", "uom": "LF", "man_hours_per_unit": 0.020 },
-    { "code": "03 11 13.45", "multiplier": "0040", "description": "Pile cap form, job-built plywood, one use", "uom": "SF", "man_hours_per_unit": 0.146 },
-    { "code": "03 11 13.45", "multiplier": "0050", "description": "Spread footing form, job-built lumber", "uom": "SF", "man_hours_per_unit": 0.140 },
-    { "code": "03 11 13.45", "multiplier": "0060", "description": "Support for dowels (plinth) 2×2 ft footing", "uom": "Each", "man_hours_per_unit": 1.702 },
-    { "code": "03 11 13.45", "multiplier": "0070", "description": "Support for dowels (plinth) 4×4 ft footing", "uom": "Each", "man_hours_per_unit": 1.935 },
-    { "code": "03 11 13.45", "multiplier": "0080", "description": "Plinths, job-built plywood (contact area)", "uom": "SF", "man_hours_per_unit": 0.170 },
-    { "code": "03 11 13.50", "multiplier": "0010", "description": "Grade beam form, job-built plywood, one use (contact area)", "uom": "SF", "man_hours_per_unit": 0.122 },
-    { "code": "03 11 13.65", "multiplier": "0010", "description": "Bulkhead forms with keyway, 6\" high, one use", "uom": "LF", "man_hours_per_unit": 0.084 },
-    { "code": "03 11 13.65", "multiplier": "0020", "description": "Curb forms, wood, 6–12\" high, on grade, one use (contact area)", "uom": "SF", "man_hours_per_unit": 0.402 },
-    { "code": "03 11 13.65", "multiplier": "0030", "description": "Edge forms, on grade to 6\" high", "uom": "LF", "man_hours_per_unit": 0.071 },
-    { "code": "03 11 13.65", "multiplier": "0040", "description": "Edge forms, on grade 7–12\" high (contact area)", "uom": "SF", "man_hours_per_unit": 0.098 },
-    { "code": "03 11 13.65", "multiplier": "0060", "description": "Edge forms, on grade 12–24\" high", "uom": "LF", "man_hours_per_unit": 0.142 },
-    { "code": "03 11 23.75", "multiplier": "0010", "description": "Stairs, forms in place", "uom": "SF", "man_hours_per_unit": 0.550 },
-    { "code": "03 11 13.85", "multiplier": "0010", "description": "Wall form, job-built plywood, to 8 ft high (contact area)", "uom": "SF", "man_hours_per_unit": 0.173 },
-    { "code": "03 11 13.85", "multiplier": "0020", "description": "Wall form, job-built plywood, 8–16 ft high (contact area)", "uom": "SF", "man_hours_per_unit": 0.227 },
-    { "code": "03 15 05.02", "multiplier": "0010", "description": "Anchor bolt, J-type ½\"×6–12\" (incl. nut & washer)", "uom": "Each", "man_hours_per_unit": 0.125 },
-    { "code": "03 15 05.02", "multiplier": "0020", "description": "Anchor bolt, J-type 5/8\"×12–24\"", "uom": "Each", "man_hours_per_unit": 0.154 },
-    { "code": "03 15 05.02", "multiplier": "0030", "description": "Anchor bolt, J-type ¾\"×8–24\"", "uom": "Each", "man_hours_per_unit": 0.173 },
-    { "code": "03 15 05.02", "multiplier": "0040", "description": "Anchor bolt, J-type 7/8\"×12–24\"", "uom": "Each", "man_hours_per_unit": 0.219 },
-    { "code": "03 15 05.12", "multiplier": "0010", "description": "Chamfer strips, wood, ½–1\" wide", "uom": "LF", "man_hours_per_unit": 0.021 },
-    { "code": "03 15 05.25", "multiplier": "0010", "description": "Expansion joint, premolded bituminous fiber ½\"×6\"", "uom": "LF", "man_hours_per_unit": 0.028 },
-    { "code": "03 15 05.25", "multiplier": "0020", "description": "Expansion joint, premolded bituminous fiber 1\"×12\"", "uom": "LF", "man_hours_per_unit": 0.036 },
-    { "code": "03 15 05.25", "multiplier": "0030", "description": "Expansion joint, polyethylene backer rod ³/8\"–1\" diam.", "uom": "LF", "man_hours_per_unit": 0.023 },
-    { "code": "03 15 05.35", "multiplier": "0010", "description": "Insert, slotted nut type for ¾\" bolt up to 8\"", "uom": "Each", "man_hours_per_unit": 0.123 },
-    { "code": "03 15 05.75", "multiplier": "0010", "description": "Sleeve, plastic, one-use, 9\"×2\" diam.", "uom": "Each", "man_hours_per_unit": 0.106 },
-    { "code": "03 15 05.75", "multiplier": "0020", "description": "Sleeve, plastic, one-use, 9\"×4\" diam.", "uom": "Each", "man_hours_per_unit": 0.118 },
-    { "code": "03 15 05.75", "multiplier": "0030", "description": "Sleeve, plastic, one-use, 9\"×6\" diam.", "uom": "Each", "man_hours_per_unit": 0.142 },
-    { "code": "03 15 05.75", "multiplier": "0040", "description": "Sleeve, plastic, one-use, 9\"×12\" diam.", "uom": "Each", "man_hours_per_unit": 0.177 },
-    { "code": "03 15 05.96", "multiplier": "0090", "description": "Core drilling (slab), 3\"×6\" deep", "uom": "Each", "man_hours_per_unit": 2.0 },
-    { "code": "03 15 05.96", "multiplier": "0100", "description": "Core drilling (wall), 4\"×8\" deep", "uom": "Each", "man_hours_per_unit": 2.5 },
-    { "code": "03 15 05.96", "multiplier": "0110", "description": "Curb angles", "uom": "Each", "man_hours_per_unit": 0.16 },
-    { "code": "03 15 05.96", "multiplier": "0120", "description": "Dovetail anchor slots", "uom": "LF", "man_hours_per_unit": 0.023 },
-    { "code": "03 15 05.96", "multiplier": "0130", "description": "Floor hardener application (mag. fluosilicate)", "uom": "SF", "man_hours_per_unit": 0.01 },
-    { "code": "03 15 05.96", "multiplier": "0140", "description": "Grout (nonshrink) under 1\" steel base plate", "uom": "Each", "man_hours_per_unit": 1.0 },
-    { "code": "03 15 05.96", "multiplier": "0150", "description": "Patch tie holes (walls)", "uom": "Each", "man_hours_per_unit": 0.05 },
-    { "code": "03 15 05.96", "multiplier": "0160", "description": "Pick up and brace inserts", "uom": "Each", "man_hours_per_unit": 0.064 },
-    { "code": "03 15 05.96", "multiplier": "0170", "description": "Poured expansion joint (½\"×½\")", "uom": "LF", "man_hours_per_unit": 0.04 },
-    { "code": "03 15 05.96", "multiplier": "0180", "description": "Premolded expansion joint (½\" thick)", "uom": "LF", "man_hours_per_unit": 0.04 },
-    { "code": "03 15 05.96", "multiplier": "0190", "description": "Reglets (metal or PVC)", "uom": "LF", "man_hours_per_unit": 0.10 },
-    { "code": "03 15 05.96", "multiplier": "0200", "description": "Silicone waterproofing", "uom": "SF", "man_hours_per_unit": 0.01 },
-    { "code": "03 15 05.96", "multiplier": "0210", "description": "Steel base plate (12\"×14\"×½\")", "uom": "Each", "man_hours_per_unit": 1.0 },
-    { "code": "03 15 05.96", "multiplier": "0220", "description": "Vapor barrier, polyethylene", "uom": "SF", "man_hours_per_unit": 0.002 },
-    { "code": "03 15 05.96", "multiplier": "0230", "description": "Water stops (PVC or copper)", "uom": "LF", "man_hours_per_unit": 0.04 },
-    { "code": "03 15 05.96", "multiplier": "0240", "description": "Gravel under slab (6\" thick, compacted)", "uom": "SF", "man_hours_per_unit": 0.01 },
-    { "code": "03 21 10.10", "multiplier": "0010", "description": "Rebar #4 or smaller, bend by hand (per bend)", "uom": "Each", "man_hours_per_unit": 0.04 },
-    { "code": "03 21 10.10", "multiplier": "0020", "description": "Rebar #4 or smaller, hook by hand (per hook)", "uom": "Each", "man_hours_per_unit": 0.06 },
-    { "code": "03 21 10.10", "multiplier": "0030", "description": "Rebar #4 or smaller, bend by machine", "uom": "Each", "man_hours_per_unit": 0.015 },
-    { "code": "03 21 10.10", "multiplier": "0040", "description": "Rebar #4 or smaller, hook by machine", "uom": "Each", "man_hours_per_unit": 0.025 },
-    { "code": "03 21 10.10", "multiplier": "0050", "description": "Rebar #5–#7, bend by hand", "uom": "Each", "man_hours_per_unit": 0.05 },
-    { "code": "03 21 10.10", "multiplier": "0060", "description": "Rebar #5–#7, hook by hand", "uom": "Each", "man_hours_per_unit": 0.08 },
-    { "code": "03 21 10.10", "multiplier": "0070", "description": "Rebar #5–#7, bend by machine", "uom": "Each", "man_hours_per_unit": 0.020 },
-    { "code": "03 21 10.10", "multiplier": "0080", "description": "Rebar #5–#7, hook by machine", "uom": "Each", "man_hours_per_unit": 0.030 },
-    { "code": "03 21 10.10", "multiplier": "0090", "description": "Rebar #8–#9, bend by hand", "uom": "Each", "man_hours_per_unit": 0.06 },
-    { "code": "03 21 10.10", "multiplier": "0100", "description": "Rebar #8–#9, hook by hand", "uom": "Each", "man_hours_per_unit": 0.10 },
-    { "code": "03 21 10.10", "multiplier": "0110", "description": "Rebar #8–#9, bend by machine", "uom": "Each", "man_hours_per_unit": 0.025 },
-    { "code": "03 21 10.10", "multiplier": "0120", "description": "Rebar #8–#9, hook by machine", "uom": "Each", "man_hours_per_unit": 0.040 },
-    { "code": "03 21 10.10", "multiplier": "0130", "description": "Rebar #10–#14, bend by hand", "uom": "Each", "man_hours_per_unit": 0.07 },
-    { "code": "03 21 10.10", "multiplier": "0140", "description": "Rebar #10–#14, hook by hand", "uom": "Each", "man_hours_per_unit": 0.12 },
-    { "code": "03 21 10.10", "multiplier": "0150", "description": "Rebar #10–#14, bend by machine", "uom": "Each", "man_hours_per_unit": 0.030 },
-    { "code": "03 21 10.10", "multiplier": "0160", "description": "Rebar #10–#14, hook by machine", "uom": "Each", "man_hours_per_unit": 0.050 },
-    { "code": "03 22 05.50", "multiplier": "0010", "description": "Welded wire fabric sheets, 58 lb/100 SF", "uom": "SF", "man_hours_per_unit": 0.008 },
-    { "code": "03 22 05.50", "multiplier": "0020", "description": "Welded wire fabric sheets, 85 lb/100 SF", "uom": "SF", "man_hours_per_unit": 0.009 },
-    { "code": "03 22 05.50", "multiplier": "0030", "description": "Welded wire fabric rolls, gunite reinforcement wrap", "uom": "SF", "man_hours_per_unit": 0.033 },
-    { "code": "03 21 10.60", "multiplier": "0010", "description": "Place rebar in beams/girders (#3–#7)", "uom": "Ton", "man_hours_per_unit": 26.60 },
-    { "code": "03 21 10.60", "multiplier": "0020", "description": "Place rebar in beams/girders (#8–#18)", "uom": "Ton", "man_hours_per_unit": 15.76 },
-    { "code": "03 21 10.60", "multiplier": "0030", "description": "Place rebar in columns (#3–#7)", "uom": "Ton", "man_hours_per_unit": 28.37 },
-    { "code": "03 21 10.60", "multiplier": "0040", "description": "Place rebar in columns (#8–#18)", "uom": "Ton", "man_hours_per_unit": 18.51 },
-    { "code": "03 21 10.60", "multiplier": "0050", "description": "Place rebar in footings (#4–#7)", "uom": "Ton", "man_hours_per_unit": 20.27 },
-    { "code": "03 21 10.60", "multiplier": "0060", "description": "Place rebar in footings (#8–#18)", "uom": "Ton", "man_hours_per_unit": 11.82 },
-    { "code": "03 21 10.60", "multiplier": "0070", "description": "Place rebar in slab on grade (#3–#7)", "uom": "Ton", "man_hours_per_unit": 18.50 },
-    { "code": "03 21 10.60", "multiplier": "0080", "description": "Place rebar in walls (#3–#7)", "uom": "Ton", "man_hours_per_unit": 14.19 },
-    { "code": "03 21 10.60", "multiplier": "0090", "description": "Place rebar in walls (#8–#18)", "uom": "Ton", "man_hours_per_unit": 10.64 },
-    { "code": "03 21 10.60", "multiplier": "0100", "description": "Install dowel, deformed #3–#6, 2 ft long", "uom": "Each", "man_hours_per_unit": 0.041 },
-    { "code": "03 21 10.60", "multiplier": "0110", "description": "Install dowel, smooth #3, 12 inches long", "uom": "Each", "man_hours_per_unit": 0.152 },
-    { "code": "03 30 53.10", "multiplier": "0010", "description": "Hand mix concrete (two-board method)", "uom": "CYD", "man_hours_per_unit": 3.20 },
-    { "code": "03 30 53.10", "multiplier": "0020", "description": "Machine mix concrete onsite (16 CF mixer)", "uom": "CYD", "man_hours_per_unit": 1.60 },
-    { "code": "03 30 53.10", "multiplier": "0030", "description": "Machine mix concrete onsite (11 CF mixer)", "uom": "CYD", "man_hours_per_unit": 2.70 },
-    { "code": "03 30 53.10", "multiplier": "0040", "description": "Transit mix concrete (8 CY truck)", "uom": "CYD", "man_hours_per_unit": 0.56 },
-    { "code": "03 31 05.70", "multiplier": "0005", "description": "Place concrete lintel/sill (8×8) via chute", "uom": "LF", "man_hours_per_unit": 0.50 },
-    { "code": "03 31 05.70", "multiplier": "0010", "description": "Place concrete in elevated beams (pumped)", "uom": "CYD", "man_hours_per_unit": 1.60 },
-    { "code": "03 31 05.70", "multiplier": "0020", "description": "Place concrete in elevated beams (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 2.40 },
-    { "code": "03 31 05.70", "multiplier": "0030", "description": "Place concrete in 12\" column (pumped)", "uom": "CYD", "man_hours_per_unit": 1.60 },
-    { "code": "03 31 05.70", "multiplier": "0040", "description": "Place concrete in 12\" column (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 2.70 },
-    { "code": "03 31 05.70", "multiplier": "0050", "description": "Place concrete in 18\" column (pumped)", "uom": "CYD", "man_hours_per_unit": 1.066 },
-    { "code": "03 31 05.70", "multiplier": "0060", "description": "Place concrete in 18\" column (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.963 },
-    { "code": "03 31 05.70", "multiplier": "0070", "description": "Place concrete in 24\" column (pumped)", "uom": "CYD", "man_hours_per_unit": 1.044 },
-    { "code": "03 31 05.70", "multiplier": "0080", "description": "Place concrete in 24\" column (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.543 },
-    { "code": "03 31 05.70", "multiplier": "0090", "description": "Place concrete in elevated slab ≤6\" (pumped)", "uom": "CYD", "man_hours_per_unit": 0.685 },
-    { "code": "03 31 05.70", "multiplier": "0100", "description": "Place concrete in elevated slab ≤6\" (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.137 },
-    { "code": "03 31 05.70", "multiplier": "0110", "description": "Place concrete in elevated slab 6–10\" (pumped)", "uom": "CYD", "man_hours_per_unit": 0.600 },
-    { "code": "03 31 05.70", "multiplier": "0120", "description": "Place concrete in elevated slab 6–10\" (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 0.982 },
-    { "code": "03 31 05.70", "multiplier": "0130", "description": "Place concrete in shallow continuous footing (chute)", "uom": "CYD", "man_hours_per_unit": 0.600 },
-    { "code": "03 31 05.70", "multiplier": "0140", "description": "Place concrete in shallow continuous footing (wheeled)", "uom": "CYD", "man_hours_per_unit": 0.641 },
-    { "code": "03 31 05.70", "multiplier": "0150", "description": "Place concrete in shallow continuous footing (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.200 },
-    { "code": "03 31 05.70", "multiplier": "0160", "description": "Place concrete in deep continuous footing (chute)", "uom": "CYD", "man_hours_per_unit": 0.514 },
-    { "code": "03 31 05.70", "multiplier": "0170", "description": "Place concrete in deep continuous footing (pumped)", "uom": "CYD", "man_hours_per_unit": 0.600 },
-    { "code": "03 31 05.70", "multiplier": "0180", "description": "Place concrete in deep continuous footing (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 0.982 },
-    { "code": "03 31 05.70", "multiplier": "0190", "description": "Place concrete in spread footing <1 CYD (chute)", "uom": "CYD", "man_hours_per_unit": 1.309 },
-    { "code": "03 31 05.70", "multiplier": "0200", "description": "Place concrete in spread footing <1 CYD (pumped)", "uom": "CYD", "man_hours_per_unit": 1.477 },
-    { "code": "03 31 05.70", "multiplier": "0210", "description": "Place concrete in spread footing <1 CYD (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 2.400 },
-    { "code": "03 31 05.70", "multiplier": "0220", "description": "Place concrete in spread footing >5 CYD (chute)", "uom": "CYD", "man_hours_per_unit": 0.600 },
-    { "code": "03 31 05.70", "multiplier": "0230", "description": "Place concrete in spread footing >5 CYD (pumped)", "uom": "CYD", "man_hours_per_unit": 0.641 },
-    { "code": "03 31 05.70", "multiplier": "0240", "description": "Place concrete in spread footing >5 CYD (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.080 },
-    { "code": "03 31 05.70", "multiplier": "0250", "description": "Place concrete in grade beams (chute)", "uom": "CYD", "man_hours_per_unit": 0.480 },
-    { "code": "03 31 05.70", "multiplier": "0260", "description": "Place concrete in grade beams (pumped)", "uom": "CYD", "man_hours_per_unit": 0.536 },
-    { "code": "03 31 05.70", "multiplier": "0270", "description": "Place concrete in grade beams (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 0.900 },
-    { "code": "03 31 05.70", "multiplier": "0280", "description": "Place concrete in pile caps (chute)", "uom": "CYD", "man_hours_per_unit": 0.800 },
-    { "code": "03 31 05.70", "multiplier": "0290", "description": "Place concrete in pile caps (pumped)", "uom": "CYD", "man_hours_per_unit": 0.873 },
-    { "code": "03 31 05.70", "multiplier": "0300", "description": "Place concrete in pile caps (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.359 },
-    { "code": "03 31 05.70", "multiplier": "0310", "description": "Place concrete in slab on grade ≤6\" (chute)", "uom": "CYD", "man_hours_per_unit": 0.654 },
-    { "code": "03 31 05.70", "multiplier": "0320", "description": "Place concrete in slab on grade ≤6\" (pumped)", "uom": "CYD", "man_hours_per_unit": 0.738 },
-    { "code": "03 31 05.70", "multiplier": "0330", "description": "Place concrete in slab on grade ≤6\" (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 0.983 },
-    { "code": "03 31 05.70", "multiplier": "0340", "description": "Place concrete in slab on grade >6\" (chute)", "uom": "CYD", "man_hours_per_unit": 0.436 },
-    { "code": "03 31 05.70", "multiplier": "0350", "description": "Place concrete in slab on grade >6\" (pumped)", "uom": "CYD", "man_hours_per_unit": 0.520 },
-    { "code": "03 31 05.70", "multiplier": "0360", "description": "Place concrete in slab on grade >6\" (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 0.750 },
-    { "code": "03 31 05.70", "multiplier": "0370", "description": "Place concrete in wall 8\" thick (chute)", "uom": "CYD", "man_hours_per_unit": 0.800 },
-    { "code": "03 31 05.70", "multiplier": "0380", "description": "Place concrete in wall 8\" thick (pumped)", "uom": "CYD", "man_hours_per_unit": 0.960 },
-    { "code": "03 31 05.70", "multiplier": "0390", "description": "Place concrete in wall 8\" thick (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.350 },
-    { "code": "03 31 05.70", "multiplier": "0400", "description": "Place concrete in wall 12\" thick (chute)", "uom": "CYD", "man_hours_per_unit": 0.720 },
-    { "code": "03 31 05.70", "multiplier": "0410", "description": "Place concrete in wall 12\" thick (pumped)", "uom": "CYD", "man_hours_per_unit": 0.873 },
-    { "code": "03 31 05.70", "multiplier": "0420", "description": "Place concrete in wall 12\" thick (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.200 },
-    { "code": "03 31 05.70", "multiplier": "0430", "description": "Place concrete in wall 18\" thick (chute)", "uom": "CYD", "man_hours_per_unit": 0.700 },
-    { "code": "03 31 05.70", "multiplier": "0440", "description": "Place concrete in wall 18\" thick (pumped)", "uom": "CYD", "man_hours_per_unit": 0.800 },
-    { "code": "03 31 05.70", "multiplier": "0450", "description": "Place concrete in wall 18\" thick (crane & bucket)", "uom": "CYD", "man_hours_per_unit": 1.137 },
-    { "code": "03 31 05.70", "multiplier": "0460", "description": "Wheeled concrete cart haul, add up to 50 ft", "uom": "CYD", "man_hours_per_unit": 0.422 },
-    { "code": "03 31 05.70", "multiplier": "0470", "description": "Wheeled concrete cart haul, add up to 150 ft", "uom": "CYD", "man_hours_per_unit": 0.563 },
-    { "code": "03 31 05.70", "multiplier": "0480", "description": "Wheeled concrete cart haul, add up to 250 ft", "uom": "CYD", "man_hours_per_unit": 0.750 },
-    { "code": "03 35 29.30", "multiplier": "0010", "description": "Manual screed, bull float", "uom": "SF", "man_hours_per_unit": 0.009 },
-    { "code": "03 35 29.30", "multiplier": "0020", "description": "Manual screed, bull float, manual float", "uom": "SF", "man_hours_per_unit": 0.018 },
-    { "code": "03 35 29.30", "multiplier": "0030", "description": "Manual screed, bull float, manual float, broom finish", "uom": "SF", "man_hours_per_unit": 0.020 },
-    { "code": "03 35 29.30", "multiplier": "0040", "description": "Manual screed, bull float, manual float, steel trowel", "uom": "SF", "man_hours_per_unit": 0.028 },
-    { "code": "03 35 29.30", "multiplier": "0050", "description": "Manual screed, bull float, machine float, walk-behind trowel", "uom": "SF", "man_hours_per_unit": 0.021 },
-    { "code": "03 35 29.30", "multiplier": "0060", "description": "Power screed, bull float, machine float, walk-behind trowel", "uom": "SF", "man_hours_per_unit": 0.015 },
-    { "code": "03 35 29.30", "multiplier": "0070", "description": "Power screed, bull float, machine float, ride-on trowel", "uom": "SF", "man_hours_per_unit": 0.009 },
-    { "code": "03 35 29.30", "multiplier": "0080", "description": "Dustproofing, solvent-based, one coat", "uom": "SF", "man_hours_per_unit": 0.006 },
-    { "code": "03 35 29.30", "multiplier": "0090", "description": "Stair finish, float", "uom": "SF", "man_hours_per_unit": 0.043 },
-    { "code": "03 35 29.30", "multiplier": "0100", "description": "Steel trowel finish", "uom": "SF", "man_hours_per_unit": 0.060 },
-    { "code": "03 35 29.30", "multiplier": "0110", "description": "Silicon carbide finish (0.25 lb/SF)", "uom": "SF", "man_hours_per_unit": 0.080 },
-    { "code": "03 35 29.35", "multiplier": "0010", "description": "Saw cut control joint in green concrete (1–2\" depth)", "uom": "LF", "man_hours_per_unit": 0.014 },
-    { "code": "03 35 29.35", "multiplier": "0020", "description": "Clean out control joint debris", "uom": "LF", "man_hours_per_unit": 0.002 },
-    { "code": "03 35 29.35", "multiplier": "0030", "description": "Install backer rod, ¼\" diam.", "uom": "LF", "man_hours_per_unit": 0.026 },
-    { "code": "03 35 29.35", "multiplier": "0040", "description": "Install joint sealant, ¼\" diam.", "uom": "LF", "man_hours_per_unit": 0.045 },
-    { "code": "03 35 29.60", "multiplier": "0010", "description": "Break form ties and patch voids", "uom": "SF", "man_hours_per_unit": 0.023 },
-    { "code": "03 35 29.60", "multiplier": "0020", "description": "Burlap rub with grout", "uom": "SF", "man_hours_per_unit": 0.027 },
-    { "code": "03 35 29.60", "multiplier": "0030", "description": "Carborundum rub, dry", "uom": "SF", "man_hours_per_unit": 0.045 },
-    { "code": "03 35 29.60", "multiplier": "0040", "description": "Carborundum rub, wet", "uom": "SF", "man_hours_per_unit": 0.070 },
-    { "code": "03 35 29.60", "multiplier": "0050", "description": "Bush hammer finish, green concrete", "uom": "SF", "man_hours_per_unit": 0.072 },
-    { "code": "03 35 29.60", "multiplier": "0060", "description": "Bush hammer finish, cured concrete", "uom": "SF", "man_hours_per_unit": 0.111 },
-    { "code": "03 35 29.60", "multiplier": "0070", "description": "Float finish (1/16\" coat on wall)", "uom": "SF", "man_hours_per_unit": 0.041 },
-    { "code": "03 35 29.60", "multiplier": "0080", "description": "Grind form fins flush", "uom": "LF", "man_hours_per_unit": 0.017 },
-    { "code": "03 39 13.50", "multiplier": "0010", "description": "Water curing (liquid membrane/burlap/water)", "uom": "SF", "man_hours_per_unit": 0.004 },
-    { "code": "03 39 23.13", "multiplier": "0010", "description": "Sprayed membrane curing compound", "uom": "SF", "man_hours_per_unit": 0.0017 },
-    { "code": "03 45 13.50", "multiplier": "0000", "description": "Precast concrete wall panels (average)", "uom": "SF", "man_hours_per_unit": 0.076 }
+  "workElements": [
+    {
+      "code": "03 11 13.35 (0010)",
+      "description": "Flat plate, job-built form, to 15′ height",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.156,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.35 (0020)",
+      "description": "Box out for slab openings",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.336,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.35 (0030)",
+      "description": "Bulkhead forms for slab",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.127,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.35 (0040)",
+      "description": "Slab bulkhead form, 4½″ high",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.036,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.35 (0050)",
+      "description": "Curb forms, wood, 6–12″ high",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.237,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.35 (0060)",
+      "description": "Edge forms to 6″ high",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.085,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.35 (0070)",
+      "description": "Perimeter deck and rail",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.473,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.45 (0010)",
+      "description": "Continuous wall footing form, plywood, one-use",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.113,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.45 (0020)",
+      "description": "Dowel supports for footings or beams",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.085,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.45 (0030)",
+      "description": "Keyway, tapered wood 2×4, one-use",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.020,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.45 (0040)",
+      "description": "Pile cap form, square/rectangular, job-built plywood, one-use",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.146,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.45 (0050)",
+      "description": "Spread footing form, job-built lumber",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.140,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.50 (0010)",
+      "description": "Job-built plywood grade beam form, one-use",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.122,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.65 (0010)",
+      "description": "Bulkhead forms with keyway, wood, 6″ high, one-use (slab on grade)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.084,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.65 (0020)",
+      "description": "Curb forms, wood, 6–12″ high on grade, one-use",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.402,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.65 (0030)",
+      "description": "Edge forms, wood, on grade to 6″ high",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.071,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.65 (0040)",
+      "description": "Edge forms, wood, on grade 7–12″ high",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.142,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.65 (0050)",
+      "description": "Edge forms for depressed slabs, to 12″ high",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.098,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.65 (0060)",
+      "description": "Edge forms from 12–24″ high",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.142,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.65 (0060a)",
+      "description": "Edge forms from 12–24″ high (contact surface equiv.)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.243,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.75 (0010)",
+      "description": "Stairs, forms in place (incl. landings) – simple stair",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.55,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.85 (0010)",
+      "description": "Wall form, job-built plywood, up to 8′ height",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.173,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 11 13.85 (0020)",
+      "description": "Wall form, over 8′ to 16′ height",
+      "unit": "SF of contact surface",
+      "laborHoursPerUnit": 0.227,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.02 (0010)",
+      "description": "Anchor bolt, J-type, 1/2″Ø × 6–12″, w/nut & washer",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.125,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.02 (0020)",
+      "description": "Anchor bolt, J-type, 5/8″Ø × 12–24″, w/nut & washer",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.154,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.02 (0030)",
+      "description": "Anchor bolt, J-type, 3/4″Ø × 8–24″, w/nut & washer",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.173,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.02 (0040)",
+      "description": "Anchor bolt, J-type, 7/8″Ø × 12–24″, w/nut & washer",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.219,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.12 (0010)",
+      "description": "Chamfer strip, wood, 1/2″–1″ wide",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.021,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.25 (0010)",
+      "description": "Expansion joint, premolded bituminous fiber, 1/2″×6″",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.028,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.25 (0020)",
+      "description": "Expansion joint, premolded bituminous fiber, 1″×12″",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.036,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.25 (0030)",
+      "description": "Backer rod, polyethylene foam, 3/8″–1″ Ø",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.023,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.35 (0010)",
+      "description": "Insert, slotted nut type for 3/4″ bolts (avg. other inserts)",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.123,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.75 (0010)",
+      "description": "Plastic sleeve/chase, one-use, 9″ long × 2″ Ø",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.106,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.75 (0020)",
+      "description": "Plastic sleeve, 4″ Ø",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.118,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.75 (0030)",
+      "description": "Plastic sleeve, 6″ Ø",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.142,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.75 (0040)",
+      "description": "Plastic sleeve, 12″ Ø",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.177,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0010)",
+      "description": "Acid wash (concrete walls)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.02,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0020)",
+      "description": "Architectural concrete finish (patched/honed/sack rub)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.08,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0030)",
+      "description": "Carborundum rub (grinding)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.04,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0040)",
+      "description": "Ceiling insert (place/set embedded insert)",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.06,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0050)",
+      "description": "Saw cut, existing concrete 2″ deep",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.08,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0060)",
+      "description": "Saw cut, existing concrete 4″ deep",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.12,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0070)",
+      "description": "Saw cut, green concrete 2″ deep",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.05,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0080)",
+      "description": "Saw cut, green concrete 4″ deep",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.08,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0090)",
+      "description": "Core drill 3″ Ø in slab (6″ thick slab)",
+      "unit": "Each",
+      "laborHoursPerUnit": 2.00,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0100)",
+      "description": "Core drill 4″ Ø in wall (8″ thick wall)",
+      "unit": "Each",
+      "laborHoursPerUnit": 2.50,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0110)",
+      "description": "Curb angle form (slot pour stop), place/remove",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.16,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0120)",
+      "description": "Dovetail anchor slots (install)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.023,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0130)",
+      "description": "Floor hardener application (magnesium fluosilicate, 1 coat)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.01,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0140)",
+      "description": "Non-shrink grout under baseplate (1 inch thick)",
+      "unit": "SF",
+      "laborHoursPerUnit": 1.00,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0150)",
+      "description": "Patch tie-holes in concrete walls",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.05,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0160)",
+      "description": "Pick up and brace inserts (embedded item placement)",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.064,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0170)",
+      "description": "Expansion joint, poured-in-place 1/2″ × 1/2″",
+      "unit": "Feet",
+      "laborHoursPerUnit": 0.04,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0180)",
+      "description": "Expansion joint, premolded (install)",
+      "unit": "Feet",
+      "laborHoursPerUnit": 0.04,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0190)",
+      "description": "Reglet, metal or PVC (install)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.10,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0200)",
+      "description": "Silicone waterproofing application",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.01,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0210)",
+      "description": "Steel base plate 12″×14″×1/2″ (place & grout)",
+      "unit": "Each",
+      "laborHoursPerUnit": 1.00,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0220)",
+      "description": "Vapor barrier, polyethylene (place)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.002,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0230)",
+      "description": "Waterstop (PVC or copper, dumbbell type)",
+      "unit": "Feet",
+      "laborHoursPerUnit": 0.04,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 15 05.96 (0240)",
+      "description": "Gravel under slab, 6″ thick (place & compact)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.01,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.10",
+      "description": "Reinforcing Steel Fabrication (bend or hook rebar)",
+      "unit": "per bend/hook",
+      "laborHoursPerUnit": null,
+      "multiplier": 1.0,
+      "details": {
+        "byHand": {
+          "#4 or less": { "bend": 0.04, "hook": 0.06 },
+          "#5 to #7":   { "bend": 0.05, "hook": 0.08 },
+          "#8 and #9":  { "bend": 0.06, "hook": 0.10 },
+          "#10 to #14": { "bend": 0.07, "hook": 0.12 }
+        },
+        "byMachine": {
+          "#4 or less": { "bend": 0.015, "hook": 0.025 },
+          "#5 to #7":   { "bend": 0.020, "hook": 0.030 },
+          "#8 and #9":  { "bend": 0.025, "hook": 0.040 },
+          "#10 to #14": { "bend": 0.030, "hook": 0.050 }
+        }
+      }
+    },
+    {
+      "code": "03 22 05.50 (0010)",
+      "description": "Welded wire fabric (sheet, ~58 lb/100 SF)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.008,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 22 05.50 (0020)",
+      "description": "Welded wire fabric (sheet, ~85 lb/100 SF)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.009,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 22 05.50 (0030)",
+      "description": "Welded wire fabric (rolls or column wrap/gunite mesh)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.033,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0010)",
+      "description": "Place rebar in beams/girders (#3–#7 bars)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 26.60,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0020)",
+      "description": "Place rebar in beams/girders (#8–#18 bars)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 15.76,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0030)",
+      "description": "Place rebar in columns (#3–#7)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 28.37,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0040)",
+      "description": "Place rebar in columns (#8–#18)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 18.51,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0050)",
+      "description": "Place rebar in footings (#4–#7)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 20.27,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0060)",
+      "description": "Place rebar in footings (#8–#18)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 11.82,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0070)",
+      "description": "Place rebar in slab-on-grade (#3–#7)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 18.50,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0080)",
+      "description": "Place rebar in walls (#3–#7)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 14.19,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0090)",
+      "description": "Place rebar in walls (#8–#18)",
+      "unit": "Ton",
+      "laborHoursPerUnit": 10.64,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0100)",
+      "description": "Install dowels 2′ long, deformed, #3–#6",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.041,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 21 10.60 (0110)",
+      "description": "Install dowels 12″ long, smooth, #3",
+      "unit": "Each",
+      "laborHoursPerUnit": 0.152,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 30 53.10 (0010)",
+      "description": "Hand-mix concrete on site (using two boards/boats)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 3.20,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 30 53.10 (0020)",
+      "description": "Machine-mix concrete on site (16 CF mixer)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.60,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 30 53.10 (0030)",
+      "description": "Machine-mix concrete on site (11 CF mixer)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 2.70,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 30 53.10 (0035)",
+      "description": "Adjust rate for custom mixer size (per 1 CF capacity)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.10,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 30 53.10 (0040)",
+      "description": "Place concrete via transit mixer truck (8 CY capacity)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.56,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0005)",
+      "description": "Place concrete in lintel/sill (8″×8″ section)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.50,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0010)",
+      "description": "Place concrete in elevated beam (any delivery)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.60,
+      "multiplier": 1.0,
+      "placementMethod": "Pumped"
+    },
+    {
+      "code": "03 31 05.70 (0020)",
+      "description": "Place concrete in elevated beam (via crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 2.40,
+      "multiplier": 1.0,
+      "placementMethod": "CraneBucket"
+    },
+    {
+      "code": "03 31 05.70 (0030)",
+      "description": "Place concrete in column (12″ thick, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.60,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0040)",
+      "description": "Place concrete in column (12″ thick, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 2.70,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0050)",
+      "description": "Place concrete in column (18″ thick, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.066,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0060)",
+      "description": "Place concrete in column (18″ thick, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.963,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0070)",
+      "description": "Place concrete in column (24″ thick, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.044,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0080)",
+      "description": "Place concrete in column (24″ thick, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.543,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0090)",
+      "description": "Place concrete in elevated slab (<6″ thick, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.685,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0100)",
+      "description": "Place concrete in elevated slab (<6″, crane & bucket, upper level)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.137,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0110)",
+      "description": "Place concrete in elevated slab (6–10″ thick, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.60,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0120)",
+      "description": "Place concrete in elevated slab (6–10″ thick, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.982,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0130)",
+      "description": "Place concrete in continuous footing (shallow, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.600,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0140)",
+      "description": "Place concrete in continuous footing (shallow, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.641,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0150)",
+      "description": "Place concrete in continuous footing (shallow, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.200,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0160)",
+      "description": "Place concrete in continuous footing (deep, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.514,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0170)",
+      "description": "Place concrete in continuous footing (deep, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.600,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0180)",
+      "description": "Place concrete in continuous footing (deep, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.982,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0190)",
+      "description": "Place concrete in spread footing (<1 CY, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.309,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0200)",
+      "description": "Place concrete in spread footing (<1 CY, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.477,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0210)",
+      "description": "Place concrete in spread footing (<1 CY, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 2.400,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0220)",
+      "description": "Place concrete in spread footing (>5 CY, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.600,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0230)",
+      "description": "Place concrete in spread footing (>5 CY, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.641,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0240)",
+      "description": "Place concrete in spread footing (>5 CY, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.080,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0250)",
+      "description": "Place concrete in grade beam (direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.480,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0260)",
+      "description": "Place concrete in grade beam (pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.536,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0270)",
+      "description": "Place concrete in grade beam (crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.900,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0280)",
+      "description": "Place concrete in pile cap (direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.800,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0290)",
+      "description": "Place concrete in pile cap (pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.873,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0300)",
+      "description": "Place concrete in pile cap (crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.359,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0310)",
+      "description": "Place concrete in slab-on-grade (≤6″, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.654,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0320)",
+      "description": "Place concrete in slab-on-grade (≤6″, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.738,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0330)",
+      "description": "Place concrete in slab-on-grade (≤6″, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.983,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0340)",
+      "description": "Place concrete in slab-on-grade (>6″, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.436,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0350)",
+      "description": "Place concrete in slab-on-grade (>6″, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.520,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0360)",
+      "description": "Place concrete in slab-on-grade (>6″, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.750,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0370)",
+      "description": "Place concrete in wall (8″ thick, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.800,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0380)",
+      "description": "Place concrete in wall (8″, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.960,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0390)",
+      "description": "Place concrete in wall (8″, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.350,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0400)",
+      "description": "Place concrete in wall (12″ thick, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.720,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0410)",
+      "description": "Place concrete in wall (12″, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.873,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0420)",
+      "description": "Place concrete in wall (12″, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.200,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0430)",
+      "description": "Place concrete in wall (1′ thick, direct chute)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.700,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0440)",
+      "description": "Place concrete in wall (1′, pumped)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.800,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0450)",
+      "description": "Place concrete in wall (1′, crane & bucket)",
+      "unit": "CYD",
+      "laborHoursPerUnit": 1.137,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0460)",
+      "description": "**Add**: wheeled concrete cart haul up to 50′",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.422,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0470)",
+      "description": "**Add**: wheeled concrete cart haul up to 150′",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.563,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 31 05.70 (0480)",
+      "description": "**Add**: wheeled concrete cart haul up to 250′",
+      "unit": "CYD",
+      "laborHoursPerUnit": 0.750,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0010)",
+      "description": "Finish floor – manual screed & bull float",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.009,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0020)",
+      "description": "Finish floor – manual screed, bull float, manual float",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.018,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0030)",
+      "description": "Finish floor – manual screed/float, broom finish",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.020,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0040)",
+      "description": "Finish floor – manual screed/float, steel trowel",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.028,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0050)",
+      "description": "Finish floor – manual screed, machine float, walk-behind trowel",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.021,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0060)",
+      "description": "Finish floor – power screed, machine float, walk-behind trowel",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.015,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0070)",
+      "description": "Finish floor – power screed, machine float, ride-on trowel",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.009,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0080)",
+      "description": "Dustproofing finish coat (solvent-based sealer)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.006,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0090)",
+      "description": "Stair tread finish (float)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.043,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0100)",
+      "description": "Steel trowel hard finish (floor)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.060,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.30 (0110)",
+      "description": "Silicon carbide non-slip finish (1/4 lb/SF grit)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.080,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.35 (0010)",
+      "description": "Saw cut control joint (green concrete, ~1–2″ depth)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.014,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.35 (0020)",
+      "description": "Clean out control joint (remove debris)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.002,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.35 (0030)",
+      "description": "Install joint backer rod (1/4″ Ø foam rod)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.026,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.35 (0040)",
+      "description": "Install joint sealant (polyurethane, 1/4″)",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.045,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0010)",
+      "description": "Break off ties & patch voids (concrete wall)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.023,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0020)",
+      "description": "Burlap rub (wet grout finish on wall)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.027,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0030)",
+      "description": "Carborundum rub (dry) on wall",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.045,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0040)",
+      "description": "Carborundum rub (wet) on wall",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.070,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0050)",
+      "description": "Bush-hammer finish on green concrete wall",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.072,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0060)",
+      "description": "Bush-hammer finish on cured concrete wall",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.111,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0070)",
+      "description": "Float finish on wall (1/16″ mortar coat)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.041,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 35 29.60 (0080)",
+      "description": "Grind form fins flush on wall",
+      "unit": "LF",
+      "laborHoursPerUnit": 0.017,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 39 13.50 (0010)",
+      "description": "Water curing (keep concrete wet/covered)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.004,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 39 23.13 (0010)",
+      "description": "Curing compound, spray-applied",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.0017,
+      "multiplier": 1.0
+    },
+    {
+      "code": "03 45 13.50 (0010)",
+      "description": "Erect precast wall panel (20′×10′×6″)",
+      "unit": "SF",
+      "laborHoursPerUnit": 0.0760,
+      "multiplier": 1.0
+    }
   ],
-  "labor_resources": [
-    { "name": "Crew Leader", "rate_per_hour": null },
-    { "name": "Skilled Laborer", "rate_per_hour": null },
-    { "name": "Unskilled Laborer", "rate_per_hour": null },
-    { "name": "Equipment Operator", "rate_per_hour": null },
-    { "name": "Steelworker", "rate_per_hour": null }
+  "laborResources": [
+    { "role": "Builder (Carpenter)", "hourlyRate": 25.00 },
+    { "role": "Steelworker (Ironworker)", "hourlyRate": 25.00 },
+    { "role": "Construction Electrician", "hourlyRate": 24.00 },
+    { "role": "Utilitiesman (Plumber)", "hourlyRate": 24.00 },
+    { "role": "Engineering Aid (Surveyor)", "hourlyRate": 20.00 },
+    { "role": "Equipment Operator", "hourlyRate": 22.00 },
+    { "role": "Construction Mechanic", "hourlyRate": 22.00 },
+    { "role": "Unskilled Laborer/Other", "hourlyRate": 18.00 }
   ],
   "equipment": [
-    { "name": "Concrete Mixer (16 CF)", "rate_per_hour": null },
-    { "name": "Concrete Mixer (11 CF)", "rate_per_hour": null },
-    { "name": "Transit Mix Truck (8 CY)", "rate_per_hour": null },
-    { "name": "Concrete Pump", "rate_per_hour": null },
-    { "name": "Crane and Bucket", "rate_per_hour": null },
-    { "name": "Wheelbarrow (Concrete Cart)", "rate_per_hour": null },
-    { "name": "Front-End Loader", "rate_per_hour": null }
+    { "name": "Concrete Mixer (16 CF)", "hourlyRate": 15.00 },
+    { "name": "Concrete Mixer (11 CF)", "hourlyRate": 12.00 },
+    { "name": "Transit Mixer Truck (8 CY)", "hourlyRate": 70.00 },
+    { "name": "Concrete Pump (Trailer or Boom)", "hourlyRate": 80.00 },
+    { "name": "Crane (for concrete bucket)", "hourlyRate": 120.00 },
+    { "name": "Concrete Vibrator (Internal)", "hourlyRate": 5.00 },
+    { "name": "Concrete Saw (Walk-behind)", "hourlyRate": 15.00 },
+    { "name": "Power Trowel (Ride-on or Walk-behind)", "hourlyRate": 10.00 },
+    { "name": "Power Screed", "hourlyRate": 10.00 }
   ]
 }
-
