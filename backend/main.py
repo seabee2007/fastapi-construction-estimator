@@ -7,13 +7,14 @@ from backend.schemas import FinalEstimationInput, FinalEstimationOutput
 from backend.estimation_logic import calculate_final_estimate
 from backend.blueprint_processor import process_blueprint, cleanup_file
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
-@app.get("/")
-async def read_index():
-    index_path = os.path.join("frontend", "index.html")
-    return FileResponse(index_path)
+# Mount the 'frontend' directory to serve static files.
+# The html=True option tells FastAPI to look for an "index.html" file to serve at the root.
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+
 
 
 # Import the blueprint processing function
