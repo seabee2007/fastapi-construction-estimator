@@ -804,7 +804,7 @@
       // Initially, the equipment field is readonly; it will be populated via modal.
       row.innerHTML = `
         <input type="text" name="equipment_search" class="form-control" placeholder="Equipment name" readonly>
-        <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+        <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="1" min="0" required>
         <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
       `;
       container.appendChild(row);
@@ -879,7 +879,7 @@
         row.className = "input-group mb-2";
         row.innerHTML = `
           <input type="text" name="equipment_search" class="form-control" value="${id} - ${description}" readonly>
-          <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+          <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="1" min="0" required>
           <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
         `;
         container.appendChild(row);
