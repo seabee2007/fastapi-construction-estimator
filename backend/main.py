@@ -7,14 +7,15 @@ from pydantic import BaseModel, Field
 
 app = FastAPI()
 
-# Serve the frontend index.html using an HTMLResponse.
+# ---------------------------
+# Serve the frontend index.html from the repository root.
+# ---------------------------
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    # Assumes the "frontend" folder is in the repository root.
-    static_dir = os.path.join(os.getcwd(), "frontend")
-    index_path = os.path.join(static_dir, "index.html")
-    print("Working Directory:", os.getcwd())
-    print("Static Directory:", static_dir)
+    # Since files are now in the root, we compute the path directly.
+    current_dir = os.getcwd()
+    index_path = os.path.join(current_dir, "index.html")
+    print("Working Directory:", current_dir)
     print("Index Path:", index_path)
     try:
         with open(index_path, "r", encoding="utf-8") as f:
@@ -24,7 +25,9 @@ async def read_index():
         print("Error reading index.html:", e)
         raise HTTPException(status_code=404, detail="Index file not found")
 
-# Load NTRP data from the JSON file in the project root.
+# ---------------------------
+# Load NTRP data from the JSON file in the repository root.
+# ---------------------------
 DATA_FILE = os.path.join(os.getcwd(), "ntrp_data.json")
 try:
     with open(DATA_FILE, "r") as f:
@@ -111,11 +114,10 @@ async def get_equipment():
 def calculate_estimate(input_data: FinalEstimationInput) -> dict:
     """
     Calculate a simple estimate based on NTRP guidelines:
-      - Labor Cost: For each labor resource, cost = quantity * hourly rate.
-      - Material Cost: For each work element, cost = (man_hours_per_unit * cost factor) * quantity.
-      - Equipment Cost: For each equipment row, cost = quantity * hourly rate.
-      
-    Adjust the cost factors and default rates as needed to match your NTRP formulas.
+      - Labor Cost: Sum over each labor resource (quantity * hourly rate).
+      - Material Cost: Sum over each work element (man_hours_per_unit * cost factor * quantity).
+      - Equipment Cost: Sum over each equipment row (quantity * hourly rate).
+    Adjust the cost factors and default rates as needed to match the NTRP formulas.
     """
     # Calculate labor cost
     labor_cost = 0
@@ -123,7 +125,7 @@ def calculate_estimate(input_data: FinalEstimationInput) -> dict:
         rate = next((item["hourlyRate"] for item in ntrp_data.get("laborResources", [])
                      if item["role"] == lr.skill), None)
         if rate is None:
-            rate = 20  # Default hourly rate if not found
+            rate = 20  # default hourly rate if not found
         labor_cost += rate * lr.quantity
 
     # Calculate material cost from work elements
@@ -141,7 +143,7 @@ def calculate_estimate(input_data: FinalEstimationInput) -> dict:
         rate = next((item["hourlyRate"] for item in ntrp_data.get("equipment", [])
                      if item["name"] == eq.name), None)
         if rate is None:
-            rate = 50  # Default equipment hourly rate if not found
+            rate = 50  # default equipment hourly rate if not found
         equipment_cost += rate * eq.quantity
 
     total_cost = labor_cost + material_cost + equipment_cost
