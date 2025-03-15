@@ -1,4 +1,4 @@
-// When the page loads, fetch activity numbers and populate the dropdown
+// On load, fetch activity numbers and populate the activity dropdown
 window.addEventListener("load", async () => {
   try {
     const res = await fetch("/activities");
@@ -32,6 +32,7 @@ function addLaborResource() {
   `;
   container.appendChild(row);
 }
+window.addLaborResource = addLaborResource;
 
 // Function to add a dynamic Work Element row
 function addWorkElement() {
@@ -39,12 +40,13 @@ function addWorkElement() {
   const row = document.createElement("div");
   row.className = "input-group mb-2";
   row.innerHTML = `
-    <input type="text" name="work_element_search" class="form-control" placeholder="Search work element" required onkeyup="searchWorkElement(this)">
+    <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" required>
     <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
     <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
   `;
   container.appendChild(row);
 }
+window.addWorkElement = addWorkElement;
 
 // Function to add a dynamic Equipment row
 function addEquipment() {
@@ -52,14 +54,15 @@ function addEquipment() {
   const row = document.createElement("div");
   row.className = "input-group mb-2";
   row.innerHTML = `
-    <input type="text" name="equipment_search" class="form-control" placeholder="Search equipment" required onkeyup="searchEquipment(this)">
+    <input type="text" name="equipment_search" class="form-control" placeholder="Equipment name" required>
     <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
     <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
   `;
   container.appendChild(row);
 }
+window.addEquipment = addEquipment;
 
-// Example search function for work elements – currently logs results
+// Example search function for work elements; currently logs results
 async function searchWorkElement(inputElem) {
   const query = inputElem.value;
   if (query.length < 2) return;
@@ -72,8 +75,9 @@ async function searchWorkElement(inputElem) {
     console.error("Error searching work elements:", error);
   }
 }
+window.searchWorkElement = searchWorkElement;
 
-// Example search function for equipment – currently logs results
+// Example search function for equipment; currently logs results
 async function searchEquipment(inputElem) {
   const query = inputElem.value;
   if (query.length < 2) return;
@@ -86,12 +90,12 @@ async function searchEquipment(inputElem) {
     console.error("Error searching equipment:", error);
   }
 }
+window.searchEquipment = searchEquipment;
 
 // Handle form submission
 document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  // Assemble data from the form
+  
   const form = e.target;
   const data = {
     project_name: form.project_name.value,
@@ -138,17 +142,9 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
     });
     const result = await res.json();
     console.log("Final Estimate:", result);
-    
-    // If a Bootstrap modal exists, display the result in the modal
-    if (document.getElementById("resultModal")) {
-      document.getElementById("resultContent").innerText = JSON.stringify(result, null, 2);
-      const modal = new bootstrap.Modal(document.getElementById("resultModal"));
-      modal.show();
-    } else {
-      // Otherwise, show in a result container (if one exists)
-      document.getElementById("result").innerText = JSON.stringify(result, null, 2);
-    }
+    document.getElementById("result").innerText = JSON.stringify(result, null, 2);
   } catch (error) {
     console.error("Error getting final estimate:", error);
+    document.getElementById("result").innerText = "Error getting final estimate.";
   }
 });
