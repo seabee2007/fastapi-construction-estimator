@@ -244,7 +244,15 @@
   
   <!-- Inline JavaScript -->
   <script>
-    // On load, fetch activity numbers and populate the activity dropdown
+    // Global variable to track the currently active work element row.
+    let activeWorkElementRow = null;
+
+    // When a work element input gains focus, set its parent row as active.
+    function setActiveWorkElementRow(row) {
+      activeWorkElementRow = row;
+    }
+
+    // On load, fetch activity numbers and populate the activity dropdown.
     window.addEventListener("load", async () => {
       try {
         const res = await fetch("/activities");
@@ -261,7 +269,7 @@
       }
     });
 
-    // Function to add a dynamic Labor Resource row
+    // Function to add a dynamic Labor Resource row.
     function addLaborResource() {
       const container = document.getElementById("laborResourcesContainer");
       const row = document.createElement("div");
@@ -280,14 +288,14 @@
     }
     window.addLaborResource = addLaborResource;
     
-    // Function to add a dynamic Work Element row (via the "Add Work Element" button).
-    // This row uses an input with auto-suggestions.
+    // Function to add a new (empty) Work Element row.
+    // The work element input now includes an onfocus event to register the active row.
     function addWorkElement() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
       row.innerHTML = `
-        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" list="workElementsSuggestions" oninput="searchWorkElement(this)" required>
+        <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" list="workElementsSuggestions" oninput="searchWorkElement(this)" onfocus="setActiveWorkElementRow(this.parentElement)" required>
         <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
         <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
       `;
@@ -295,7 +303,7 @@
     }
     window.addWorkElement = addWorkElement;
     
-    // Function to add a dynamic Equipment row
+    // Function to add a dynamic Equipment row.
     function addEquipment() {
       const container = document.getElementById("equipmentContainer");
       const row = document.createElement("div");
@@ -310,7 +318,7 @@
     window.addEquipment = addEquipment;
     
     // Updated search function for work elements.
-    // Fetch suggestions from the /work-elements endpoint and update the datalist.
+    // Fetches suggestions from the /work-elements endpoint and updates the datalist.
     async function searchWorkElement(inputElem) {
       const query = inputElem.value;
       if (query.length < 2) return;
@@ -331,13 +339,16 @@
     window.searchWorkElement = searchWorkElement;
     
     // Function to open the Work Elements Library modal.
-    // Fetches all work elements and displays them in a scrollable table with extra JSON data.
+    // If no active row exists, create a new one.
     async function openLibraryModal() {
+      if (!activeWorkElementRow) {
+        addWorkElement();
+        activeWorkElementRow = document.querySelector("#workElementsContainer .input-group:last-child");
+      }
       try {
         const res = await fetch("/work-elements");
         const results = await res.json();
         const modalBody = document.getElementById("libraryModalBody");
-        // Build table headers including extra info (Man Hours/Unit, U/M, Multiplier)
         let tableHTML = `
           <table class="table table-striped">
             <thead>
@@ -352,7 +363,7 @@
             <tbody>`;
         results.forEach(item => {
           tableHTML += `
-            <tr style="cursor:pointer" onclick="selectWorkElement('${item.code}', '${item.description}', '${item.uom || 'N/A'}', '${item.multiplier || 'N/A'}')">
+            <tr style="cursor:pointer" onclick="selectWorkElement('${item.code}', '${item.description}', '${item.uom ? item.uom : 'N/A'}', '${item.multiplier ? item.multiplier : 'N/A'}')">
               <td>${item.code}</td>
               <td>${item.description}</td>
               <td>${item.man_hours_per_unit !== undefined ? item.man_hours_per_unit : 'N/A'}</td>
@@ -373,19 +384,30 @@
     window.openLibraryModal = openLibraryModal;
     
     // Function to handle selection of a work element from the library modal.
-    // This function creates a new work element row on the form with the selected data.
+    // It updates the active row (or creates a new one if needed) with the selected data.
     function selectWorkElement(code, description, uom, multiplier) {
-      const container = document.getElementById("workElementsContainer");
-      const row = document.createElement("div");
-      row.className = "input-group mb-2";
-      row.innerHTML = `
-        <input type="text" name="work_element_search" class="form-control" value="${code} - ${description}" readonly>
-        <span class="input-group-text">U/M: ${uom}</span>
-        <span class="input-group-text">Multiplier: ${multiplier}</span>
-        <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
-        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
-      `;
-      container.appendChild(row);
+      if (activeWorkElementRow) {
+        activeWorkElementRow.innerHTML = `
+          <input type="text" name="work_element_search" class="form-control" value="${code} - ${description}" readonly>
+          <span class="input-group-text">U/M: ${uom}</span>
+          <span class="input-group-text">Multiplier: ${multiplier}</span>
+          <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+        `;
+        activeWorkElementRow = null;
+      } else {
+        const container = document.getElementById("workElementsContainer");
+        const row = document.createElement("div");
+        row.className = "input-group mb-2";
+        row.innerHTML = `
+          <input type="text" name="work_element_search" class="form-control" value="${code} - ${description}" readonly>
+          <span class="input-group-text">U/M: ${uom}</span>
+          <span class="input-group-text">Multiplier: ${multiplier}</span>
+          <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
+          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+        `;
+        container.appendChild(row);
+      }
       // Hide the library modal after selection.
       const modalEl = document.getElementById("libraryModal");
       const modal = bootstrap.Modal.getInstance(modalEl);
@@ -393,7 +415,7 @@
     }
     window.selectWorkElement = selectWorkElement;
     
-    // Handle form submission
+    // Handle form submission.
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       
@@ -409,7 +431,7 @@
         equipment: []
       };
     
-      // Gather Labor Resources from dynamic rows
+      // Gather Labor Resources from dynamic rows.
       const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
       laborRows.forEach(row => {
         const skill = row.querySelector("select[name='labor_skill']").value;
@@ -417,7 +439,7 @@
         data.labor_resources.push({ skill, quantity });
       });
     
-      // Gather Work Elements from dynamic rows
+      // Gather Work Elements from dynamic rows.
       const workRows = document.querySelectorAll("#workElementsContainer .input-group");
       workRows.forEach(row => {
         const codeAndDescription = row.querySelector("input[name='work_element_search']").value;
@@ -425,7 +447,7 @@
         data.work_elements.push({ code: codeAndDescription, description: codeAndDescription, quantity });
       });
     
-      // Gather Equipment from dynamic rows
+      // Gather Equipment from dynamic rows.
       const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
       equipRows.forEach(row => {
         const name = row.querySelector("input[name='equipment_search']").value;
@@ -444,7 +466,7 @@
         const result = await res.json();
         console.log("Final Estimate:", result);
         document.getElementById("resultContent").innerText = JSON.stringify(result, null, 2);
-        // Show the modal with the result
+        // Show the modal with the result.
         const modal = new bootstrap.Modal(document.getElementById("resultModal"));
         modal.show();
       } catch (error) {
