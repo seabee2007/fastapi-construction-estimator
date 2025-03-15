@@ -132,25 +132,28 @@
     }
     /* Hover effects for modal table rows */
     #libraryModalBody tr.library-row {
+      position: relative;
+      z-index: 1;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     }
     #libraryModalBody tr.library-row:hover {
       transform: scale(1.02);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       background-color: #f0f0f0;
+      z-index: 10;
     }
     /* Make the code column wider */
     #libraryModalBody td:first-child {
       min-width: 150px;
     }
-    /* Additional CAS Summary Styles (unchanged from previous version) */
+    /* Additional CAS Summary Styles (unchanged) */
     #casSummary {
       margin-top: 40px;
       padding: 20px;
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     #casSummary h2 {
       text-align: center;
@@ -217,13 +220,11 @@
       </fieldset>
       
       <!-- Labor Resources -->
-<!-- Labor Resources -->
-<fieldset class="mb-4">
-  <legend>Labor Resources</legend>
-  <div id="laborResourcesContainer"></div>
-  <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
-</fieldset>
-
+      <fieldset class="mb-4">
+        <legend>Labor Resources</legend>
+        <div id="laborResourcesContainer"></div>
+        <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
+      </fieldset>
       
       <!-- Work Elements -->
       <fieldset class="mb-4">
@@ -248,7 +249,6 @@
       <fieldset class="mb-4">
         <legend>Production Efficiency Factors</legend>
         <div id="efficiencyFactorsContainer" class="mb-3">
-          <!-- For each factor, a drop down will be generated -->
           <div class="row mb-2">
             <div class="col-md-3"><strong>Workload</strong></div>
             <div class="col-md-3"><select id="factor-workload" class="form-select"></select></div>
@@ -290,7 +290,7 @@
           <div class="col-md-3"><strong>Availability Factor</strong></div>
           <div class="col-md-3">
             <select id="availability-factor" class="form-select">
-              <!-- Options in increments of 5% from 0% to 100% -->
+              <!-- Options in 5% increments, default 75% -->
             </select>
           </div>
         </div>
@@ -298,7 +298,6 @@
           <div class="col-md-3"><strong>Manday Equivalent</strong></div>
           <div class="col-md-3">
             <select id="manday-equivalent" class="form-select">
-              <!-- Example options -->
               <option value="1.00">1.00</option>
               <option value="1.125" selected>1.125</option>
               <option value="1.25">1.25</option>
@@ -317,22 +316,17 @@
     <!-- New Section: Construction Activity Summary Sheet (CAS) -->
     <div id="casSummary">
       <h2>Construction Activity Summary Sheet</h2>
-      
-      <!-- Project & Activity Info -->
+      <!-- CAS content (as previously defined) -->
       <div class="section-header">Project & Activity Information</div>
       <p><strong>Project Number:</strong> <span id="casProjectNumber">PH5-800</span> &nbsp;&nbsp; 
          <strong>Project Title:</strong> <span id="casProjectTitle">CONSTRUCT SHED</span></p>
       <p><strong>Activity Number:</strong> <span id="casActivityNumber">02200</span> &nbsp;&nbsp; 
          <strong>Activity Title:</strong> <span id="casActivityTitle">EXCAVATE FOR FOOTERS</span></p>
-      
-      <!-- CA # 02200-1 -->
       <div class="section-header">CA # 02200-1</div>
       <p><strong>DESCRIPTION OF WORK:</strong></p>
       <p id="casDescription">EXCAVATE TRENCH 12" DEEP BY 18" WIDE. TOTAL LINEAR FEET IS 70.</p>
       <p><strong>METHOD OF CONSTRUCTION/ASSUMPTIONS:</strong></p>
       <p id="casMethod">[Enter Method of Construction]</p>
-      
-      <!-- Labor Resources -->
       <div class="section-header">LABOR RESOURCES</div>
       <table>
         <thead>
@@ -361,13 +355,9 @@
         </tbody>
       </table>
       <p><strong>Total Labor:</strong> <span id="casTotalLabor">2</span></p>
-      
-      <!-- Production Efficiency Factor Section -->
       <div class="section-header">PRODUCTION EFFICIENCY FACTOR</div>
       <p><strong>Product Efficiency Factor:</strong> <span id="casProductEfficiency">67</span></p>
       <p><strong>Resulting Delay Factor:</strong> <span id="casDelayFactor">1.00</span></p>
-      
-      <!-- CA # 02200-2: Work Elements, Tools, Equipment, Materials -->
       <div class="section-header">CA # 02200-2</div>
       <p><strong>WORK ELEMENTS</strong></p>
       <table>
@@ -403,7 +393,6 @@
           </tr>
         </tbody>
       </table>
-      
       <p><strong>TOOLS</strong></p>
       <table>
         <thead>
@@ -421,7 +410,6 @@
           </tr>
         </tbody>
       </table>
-      
       <p><strong>EQUIPMENT</strong></p>
       <table>
         <thead>
@@ -454,7 +442,6 @@
           </tr>
         </tbody>
       </table>
-      
       <p><strong>MATERIALS</strong></p>
       <table>
         <thead>
@@ -483,21 +470,15 @@
           </tr>
         </tbody>
       </table>
-      
-      <!-- Safety, Quality, Environmental -->
       <div class="section-header">SAFETY PLAN</div>
       <p><strong>Safety Hazard:</strong> OPEN TRENCHES &nbsp;&nbsp; <strong>Control Measure:</strong> CLEARLY MARKED/BARRICADED</p>
       <p><strong>Safety Hazard:</strong> UNDERGROUND/UTILITIES &nbsp;&nbsp; <strong>Control Measure:</strong> MARKED TO ENSURE VISIBILITY</p>
-      
       <div class="section-header">QUALITY CONTROL PLAN</div>
       <p><strong>Requirement:</strong> SIZE OF EXCAVATION &nbsp;&nbsp; <strong>Action:</strong> EXCAVATE TO DIMENSIONS SHOWN ON PRINTS ONLY</p>
       <p><strong>Requirement:</strong> OVER EXCAVATION &nbsp;&nbsp; <strong>Action:</strong> FILL OVER EXCAVATED AREAS WITH CONCRETE</p>
       <p><strong>Requirement:</strong> SPOIL STORAGE &nbsp;&nbsp; <strong>Action:</strong> STORE SPOIL MATERIAL TO PREVENT CONTAMINATION</p>
-      
       <div class="section-header">ENVIRONMENTAL PLAN</div>
       <p><strong>Hazard:</strong> EQUIPMENT SPILL &nbsp;&nbsp; <strong>Action:</strong> MAINTAIN SPILL KIT AND SPILL PLAN ON SITE</p>
-      
-      <!-- Comments -->
       <div class="section-header">CA # 02200-3: COMMENTS</div>
       <p id="casComments">DUE TO RAINY SEASONS PUMPS MAY BE REQUIRED. EXCAVATION TO BE COVERED EACH NIGHT AND MARKED WITH CAUTION TAPE.</p>
     </div>
@@ -544,12 +525,12 @@
   <script>
     // Global variable to track the currently active work element row.
     let activeWorkElementRow = null;
-
+    
     // When a work element input gains focus, set its parent row as active.
     function setActiveWorkElementRow(row) {
       activeWorkElementRow = row;
     }
-
+    
     // Populate dropdowns for the eight production efficiency factors (0–100)
     function populateFactorDropdowns() {
       const factorIds = [
@@ -572,11 +553,10 @@
           if (i === 67) opt.selected = true;
           select.appendChild(opt);
         }
-        // Add change event to recalc efficiency
         select.addEventListener("change", recalcEfficiency);
       });
     }
-
+    
     // Populate Availability Factor dropdown (0% to 100% in steps of 5, default 75)
     function populateAvailabilityDropdown() {
       const availSelect = document.getElementById("availability-factor");
@@ -588,11 +568,8 @@
         if (i === 75) opt.selected = true;
         availSelect.appendChild(opt);
       }
-      availSelect.addEventListener("change", function() {
-        // You can add additional logic here if needed.
-      });
     }
-
+    
     // Recalculate Product Efficiency Factor and Delay Factor in real time.
     function recalcEfficiency() {
       const factorIds = [
@@ -611,15 +588,14 @@
       });
       const avg = sum / factorIds.length;
       document.getElementById("product-efficiency").textContent = avg.toFixed(1);
-      // Resulting Delay Factor = 67 / average
       const delay = (avg !== 0) ? (67 / avg) : 0;
       document.getElementById("delay-factor").textContent = delay.toFixed(2);
-      // Also update CAS summary fields
+      // Update CAS summary fields
       document.getElementById("casProductEfficiency").textContent = avg.toFixed(1);
       document.getElementById("casDelayFactor").textContent = delay.toFixed(2);
     }
-
-    // On load, fetch activity numbers and populate the activity dropdown.
+    
+    // On load, fetch activity numbers, populate efficiency dropdowns and availability dropdown.
     window.addEventListener("load", async () => {
       try {
         const res = await fetch("/activities");
@@ -634,34 +610,32 @@
       } catch (error) {
         console.error("Error fetching activities:", error);
       }
-      // Populate efficiency factor dropdowns and availability dropdown
       populateFactorDropdowns();
       populateAvailabilityDropdown();
       recalcEfficiency();
     });
-
-    // Function to add a dynamic Labor Resource row.
-   function addLaborResource() {
-  const container = document.getElementById("laborResourcesContainer");
-  const row = document.createElement("div");
-  row.className = "input-group mb-2";
-  row.innerHTML = `
-    <select name="labor_skill" class="form-select">
-      <option value="Builder">Builder</option>
-      <option value="Steel Worker">Steel Worker</option>
-      <option value="Utilitiesman">Utilitiesman</option>
-      <option value="Engineering Aid">Engineering Aid</option>
-      <option value="Construction Electrician">Construction Electrician</option>
-      <option value="Equipment Operator">Equipment Operator</option>
-      <option value="Construction Mechanic">Construction Mechanic</option>
-    </select>
-    <input type="number" name="labor_quantity" class="form-control" placeholder="Quantity" step="1" min="0" required>
-    <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
-  `;
-  container.appendChild(row);
-}
-window.addLaborResource = addLaborResource;
-
+    
+    // Function to add a dynamic Labor Resource row (quantities as whole numbers).
+    function addLaborResource() {
+      const container = document.getElementById("laborResourcesContainer");
+      const row = document.createElement("div");
+      row.className = "input-group mb-2";
+      row.innerHTML = `
+        <select name="labor_skill" class="form-select">
+          <option value="Builder">Builder</option>
+          <option value="Steel Worker">Steel Worker</option>
+          <option value="Utilitiesman">Utilitiesman</option>
+          <option value="Engineering Aid">Engineering Aid</option>
+          <option value="Construction Electrician">Construction Electrician</option>
+          <option value="Equipment Operator">Equipment Operator</option>
+          <option value="Construction Mechanic">Construction Mechanic</option>
+        </select>
+        <input type="number" name="labor_quantity" class="form-control" placeholder="Quantity" step="1" min="0" required>
+        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      container.appendChild(row);
+    }
+    window.addLaborResource = addLaborResource;
     
     // Function to add a new (empty) Work Element row.
     function addWorkElement() {
@@ -717,25 +691,26 @@ window.addLaborResource = addLaborResource;
     async function populateWorkElementDetails(inputElem) {
       let value = inputElem.value.trim();
       if (!value) return;
-      // Assume format "CODE - Description"
       let parts = value.split(" - ");
       if (parts.length < 1) return;
       let code = parts[0].trim();
       try {
         const res = await fetch("/work-elements?query=" + encodeURIComponent(code));
         const results = await res.json();
-        // Look for an exact match on code.
-        let record = results.find(item => item.code === code);
+        let record = results.find(item => item.code.toLowerCase() === code.toLowerCase());
+        let parentRow = inputElem.parentElement;
+        let umSpan = parentRow.querySelector("span.um-field");
+        let multiplierSpan = parentRow.querySelector("span.multiplier-field");
         if (record) {
-          let parentRow = inputElem.parentElement;
-          let umSpan = parentRow.querySelector("span.um-field");
-          let multiplierSpan = parentRow.querySelector("span.multiplier-field");
           if (umSpan) {
             umSpan.textContent = record.uom ? record.uom : "N/A";
           }
           if (multiplierSpan) {
             multiplierSpan.textContent = record.multiplier ? record.multiplier : "N/A";
           }
+        } else {
+          if (umSpan) { umSpan.textContent = ""; }
+          if (multiplierSpan) { multiplierSpan.textContent = ""; }
         }
       } catch(e) {
         console.error("Error populating work element details", e);
@@ -811,7 +786,6 @@ window.addLaborResource = addLaborResource;
         `;
         container.appendChild(row);
       }
-      // Hide the library modal after selection.
       const modalEl = document.getElementById("libraryModal");
       const modal = bootstrap.Modal.getInstance(modalEl);
       if (modal) modal.hide();
@@ -834,15 +808,13 @@ window.addLaborResource = addLaborResource;
         equipment: []
       };
     
-      // Gather Labor Resources from dynamic rows.
       const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
       laborRows.forEach(row => {
         const skill = row.querySelector("select[name='labor_skill']").value;
-        const quantity = parseFloat(row.querySelector("input[name='labor_quantity']").value);
+        const quantity = parseInt(row.querySelector("input[name='labor_quantity']").value, 10);
         data.labor_resources.push({ skill, quantity });
       });
     
-      // Gather Work Elements from dynamic rows.
       const workRows = document.querySelectorAll("#workElementsContainer .input-group");
       workRows.forEach(row => {
         const codeAndDescription = row.querySelector("input[name='work_element_search']").value;
@@ -850,7 +822,6 @@ window.addLaborResource = addLaborResource;
         data.work_elements.push({ code: codeAndDescription, description: codeAndDescription, quantity });
       });
     
-      // Gather Equipment from dynamic rows.
       const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
       equipRows.forEach(row => {
         const name = row.querySelector("input[name='equipment_search']").value;
@@ -869,7 +840,6 @@ window.addLaborResource = addLaborResource;
         const result = await res.json();
         console.log("Final Estimate:", result);
         document.getElementById("resultContent").innerText = JSON.stringify(result, null, 2);
-        // Show the modal with the result.
         const modal = new bootstrap.Modal(document.getElementById("resultModal"));
         modal.show();
       } catch (error) {
