@@ -1,72 +1,75 @@
-# Hard-coded reference data based on NTRP standards
-# (Replace these numbers with the actual rates you reference from NTRP)
-PRODUCTIVITY_RATES = {
-    "Concrete": {
-        "placement": 0.480  # man-hours per cubic yard for concrete placement
-    }
-}
-LABOR_HOUR_COST = 50.0  # example: $50 per man-hour labor cost
-MATERIAL_UNIT_COST = {
-    "Concrete": 100.0  # example: $100 per cubic yard of concrete
-}
+import os
+import json
+from schemas import FinalEstimationInput
 
-def calculate_estimate(area_sqft: float, material_type: str):
+def load_ntrp_data():
     """
-    Calculate an estimate based on area and material type.
-    This is a simplified example:
-      - Converts area (sqft) to a material quantity (cubic yards).
-      - Uses a productivity rate to compute man-hours.
-      - Converts man-hours to man-days (assumes 8 hours per day).
-      - Calculates labor cost and material cost.
+    Load the NTRP data from ntrp_data.json located in the project root.
+    This JSON file should contain keys:
+      - "activities": List of activity objects.
+      - "work_elements": List of work element objects with at least keys: code, description, uom, man_hours_per_unit, multiplier.
+      - "laborResources": List of labor resource objects with keys: role, hourlyRate.
+      - "equipment": List of equipment objects with keys: name, hourlyRate.
     """
-    # For demonstration, assume a conversion factor: 
-    # 0.1 cubic yards of material per sqft of area.
-   # (Keep your existing reference data; update the values as needed based on NTRP)
-PRODUCTIVITY_RATES = {
-    "Concrete": {
-        "placement": 0.480  # man-hours per cubic yard for concrete placement
-    }
-}
-LABOR_HOUR_COST = 50.0  # example cost per man-hour
-MATERIAL_UNIT_COST = {
-    "Concrete": 100.0  # example cost per cubic yard
-}
+    DATA_FILE = os.path.join(os.getcwd(), "ntrp_data.json")
+    try:
+        with open(DATA_FILE, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        print("Error loading NTRP data:", e)
+        return {}
 
-def calculate_final_estimate(project_type: str, blueprint_data: dict, condition_multiplier: float = 1.0) -> dict:
+# Load the data once and cache it
+ntrp_data = load_ntrp_data()
+
+def calculate_estimate(input_data: FinalEstimationInput) -> dict:
     """
-    Calculate a detailed construction estimate based on:
-      - blueprint extracted data,
-      - project type (affecting cost assumptions),
-      - and a condition multiplier to adjust labor productivity.
+    Calculate the final estimate using NTRP guidelines.
     
-    For demonstration:
-      - We assume that the total floor area (in sqft) converts to material quantity (in cubic yards)
-        using a simple conversion (e.g., 0.1 cubic yards per sqft).
-      - Then, we apply a productivity rate (from NTRP) and adjust using the condition multiplier.
+    Formulas:
+      - Labor Cost: For each labor row, cost = quantity * hourlyRate.
+      - Material Cost: For each work element, cost = (man_hours_per_unit * cost_factor) * quantity.
+          * The cost_factor here converts man-hours into dollars.
+      - Equipment Cost: For each equipment row, cost = quantity * hourlyRate.
+    
+    Note: The cost_factor and default hourly rates are examples.
+    Adjust these values as needed to match the NTRP manual.
     """
-    # Extract values from blueprint_data
-    floor_area = blueprint_data.get("total_floor_area_sqft", 0)
-    
-    # Calculate material quantity (dummy conversion factor: 0.1 cubic yards per sqft)
-    quantity = floor_area * 0.1
+    # Calculate Labor Cost
+    labor_cost = 0.0
+    for lr in input_data.labor_resources:
+        # Look up hourly rate from NTRP data (laborResources list)
+        rate = next((item["hourlyRate"] for item in ntrp_data.get("laborResources", [])
+                     if item["role"] == lr.skill), None)
+        if rate is None:
+            rate = 20  # Default hourly rate if not found
+        labor_cost += rate * lr.quantity
 
-    # Get the productivity rate for Concrete placement
-    rate = PRODUCTIVITY_RATES.get("Concrete", {}).get("placement", 0)
-    
-    # Calculate labor estimates using the condition multiplier
-    man_hours = rate * quantity * condition_multiplier
-    man_days = man_hours / 8  # Convert hours to days (8 hours per day)
+    # Calculate Material Cost using work elements
+    material_cost = 0.0
+    # The cost_factor converts man-hours into dollars; adjust as necessary.
+    cost_factor = 100  
+    for we in input_data.work_elements:
+        element = next((item for item in ntrp_data.get("work_elements", [])
+                        if item["code"] == we.code), None)
+        if element:
+            man_hours = element.get("man_hours_per_unit", 0)
+            material_cost += (man_hours * cost_factor) * we.quantity
 
-    # Calculate costs
-    labor_cost = man_hours * LABOR_HOUR_COST
-    material_cost = quantity * MATERIAL_UNIT_COST.get("Concrete", 0)
-    total_cost = labor_cost + material_cost
+    # Calculate Equipment Cost
+    equipment_cost = 0.0
+    for eq in input_data.equipment:
+        rate = next((item["hourlyRate"] for item in ntrp_data.get("equipment", [])
+                     if item["name"] == eq.name), None)
+        if rate is None:
+            rate = 50  # Default hourly rate for equipment if not found
+        equipment_cost += rate * eq.quantity
+
+    total_estimated_cost = labor_cost + material_cost + equipment_cost
 
     return {
-        "material_quantity": quantity,
-        "man_hours": man_hours,
-        "man_days": man_days,
-        "labor_cost": labor_cost,
-        "material_cost": material_cost,
-        "total_estimated_cost": total_cost,
+        "total_labor_cost": labor_cost,
+        "total_material_cost": material_cost,
+        "total_equipment_cost": equipment_cost,
+        "total_estimated_cost": total_estimated_cost
     }
