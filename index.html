@@ -519,26 +519,51 @@
     let activeEquipmentRow = null;
     
     // Function to update the CAS Summary (including labor resources) with user inputs.
-    function updateCASSummary() {
-      // Update project and activity fields.
-      document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
-      document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
-      document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
-      document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
-      document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
-      document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
-      // Update Production Efficiency Factors in the CAS Summary.
-      document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
-      document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
-      document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
-      document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
-      document.getElementById("estimatorForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  // ... other update functions, e.g. updateCASSummary() ...
+function updateCASSummary() {
+  // Update project and activity fields.
+  document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
+  document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
+  document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+  document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+  document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
+  document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
+  
+  // Update Production Efficiency Factors.
+  document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
+  document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
+  document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
+  document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+  
+  // Update Equipment.
   updateEquipmentSummary();
   
-  // Proceed with gathering the rest of the payload and sending it to the server.
-});
+  // **Add this line to update the Work Elements section:**
+  updateWorkElementsSummary();
+  
+  // Update Labor Resources.
+  const laborTable = document.getElementById("casLaborTable");
+  laborTable.innerHTML = "";
+  let totalLabor = 0;
+  const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
+  laborRows.forEach(row => {
+    const skill = row.querySelector("select[name='labor_skill']").value;
+    const quantity = parseFloat(row.querySelector("input[name='labor_quantity']").value) || 0;
+    totalLabor += quantity;
+    const tr = document.createElement("tr");
+    const tdSkill = document.createElement("td");
+    tdSkill.textContent = skill;
+    const tdQuantity = document.createElement("td");
+    tdQuantity.textContent = quantity;
+    const tdRemarks = document.createElement("td");
+    tdRemarks.textContent = "";
+    tr.appendChild(tdSkill);
+    tr.appendChild(tdQuantity);
+    tr.appendChild(tdRemarks);
+    laborTable.appendChild(tr);
+  });
+  document.getElementById("casTotalLabor").textContent = totalLabor;
+}
+
 
 function updateEquipmentSummary() {
   // Get the equipment table's tbody in the CAS Summary.
