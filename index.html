@@ -366,7 +366,7 @@
             <th>Description</th>
             <th>U/M</th>
             <th>Qty</th>
-            <th>ManHrs Per Unit</th>
+            <th>Man Hrs/Unit</th>
             <th>Work Multi</th>
             <th>Est. MDs</th>
           </tr>
@@ -526,31 +526,11 @@
     let activeWorkElementRow = null;
     let activeEquipmentRow = null;
     
-    // ----------------------------------
+    // -----------------------------
     // Update CAS Summary Functions
-    // ----------------------------------
-    function updateCASSummary() {
-      // Update project and activity fields.
-      document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
-      document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
-      document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
-      document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
-      document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
-      document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
-      
-      // Update Production Efficiency Factors.
-      document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
-      document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
-      document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
-      document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
-      
-      // Update Equipment.
-      updateEquipmentSummary();
-      
-      // Update Work Elements.
-      updateWorkElementsSummary();
-      
-      // Update Labor Resources.
+    // -----------------------------
+    // Update Labor Resources first so crew size is available.
+    function updateLaborResources() {
       const laborTable = document.getElementById("casLaborTable");
       laborTable.innerHTML = "";
       let totalLabor = 0;
@@ -572,6 +552,7 @@
         laborTable.appendChild(tr);
       });
       document.getElementById("casTotalLabor").textContent = totalLabor;
+      return totalLabor;
     }
     
     function updateEquipmentSummary() {
@@ -601,21 +582,22 @@
     function updateWorkElementsSummary() {
       const workTable = document.getElementById("casWorkElements");
       workTable.innerHTML = "";
-      const workRows = document.querySelectorAll("#workElementsContainer .input-group");
-      // Use crew size from CAS Labor summary.
+      // Get crew size from labor update.
       const crewSize = parseFloat(document.getElementById("casTotalLabor").textContent) || 0;
+      const workRows = document.querySelectorAll("#workElementsContainer .input-group");
       workRows.forEach(row => {
         const codeAndDesc = row.querySelector("input[name='work_element_search']").value.trim();
         const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value) || 0;
         const parts = codeAndDesc.split(" - ");
         const code = parts[0] ? parts[0] : codeAndDesc;
         const description = parts[1] ? parts[1] : codeAndDesc;
-        // Read additional fields from the row.
-        const um = row.querySelector("span.um-field").textContent;
+        // Retrieve additional fields.
+        const um = row.querySelector("span.um-field").textContent || "N/A";
         const manHoursPerUnit = parseFloat(row.querySelector("span.man-hours-field").textContent) || 0;
         const multiplier = parseFloat(row.querySelector("span.multiplier-field").textContent) || 1;
         let estMDs = "N/A";
         if (crewSize > 0 && manHoursPerUnit > 0) {
+          // Formula: MDs = (Quantity / Crew Size) × (ManHrs Per Unit / 8) × Multiplier
           estMDs = ((quantity / crewSize) * (manHoursPerUnit / 8) * multiplier).toFixed(2);
         }
         const tr = document.createElement("tr");
@@ -644,9 +626,32 @@
       });
     }
     
-    // ----------------------------------
+    function updateCASSummary() {
+      // Update basic fields.
+      document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
+      document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
+      document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+      document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+      document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
+      document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
+      
+      // Update Production Efficiency Factors.
+      document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
+      document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
+      document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
+      document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+      
+      // Update Labor Resources first.
+      updateLaborResources();
+      // Then update Work Elements (now using crew size from labor update).
+      updateWorkElementsSummary();
+      // Then update Equipment.
+      updateEquipmentSummary();
+    }
+    
+    // -----------------------------
     // Production Efficiency Functions
-    // ----------------------------------
+    // -----------------------------
     function populateFactorDropdowns() {
       const factorIds = [
         "factor-workload", "factor-site", "factor-labor", "factor-supervision",
@@ -699,9 +704,9 @@
       recalcEfficiency();
     });
     
-    // ----------------------------------
+    // -----------------------------
     // Labor Resources Functions
-    // ----------------------------------
+    // -----------------------------
     function addLaborResource() {
       const container = document.getElementById("laborResourcesContainer");
       const row = document.createElement("div");
@@ -723,14 +728,14 @@
     }
     document.getElementById("addLaborBtn").addEventListener("click", addLaborResource);
     
-    // ----------------------------------
+    // -----------------------------
     // Work Elements Modal Functions
-    // ----------------------------------
+    // -----------------------------
     function addWorkElementPlaceholder() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
-      // Note the added span for Man Hrs/Unit.
+      // Include span for Man Hrs/Unit.
       row.innerHTML = `
         <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" readonly>
         <span class="input-group-text">U/M: <span class="um-field"></span></span>
@@ -772,7 +777,7 @@
       
       const thead = document.createElement("thead");
       const headerRow = document.createElement("tr");
-      // Include column header for Man Hrs/Unit.
+      // Include column for Man Hrs/Unit.
       ["Code", "Description", "Man Hours/Unit", "U/M", "Multiplier"].forEach(text => {
         const th = document.createElement("th");
         th.textContent = text;
@@ -832,6 +837,7 @@
       }
     }
     
+    // The selectWorkElement function now accepts manHoursPerUnit.
     function selectWorkElement(code, description, uom, multiplier, manHoursPerUnit) {
       if (activeWorkElementRow) {
         activeWorkElementRow.innerHTML = `
@@ -863,9 +869,9 @@
     }
     window.selectWorkElement = selectWorkElement;
     
-    // ----------------------------------
+    // -----------------------------
     // Equipment Modal Functions
-    // ----------------------------------
+    // -----------------------------
     function addEquipmentPlaceholder() {
       const container = document.getElementById("equipmentContainer");
       const row = document.createElement("div");
@@ -983,12 +989,11 @@
     }
     window.selectEquipment = selectEquipment;
     
-    // ----------------------------------
+    // -----------------------------
     // Form Submission Handler
-    // ----------------------------------
+    // -----------------------------
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      
       // Update the CAS Summary with current user inputs.
       updateCASSummary();
       
