@@ -561,6 +561,12 @@
       document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
       document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
       document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
+      // Update Production Efficiency Factors in the CAS Summary.
+      document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
+      document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
+      document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
+      document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+
       
       // Update Labor Resources in the summary.
       const laborTable = document.getElementById("casLaborTable");
