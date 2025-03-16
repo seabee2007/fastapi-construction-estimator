@@ -223,21 +223,21 @@
       <fieldset class="mb-4">
         <legend>Labor Resources</legend>
         <div id="laborResourcesContainer"></div>
-        <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
+        <button type="button" class="btn btn-outline-success mb-3" id="addLaborBtn">Add Labor Resource</button>
       </fieldset>
       
       <!-- Work Elements -->
       <fieldset class="mb-4">
         <legend>Work Elements</legend>
         <div id="workElementsContainer"></div>
-        <button type="button" class="btn btn-outline-primary mb-3" onclick="openLibraryModal()">Add Work Element</button>
+        <button type="button" class="btn btn-outline-primary mb-3" id="addWorkElementBtn">Add Work Element</button>
       </fieldset>
       
       <!-- Equipment -->
       <fieldset class="mb-4">
         <legend>Equipment</legend>
         <div id="equipmentContainer"></div>
-        <button type="button" class="btn btn-outline-warning mb-3" onclick="openEquipmentModal()">Add Equipment</button>
+        <button type="button" class="btn btn-outline-warning mb-3" id="addEquipmentBtn">Add Equipment</button>
       </fieldset>
       
       <!-- Production Efficiency Factors -->
@@ -306,7 +306,7 @@
       </div>
     </form>
     
-    <!-- Construction Activity Summary Section (PDF Format) -->
+    <!-- Construction Activity Summary (PDF Format) -->
     <div id="casSummary">
       <h2>Construction Activity Summary Sheet</h2>
       
@@ -521,11 +521,14 @@
   
   <!-- Inline JavaScript -->
   <script>
+  document.addEventListener("DOMContentLoaded", function() {
     // Global active row variables for modals.
     let activeWorkElementRow = null;
     let activeEquipmentRow = null;
     
-    // Function to update the CAS Summary with user inputs.
+    // -----------------------------
+    // Update CAS Summary Functions
+    // -----------------------------
     function updateCASSummary() {
       // Update project and activity fields.
       document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
@@ -571,7 +574,6 @@
       document.getElementById("casTotalLabor").textContent = totalLabor;
     }
     
-    // Function to update Equipment in the CAS Summary.
     function updateEquipmentSummary() {
       const equipmentTable = document.getElementById("casEquipmentTable");
       equipmentTable.innerHTML = "";
@@ -596,7 +598,6 @@
       });
     }
     
-    // Function to update Work Elements in the CAS Summary.
     function updateWorkElementsSummary() {
       const workTable = document.getElementById("casWorkElements");
       workTable.innerHTML = "";
@@ -607,7 +608,6 @@
         const parts = codeAndDesc.split(" - ");
         const code = parts[0] ? parts[0] : codeAndDesc;
         const description = parts[1] ? parts[1] : codeAndDesc;
-        // Default values for additional fields.
         const um = "N/A";
         const manHrsPerUnit = "N/A";
         const workMulti = "1.00";
@@ -638,7 +638,9 @@
       });
     }
     
+    // -----------------------------
     // Production Efficiency Functions
+    // -----------------------------
     function populateFactorDropdowns() {
       const factorIds = [
         "factor-workload", "factor-site", "factor-labor", "factor-supervision",
@@ -691,7 +693,9 @@
       recalcEfficiency();
     });
     
+    // -----------------------------
     // Labor Resources Functions
+    // -----------------------------
     function addLaborResource() {
       const container = document.getElementById("laborResourcesContainer");
       const row = document.createElement("div");
@@ -711,9 +715,11 @@
       `;
       container.appendChild(row);
     }
-    window.addLaborResource = addLaborResource;
+    document.getElementById("addLaborBtn").addEventListener("click", addLaborResource);
     
+    // -----------------------------
     // Work Elements Modal Functions
+    // -----------------------------
     function addWorkElementPlaceholder() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
@@ -737,7 +743,7 @@
       const modal = new bootstrap.Modal(document.getElementById("libraryModal"));
       modal.show();
     }
-    window.openLibraryModal = openLibraryModal;
+    document.getElementById("addWorkElementBtn").addEventListener("click", openLibraryModal);
     
     async function fetchWorkElementsForModal() {
       try {
@@ -845,17 +851,9 @@
     }
     window.selectWorkElement = selectWorkElement;
     
+    // -----------------------------
     // Equipment Modal Functions
-    function openEquipmentModal() {
-      addEquipmentPlaceholder();
-      document.getElementById("equipmentModalSearchInput").value = "";
-      filterEquipmentModalTable();
-      fetchEquipmentForModal();
-      const modal = new bootstrap.Modal(document.getElementById("equipmentModal"));
-      modal.show();
-    }
-    window.openEquipmentModal = openEquipmentModal;
-    
+    // -----------------------------
     function addEquipmentPlaceholder() {
       const container = document.getElementById("equipmentContainer");
       const row = document.createElement("div");
@@ -868,6 +866,16 @@
       container.appendChild(row);
       activeEquipmentRow = row;
     }
+    
+    function openEquipmentModal() {
+      addEquipmentPlaceholder();
+      document.getElementById("equipmentModalSearchInput").value = "";
+      filterEquipmentModalTable();
+      fetchEquipmentForModal();
+      const modal = new bootstrap.Modal(document.getElementById("equipmentModal"));
+      modal.show();
+    }
+    document.getElementById("addEquipmentBtn").addEventListener("click", openEquipmentModal);
     
     async function fetchEquipmentForModal() {
       try {
@@ -963,11 +971,13 @@
     }
     window.selectEquipment = selectEquipment;
     
+    // -----------------------------
     // Form Submission Handler
+    // -----------------------------
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       
-      // First, update the CAS Summary with current user inputs.
+      // Update the CAS Summary with current user inputs.
       updateCASSummary();
       
       // Build the payload.
@@ -1028,6 +1038,7 @@
         modal.show();
       }
     });
+  });
   </script>
   <!-- Bootstrap Bundle with Popper from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
