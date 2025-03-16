@@ -780,7 +780,7 @@
         console.log("Final Estimate:", result);
         document.getElementById("resultContent").innerText = JSON.stringify(result, null, 2);
         const modal = new bootstrap.Modal(document.getElementById("resultModal"));
-        modal.show();
+        modal.show();  
       } catch (error) {
         console.error("Error getting final estimate:", error);
         document.getElementById("resultContent").innerText = "Error getting final estimate.";
