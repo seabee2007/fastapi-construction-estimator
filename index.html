@@ -408,38 +408,20 @@
           </tr>
         </tbody>
       </table>
-      <p><strong>EQUIPMENT</strong></p>
-      <table>
-        <thead>
-          <tr>
-            <th>ID #</th>
-            <th>Description</th>
-            <th>Qty</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>058700</td>
-            <td>TRUCK DUMP 6X6 30000 GVW</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>434000</td>
-            <td>EXCAVATOR WHEEL MOUNTED HYD OPERATED</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>453100</td>
-            <td>LOADER SCOOP WHEEL MOUNTED 4X4</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>064300</td>
-            <td>TRUCK STAKE 6X6 DED 46000 GVW</td>
-            <td>1</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="section-header">EQUIPMENT</div>
+<table>
+  <thead>
+    <tr>
+      <th>ID #</th>
+      <th>Description</th>
+      <th>Qty</th>
+    </tr>
+  </thead>
+  <tbody id="casEquipmentTable">
+    <!-- Equipment rows will be inserted here -->
+  </tbody>
+</table>
+
       <p><strong>MATERIALS</strong></p>
       <table>
         <thead>
@@ -566,6 +548,54 @@
       document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
       document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
       document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+      document.getElementById("estimatorForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  // ... other update functions, e.g. updateCASSummary() ...
+  updateEquipmentSummary();
+  
+  // Proceed with gathering the rest of the payload and sending it to the server.
+});
+
+function updateEquipmentSummary() {
+  // Get the equipment table's tbody in the CAS Summary.
+  const equipmentTable = document.getElementById("casEquipmentTable");
+  // Clear any existing rows.
+  equipmentTable.innerHTML = "";
+  
+  // Select all equipment rows from the input form.
+  const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
+  
+  equipRows.forEach(row => {
+    const equipmentValue = row.querySelector("input[name='equipment_search']").value.trim();
+    const quantity = row.querySelector("input[name='equipment_quantity']").value.trim();
+    
+    // Create a new table row.
+    const tr = document.createElement("tr");
+    
+    // Split the equipment value if it follows the format "ID - Description"
+    const parts = equipmentValue.split(" - ");
+    const equipmentID = parts[0] ? parts[0] : equipmentValue;
+    const equipmentDesc = parts[1] ? parts[1] : equipmentValue;
+    
+    // Create table cells.
+    const tdID = document.createElement("td");
+    tdID.textContent = equipmentID;
+    
+    const tdDesc = document.createElement("td");
+    tdDesc.textContent = equipmentDesc;
+    
+    const tdQty = document.createElement("td");
+    tdQty.textContent = quantity;
+    
+    // Append cells to the row.
+    tr.appendChild(tdID);
+    tr.appendChild(tdDesc);
+    tr.appendChild(tdQty);
+    
+    // Append the row to the equipment table in the summary.
+    equipmentTable.appendChild(tr);
+  });
+}
 
       
       // Update Labor Resources in the summary.
