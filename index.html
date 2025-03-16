@@ -526,9 +526,9 @@
     let activeWorkElementRow = null;
     let activeEquipmentRow = null;
     
-    // -----------------------------
+    // ----------------------------------
     // Update CAS Summary Functions
-    // -----------------------------
+    // ----------------------------------
     function updateCASSummary() {
       // Update project and activity fields.
       document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
@@ -602,34 +602,40 @@
       const workTable = document.getElementById("casWorkElements");
       workTable.innerHTML = "";
       const workRows = document.querySelectorAll("#workElementsContainer .input-group");
+      // Use crew size from CAS Labor summary.
+      const crewSize = parseFloat(document.getElementById("casTotalLabor").textContent) || 0;
       workRows.forEach(row => {
         const codeAndDesc = row.querySelector("input[name='work_element_search']").value.trim();
-        const quantity = row.querySelector("input[name='work_element_quantity']").value.trim();
+        const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value) || 0;
         const parts = codeAndDesc.split(" - ");
         const code = parts[0] ? parts[0] : codeAndDesc;
         const description = parts[1] ? parts[1] : codeAndDesc;
-        const uom = "N/A";
-        const manHrsPerUnit = "N/A";
-        const workMulti = "1.00";
-        const estMDs = "N/A";
+        // Read additional fields from the row.
+        const um = row.querySelector("span.um-field").textContent;
+        const manHoursPerUnit = parseFloat(row.querySelector("span.man-hours-field").textContent) || 0;
+        const multiplier = parseFloat(row.querySelector("span.multiplier-field").textContent) || 1;
+        let estMDs = "N/A";
+        if (crewSize > 0 && manHoursPerUnit > 0) {
+          estMDs = ((quantity / crewSize) * (manHoursPerUnit / 8) * multiplier).toFixed(2);
+        }
         const tr = document.createElement("tr");
         const tdCode = document.createElement("td");
         tdCode.textContent = code;
         const tdDesc = document.createElement("td");
         tdDesc.textContent = description;
         const tdUM = document.createElement("td");
-        tdUM.textContent = uom;
+        tdUM.textContent = um;
         const tdQty = document.createElement("td");
         tdQty.textContent = quantity;
         const tdManHrs = document.createElement("td");
-        tdManHrs.textContent = manHrsPerUnit;
+        tdManHrs.textContent = manHoursPerUnit > 0 ? manHoursPerUnit : "N/A";
         const tdWorkMulti = document.createElement("td");
-        tdWorkMulti.textContent = workMulti;
+        tdWorkMulti.textContent = multiplier;
         const tdEstMDs = document.createElement("td");
         tdEstMDs.textContent = estMDs;
         tr.appendChild(tdCode);
         tr.appendChild(tdDesc);
-        tr.appendChild(tdUOM);
+        tr.appendChild(tdUM);
         tr.appendChild(tdQty);
         tr.appendChild(tdManHrs);
         tr.appendChild(tdWorkMulti);
@@ -638,9 +644,9 @@
       });
     }
     
-    // -----------------------------
+    // ----------------------------------
     // Production Efficiency Functions
-    // -----------------------------
+    // ----------------------------------
     function populateFactorDropdowns() {
       const factorIds = [
         "factor-workload", "factor-site", "factor-labor", "factor-supervision",
@@ -693,9 +699,9 @@
       recalcEfficiency();
     });
     
-    // -----------------------------
+    // ----------------------------------
     // Labor Resources Functions
-    // -----------------------------
+    // ----------------------------------
     function addLaborResource() {
       const container = document.getElementById("laborResourcesContainer");
       const row = document.createElement("div");
@@ -717,16 +723,18 @@
     }
     document.getElementById("addLaborBtn").addEventListener("click", addLaborResource);
     
-    // -----------------------------
+    // ----------------------------------
     // Work Elements Modal Functions
-    // -----------------------------
+    // ----------------------------------
     function addWorkElementPlaceholder() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
       row.className = "input-group mb-2";
+      // Note the added span for Man Hrs/Unit.
       row.innerHTML = `
         <input type="text" name="work_element_search" class="form-control" placeholder="Work element code" readonly>
         <span class="input-group-text">U/M: <span class="um-field"></span></span>
+        <span class="input-group-text">Man Hrs/Unit: <span class="man-hours-field"></span></span>
         <span class="input-group-text">Multiplier: <span class="multiplier-field"></span></span>
         <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
         <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
@@ -764,6 +772,7 @@
       
       const thead = document.createElement("thead");
       const headerRow = document.createElement("tr");
+      // Include column header for Man Hrs/Unit.
       ["Code", "Description", "Man Hours/Unit", "U/M", "Multiplier"].forEach(text => {
         const th = document.createElement("th");
         th.textContent = text;
@@ -787,7 +796,7 @@
         row.appendChild(cellDesc);
         
         const cellMHPU = document.createElement("td");
-        cellMHPU.textContent = (item.man_hours_per_unit !== undefined ? item.man_hours_per_unit : "N/A");
+        cellMHPU.textContent = (item.man_hours_per_unit !== undefined ? item.man_hours_per_unit : "0");
         row.appendChild(cellMHPU);
         
         const cellUM = document.createElement("td");
@@ -795,11 +804,12 @@
         row.appendChild(cellUM);
         
         const cellMultiplier = document.createElement("td");
-        cellMultiplier.textContent = (item.multiplier ? item.multiplier : "N/A");
+        cellMultiplier.textContent = (item.multiplier ? item.multiplier : "1.00");
         row.appendChild(cellMultiplier);
         
+        // Pass man_hours_per_unit to the selectWorkElement function.
         row.addEventListener("click", () => {
-          selectWorkElement(item.code, item.description, item.uom || "N/A", item.multiplier || "N/A");
+          selectWorkElement(item.code, item.description, item.uom || "N/A", item.multiplier || "1.00", item.man_hours_per_unit || "0");
         });
         tbody.appendChild(row);
       });
@@ -822,11 +832,12 @@
       }
     }
     
-    function selectWorkElement(code, description, uom, multiplier) {
+    function selectWorkElement(code, description, uom, multiplier, manHoursPerUnit) {
       if (activeWorkElementRow) {
         activeWorkElementRow.innerHTML = `
           <input type="text" name="work_element_search" class="form-control" value="${code} - ${description}" readonly>
           <span class="input-group-text">U/M: <span class="um-field">${uom}</span></span>
+          <span class="input-group-text">Man Hrs/Unit: <span class="man-hours-field">${manHoursPerUnit}</span></span>
           <span class="input-group-text">Multiplier: <span class="multiplier-field">${multiplier}</span></span>
           <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
           <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
@@ -839,6 +850,7 @@
         row.innerHTML = `
           <input type="text" name="work_element_search" class="form-control" value="${code} - ${description}" readonly>
           <span class="input-group-text">U/M: <span class="um-field">${uom}</span></span>
+          <span class="input-group-text">Man Hrs/Unit: <span class="man-hours-field">${manHoursPerUnit}</span></span>
           <span class="input-group-text">Multiplier: <span class="multiplier-field">${multiplier}</span></span>
           <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" required>
           <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
@@ -851,9 +863,9 @@
     }
     window.selectWorkElement = selectWorkElement;
     
-    // -----------------------------
+    // ----------------------------------
     // Equipment Modal Functions
-    // -----------------------------
+    // ----------------------------------
     function addEquipmentPlaceholder() {
       const container = document.getElementById("equipmentContainer");
       const row = document.createElement("div");
@@ -971,9 +983,9 @@
     }
     window.selectEquipment = selectEquipment;
     
-    // -----------------------------
+    // ----------------------------------
     // Form Submission Handler
-    // -----------------------------
+    // ----------------------------------
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       
