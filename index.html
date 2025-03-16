@@ -181,7 +181,7 @@
   <div class="container my-5">
     <!-- Main Form Section -->
     <form id="estimatorForm" class="p-4 bg-white rounded shadow">
-      <!-- Updated Project Information -->
+      <!-- Project Information -->
       <fieldset class="mb-4">
         <legend>Project Information</legend>
         <div class="mb-3 row">
@@ -196,7 +196,7 @@
         </div>
       </fieldset>
       
-      <!-- Updated Activity Details -->
+      <!-- Activity Details -->
       <fieldset class="mb-4">
         <legend>Activity Details</legend>
         <div class="mb-3 row">
@@ -219,28 +219,28 @@
         </div>
       </fieldset>
       
-      <!-- Labor Resources Section -->
+      <!-- Labor Resources -->
       <fieldset class="mb-4">
         <legend>Labor Resources</legend>
         <div id="laborResourcesContainer"></div>
         <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
       </fieldset>
       
-      <!-- Work Elements Section -->
+      <!-- Work Elements -->
       <fieldset class="mb-4">
         <legend>Work Elements</legend>
         <div id="workElementsContainer"></div>
         <button type="button" class="btn btn-outline-primary mb-3" onclick="openLibraryModal()">Add Work Element</button>
       </fieldset>
       
-      <!-- Equipment Section -->
+      <!-- Equipment -->
       <fieldset class="mb-4">
         <legend>Equipment</legend>
         <div id="equipmentContainer"></div>
         <button type="button" class="btn btn-outline-warning mb-3" onclick="openEquipmentModal()">Add Equipment</button>
       </fieldset>
       
-      <!-- Production Efficiency Factors (unchanged) -->
+      <!-- Production Efficiency Factors -->
       <fieldset class="mb-4">
         <legend>Production Efficiency Factors</legend>
         <div id="efficiencyFactorsContainer" class="mb-3">
@@ -305,12 +305,8 @@
         <button type="submit" class="btn btn-lg btn-success">Get Final Estimate</button>
       </div>
     </form>
-
-
-
-
     
-    <!-- Construction Activity Summary Section (PDF Format remains unchanged) -->
+    <!-- Construction Activity Summary Section (PDF Format) -->
     <div id="casSummary">
       <h2>Construction Activity Summary Sheet</h2>
       
@@ -324,7 +320,7 @@
         <strong>Activity Number:</strong> <span id="casActivityNumber">02200</span>&nbsp;&nbsp;
         <strong>Activity Title:</strong> <span id="casActivityTitle">EXCAVATE FOR FOOTERS</span>
       </p>
-          
+      
       <!-- Work Details -->
       <div class="section-header">CA # 02200-1</div>
       <p><strong>DESCRIPTION OF WORK:</strong></p>
@@ -332,7 +328,7 @@
       <p><strong>METHOD OF CONSTRUCTION/ASSUMPTIONS:</strong></p>
       <p id="casMethod">[Static Method]</p>
       
-      <!-- Labor Resources (Updated dynamically) -->
+      <!-- Labor Resources -->
       <div class="section-header">LABOR RESOURCES</div>
       <table>
         <thead>
@@ -343,39 +339,45 @@
           </tr>
         </thead>
         <tbody id="casLaborTable">
-          <!-- Labor rows will be dynamically inserted here -->
+          <!-- Labor rows will be inserted here -->
         </tbody>
       </table>
-<div class="section-header">PRODUCTION EFFICIENCY FACTORS</div>
-<table>
-  <tr>
-    <td><strong>Product Efficiency Factor:</strong> <span id="casProductEfficiency">67</span></td>
-    <td><strong>Resulting Delay Factor:</strong> <span id="casDelayFactor">1.00</span></td>
-  </tr>
-  <tr>
-    <td><strong>Availability Factor:</strong> <span id="casAvailabilityFactor">75%</span></td>
-    <td><strong>Manday Equivalent:</strong> <span id="casMandayEquivalent">1.125</span></td>
-  </tr>
-</table>
-<div class="section-header">WORK ELEMENTS</div>
-<table>
-  <thead>
-    <tr>
-      <th>Code</th>
-      <th>Description</th>
-      <th>U/M</th>
-      <th>Qty</th>
-      <th>ManHrs Per Unit</th>
-      <th>Work Multi</th>
-      <th>Est. MDs</th>
-    </tr>
-  </thead>
-  <tbody id="casWorkElements">
-    <!-- Work element rows will be inserted here -->
-  </tbody>
-</table>
-
-<div class="section-header">TOOLS</div>
+      <p><strong>Total Labor:</strong> <span id="casTotalLabor">0</span></p>
+      
+      <!-- Production Efficiency Factors -->
+      <div class="section-header">PRODUCTION EFFICIENCY FACTORS</div>
+      <table>
+        <tr>
+          <td><strong>Product Efficiency Factor:</strong> <span id="casProductEfficiency">67</span></td>
+          <td><strong>Resulting Delay Factor:</strong> <span id="casDelayFactor">1.00</span></td>
+        </tr>
+        <tr>
+          <td><strong>Availability Factor:</strong> <span id="casAvailabilityFactor">75%</span></td>
+          <td><strong>Manday Equivalent:</strong> <span id="casMandayEquivalent">1.125</span></td>
+        </tr>
+      </table>
+      
+      <!-- Work Elements -->
+      <div class="section-header">WORK ELEMENTS</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>U/M</th>
+            <th>Qty</th>
+            <th>ManHrs Per Unit</th>
+            <th>Work Multi</th>
+            <th>Est. MDs</th>
+          </tr>
+        </thead>
+        <tbody id="casWorkElements">
+          <!-- Work element rows will be inserted here -->
+        </tbody>
+      </table>
+      
+      <!-- Tools (Static) -->
+      <div class="section-header">TOOLS</div>
       <table>
         <thead>
           <tr>
@@ -392,20 +394,23 @@
           </tr>
         </tbody>
       </table>
-<div class="section-header">EQUIPMENT</div>
-<table>
-  <thead>
-    <tr>
-      <th>ID #</th>
-      <th>Description</th>
-      <th>Qty</th>
-    </tr>
-  </thead>
-  <tbody id="casEquipmentTable">
-    <!-- Equipment rows will be inserted here -->
-  </tbody>
-</table>
-
+      
+      <!-- Equipment -->
+      <div class="section-header">EQUIPMENT</div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID #</th>
+            <th>Description</th>
+            <th>Qty</th>
+          </tr>
+        </thead>
+        <tbody id="casEquipmentTable">
+          <!-- Equipment rows will be inserted here -->
+        </tbody>
+      </table>
+      
+      <!-- Materials (Static) -->
       <p><strong>MATERIALS</strong></p>
       <table>
         <thead>
@@ -434,6 +439,8 @@
           </tr>
         </tbody>
       </table>
+      
+      <!-- Safety, Quality, Environmental -->
       <div class="section-header">SAFETY PLAN</div>
       <p><strong>Safety Hazard:</strong> OPEN TRENCHES &nbsp;&nbsp; <strong>Control Measure:</strong> CLEARLY MARKED/BARRICADED</p>
       <p><strong>Safety Hazard:</strong> UNDERGROUND/UTILITIES &nbsp;&nbsp; <strong>Control Measure:</strong> MARKED TO ENSURE VISIBILITY</p>
@@ -518,159 +525,31 @@
     let activeWorkElementRow = null;
     let activeEquipmentRow = null;
     
-    // Function to update the CAS Summary (including labor resources) with user inputs.
-function updateCASSummary() {
-  // Update project and activity fields.
-  document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
-  document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
-  document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
-  document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
-  document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
-  document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
-  
-  // Update Production Efficiency Factors.
-  document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
-  document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
-  document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
-  document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
-  
-  // Update Equipment.
-  updateEquipmentSummary();
-  
-  // **Add this line to update the Work Elements section:**
-  updateWorkElementsSummary();
-  
-  // Update Labor Resources.
-  const laborTable = document.getElementById("casLaborTable");
-  laborTable.innerHTML = "";
-  let totalLabor = 0;
-  const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
-  laborRows.forEach(row => {
-    const skill = row.querySelector("select[name='labor_skill']").value;
-    const quantity = parseFloat(row.querySelector("input[name='labor_quantity']").value) || 0;
-    totalLabor += quantity;
-    const tr = document.createElement("tr");
-    const tdSkill = document.createElement("td");
-    tdSkill.textContent = skill;
-    const tdQuantity = document.createElement("td");
-    tdQuantity.textContent = quantity;
-    const tdRemarks = document.createElement("td");
-    tdRemarks.textContent = "";
-    tr.appendChild(tdSkill);
-    tr.appendChild(tdQuantity);
-    tr.appendChild(tdRemarks);
-    laborTable.appendChild(tr);
-  });
-  document.getElementById("casTotalLabor").textContent = totalLabor;
-}
-
-
-function updateEquipmentSummary() {
-  // Get the equipment table's tbody in the CAS Summary.
-  const equipmentTable = document.getElementById("casEquipmentTable");
-  // Clear any existing rows.
-  equipmentTable.innerHTML = "";
-  
-  // Select all equipment rows from the input form.
-  const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
-  
-  equipRows.forEach(row => {
-    const equipmentValue = row.querySelector("input[name='equipment_search']").value.trim();
-    const quantity = row.querySelector("input[name='equipment_quantity']").value.trim();
-    
-    // Create a new table row.
-    const tr = document.createElement("tr");
-    
-    // Split the equipment value if it follows the format "ID - Description"
-    const parts = equipmentValue.split(" - ");
-    const equipmentID = parts[0] ? parts[0] : equipmentValue;
-    const equipmentDesc = parts[1] ? parts[1] : equipmentValue;
-    
-    // Create table cells.
-    const tdID = document.createElement("td");
-    tdID.textContent = equipmentID;
-    
-    const tdDesc = document.createElement("td");
-    tdDesc.textContent = equipmentDesc;
-    
-    const tdQty = document.createElement("td");
-    tdQty.textContent = quantity;
-    
-    // Append cells to the row.
-    tr.appendChild(tdID);
-    tr.appendChild(tdDesc);
-    tr.appendChild(tdQty);
-    
-    // Append the row to the equipment table in the summary.
-    equipmentTable.appendChild(tr);
-  });
-}
-
-function updateWorkElementsSummary() {
-  // Get the work elements table's tbody in the CAS Summary.
-  const workTable = document.getElementById("casWorkElements");
-  // Clear any existing rows.
-  workTable.innerHTML = "";
-  
-  // Select all work element rows from the input form.
-  const workRows = document.querySelectorAll("#workElementsContainer .input-group");
-  
-  workRows.forEach(row => {
-    // Retrieve the code and description string and the quantity.
-    const codeAndDesc = row.querySelector("input[name='work_element_search']").value.trim();
-    const quantity = row.querySelector("input[name='work_element_quantity']").value.trim();
-    
-    // Split the value to extract code and description.
-    const parts = codeAndDesc.split(" - ");
-    const code = parts[0] ? parts[0] : codeAndDesc;
-    const description = parts[1] ? parts[1] : codeAndDesc;
-    
-    // Set default values for fields not provided in the form.
-    const um = "N/A";           // Unit of Measure
-    const manHrsPerUnit = "N/A";  // Man Hours Per Unit
-    const workMulti = "1.00";     // Work Multiplier (default 1.00)
-    const estMDs = "N/A";         // Estimated Mandays
-    
-    // Create a new table row.
-    const tr = document.createElement("tr");
-    
-    // Create and append the cells.
-    const tdCode = document.createElement("td");
-    tdCode.textContent = code;
-    tr.appendChild(tdCode);
-    
-    const tdDesc = document.createElement("td");
-    tdDesc.textContent = description;
-    tr.appendChild(tdDesc);
-    
-    const tdUM = document.createElement("td");
-    tdUM.textContent = um;
-    tr.appendChild(tdUM);
-    
-    const tdQty = document.createElement("td");
-    tdQty.textContent = quantity;
-    tr.appendChild(tdQty);
-    
-    const tdManHrs = document.createElement("td");
-    tdManHrs.textContent = manHrsPerUnit;
-    tr.appendChild(tdManHrs);
-    
-    const tdWorkMulti = document.createElement("td");
-    tdWorkMulti.textContent = workMulti;
-    tr.appendChild(tdWorkMulti);
-    
-    const tdEstMDs = document.createElement("td");
-    tdEstMDs.textContent = estMDs;
-    tr.appendChild(tdEstMDs);
-    
-    // Append the newly created row to the work elements table in the summary.
-    workTable.appendChild(tr);
-  });
-}
-
-      // Update Labor Resources in the summary.
+    // Function to update the CAS Summary with user inputs.
+    function updateCASSummary() {
+      // Update project and activity fields.
+      document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
+      document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
+      document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+      document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+      document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
+      document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
+      
+      // Update Production Efficiency Factors.
+      document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
+      document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
+      document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
+      document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+      
+      // Update Equipment.
+      updateEquipmentSummary();
+      
+      // Update Work Elements.
+      updateWorkElementsSummary();
+      
+      // Update Labor Resources.
       const laborTable = document.getElementById("casLaborTable");
-      laborTable.innerHTML = ""; // Clear existing rows.
+      laborTable.innerHTML = "";
       let totalLabor = 0;
       const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
       laborRows.forEach(row => {
@@ -683,7 +562,7 @@ function updateWorkElementsSummary() {
         const tdQuantity = document.createElement("td");
         tdQuantity.textContent = quantity;
         const tdRemarks = document.createElement("td");
-        tdRemarks.textContent = ""; // Optionally include remarks if available.
+        tdRemarks.textContent = "";
         tr.appendChild(tdSkill);
         tr.appendChild(tdQuantity);
         tr.appendChild(tdRemarks);
@@ -692,7 +571,74 @@ function updateWorkElementsSummary() {
       document.getElementById("casTotalLabor").textContent = totalLabor;
     }
     
-    // Production Efficiency Factors dropdowns.
+    // Function to update Equipment in the CAS Summary.
+    function updateEquipmentSummary() {
+      const equipmentTable = document.getElementById("casEquipmentTable");
+      equipmentTable.innerHTML = "";
+      const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
+      equipRows.forEach(row => {
+        const equipmentValue = row.querySelector("input[name='equipment_search']").value.trim();
+        const quantity = row.querySelector("input[name='equipment_quantity']").value.trim();
+        const tr = document.createElement("tr");
+        const parts = equipmentValue.split(" - ");
+        const equipmentID = parts[0] ? parts[0] : equipmentValue;
+        const equipmentDesc = parts[1] ? parts[1] : equipmentValue;
+        const tdID = document.createElement("td");
+        tdID.textContent = equipmentID;
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = equipmentDesc;
+        const tdQty = document.createElement("td");
+        tdQty.textContent = quantity;
+        tr.appendChild(tdID);
+        tr.appendChild(tdDesc);
+        tr.appendChild(tdQty);
+        equipmentTable.appendChild(tr);
+      });
+    }
+    
+    // Function to update Work Elements in the CAS Summary.
+    function updateWorkElementsSummary() {
+      const workTable = document.getElementById("casWorkElements");
+      workTable.innerHTML = "";
+      const workRows = document.querySelectorAll("#workElementsContainer .input-group");
+      workRows.forEach(row => {
+        const codeAndDesc = row.querySelector("input[name='work_element_search']").value.trim();
+        const quantity = row.querySelector("input[name='work_element_quantity']").value.trim();
+        const parts = codeAndDesc.split(" - ");
+        const code = parts[0] ? parts[0] : codeAndDesc;
+        const description = parts[1] ? parts[1] : codeAndDesc;
+        // Default values for additional fields.
+        const um = "N/A";
+        const manHrsPerUnit = "N/A";
+        const workMulti = "1.00";
+        const estMDs = "N/A";
+        const tr = document.createElement("tr");
+        const tdCode = document.createElement("td");
+        tdCode.textContent = code;
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = description;
+        const tdUM = document.createElement("td");
+        tdUM.textContent = um;
+        const tdQty = document.createElement("td");
+        tdQty.textContent = quantity;
+        const tdManHrs = document.createElement("td");
+        tdManHrs.textContent = manHrsPerUnit;
+        const tdWorkMulti = document.createElement("td");
+        tdWorkMulti.textContent = workMulti;
+        const tdEstMDs = document.createElement("td");
+        tdEstMDs.textContent = estMDs;
+        tr.appendChild(tdCode);
+        tr.appendChild(tdDesc);
+        tr.appendChild(tdUM);
+        tr.appendChild(tdQty);
+        tr.appendChild(tdManHrs);
+        tr.appendChild(tdWorkMulti);
+        tr.appendChild(tdEstMDs);
+        workTable.appendChild(tr);
+      });
+    }
+    
+    // Production Efficiency Functions
     function populateFactorDropdowns() {
       const factorIds = [
         "factor-workload", "factor-site", "factor-labor", "factor-supervision",
@@ -767,7 +713,7 @@ function updateWorkElementsSummary() {
     }
     window.addLaborResource = addLaborResource;
     
-    // Work Elements Modal Functions (unchanged from previous integration)
+    // Work Elements Modal Functions
     function addWorkElementPlaceholder() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
@@ -1017,11 +963,11 @@ function updateWorkElementsSummary() {
     }
     window.selectEquipment = selectEquipment;
     
-    // Form Submission Handler – update CAS Summary (including Labor Resources) before processing.
+    // Form Submission Handler
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       
-      // Update the Construction Activity Summary with current user inputs.
+      // First, update the CAS Summary with current user inputs.
       updateCASSummary();
       
       // Build the payload.
