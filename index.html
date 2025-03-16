@@ -358,40 +358,24 @@
   </tr>
 </table>
 <div class="section-header">WORK ELEMENTS</div>
-      <table>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Description</th>
-            <th>U/M</th>
-            <th>Qty</th>
-            <th>ManHrs Per Unit</th>
-            <th>Work Multi</th>
-            <th>Est. MDs</th>
-          </tr>
-        </thead>
-        <tbody id="casWorkElements">
-          <tr>
-            <td>1302</td>
-            <td>EXCAVATE USING, TRACTOR MTD. BACKHOE</td>
-            <td>CD</td>
-            <td>4</td>
-            <td>0</td>
-            <td>1.00</td>
-            <td>0.05</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>HAND EXCAVATE TO DEPTH</td>
-            <td>EA</td>
-            <td>1</td>
-            <td>6</td>
-            <td>1.00</td>
-            <td>0.79</td>
-          </tr>
-        </tbody>
-      </table>
-      <p><strong>TOOLS</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Description</th>
+      <th>U/M</th>
+      <th>Qty</th>
+      <th>ManHrs Per Unit</th>
+      <th>Work Multi</th>
+      <th>Est. MDs</th>
+    </tr>
+  </thead>
+  <tbody id="casWorkElements">
+    <!-- Work element rows will be inserted here -->
+  </tbody>
+</table>
+
+<div class="section-header">TOOLS</div>
       <table>
         <thead>
           <tr>
@@ -597,7 +581,68 @@ function updateEquipmentSummary() {
   });
 }
 
-      
+function updateWorkElementsSummary() {
+  // Get the work elements table's tbody in the CAS Summary.
+  const workTable = document.getElementById("casWorkElements");
+  // Clear any existing rows.
+  workTable.innerHTML = "";
+  
+  // Select all work element rows from the input form.
+  const workRows = document.querySelectorAll("#workElementsContainer .input-group");
+  
+  workRows.forEach(row => {
+    // Retrieve the code and description string and the quantity.
+    const codeAndDesc = row.querySelector("input[name='work_element_search']").value.trim();
+    const quantity = row.querySelector("input[name='work_element_quantity']").value.trim();
+    
+    // Split the value to extract code and description.
+    const parts = codeAndDesc.split(" - ");
+    const code = parts[0] ? parts[0] : codeAndDesc;
+    const description = parts[1] ? parts[1] : codeAndDesc;
+    
+    // Set default values for fields not provided in the form.
+    const um = "N/A";           // Unit of Measure
+    const manHrsPerUnit = "N/A";  // Man Hours Per Unit
+    const workMulti = "1.00";     // Work Multiplier (default 1.00)
+    const estMDs = "N/A";         // Estimated Mandays
+    
+    // Create a new table row.
+    const tr = document.createElement("tr");
+    
+    // Create and append the cells.
+    const tdCode = document.createElement("td");
+    tdCode.textContent = code;
+    tr.appendChild(tdCode);
+    
+    const tdDesc = document.createElement("td");
+    tdDesc.textContent = description;
+    tr.appendChild(tdDesc);
+    
+    const tdUM = document.createElement("td");
+    tdUM.textContent = um;
+    tr.appendChild(tdUM);
+    
+    const tdQty = document.createElement("td");
+    tdQty.textContent = quantity;
+    tr.appendChild(tdQty);
+    
+    const tdManHrs = document.createElement("td");
+    tdManHrs.textContent = manHrsPerUnit;
+    tr.appendChild(tdManHrs);
+    
+    const tdWorkMulti = document.createElement("td");
+    tdWorkMulti.textContent = workMulti;
+    tr.appendChild(tdWorkMulti);
+    
+    const tdEstMDs = document.createElement("td");
+    tdEstMDs.textContent = estMDs;
+    tr.appendChild(tdEstMDs);
+    
+    // Append the newly created row to the work elements table in the summary.
+    workTable.appendChild(tr);
+  });
+}
+
       // Update Labor Resources in the summary.
       const laborTable = document.getElementById("casLaborTable");
       laborTable.innerHTML = ""; // Clear existing rows.
