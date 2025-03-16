@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Construction Activity Summary Sheet</title>
+  <title>Digital Construction Estimator</title>
   <!-- Bootstrap CSS from CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Optional: Animate.css for animations -->
@@ -119,7 +119,7 @@
       0% { opacity: 0; transform: translateY(-20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    /* Modal scrollable bodies */
+    /* Scrollable Modal Bodies */
     #libraryModalBody, #equipmentModalBody {
       max-height: 400px;
       overflow-y: auto;
@@ -140,7 +140,7 @@
     #equipmentModalBody td:first-child {
       min-width: 150px;
     }
-    /* Additional CAS Summary Styles */
+    /* Construction Activity Summary Styles */
     #casSummary {
       margin-top: 40px;
       padding: 20px;
@@ -181,7 +181,6 @@
   <div class="container my-5">
     <!-- Main Form Section -->
     <form id="estimatorForm" class="p-4 bg-white rounded shadow">
-      
       <!-- Updated Project Information -->
       <fieldset class="mb-4">
         <legend>Project Information</legend>
@@ -220,32 +219,31 @@
         </div>
       </fieldset>
       
-      <!-- Labor Resources Section -->
+      <!-- Labor Resources -->
       <fieldset class="mb-4">
         <legend>Labor Resources</legend>
         <div id="laborResourcesContainer"></div>
         <button type="button" class="btn btn-outline-success mb-3" onclick="addLaborResource()">Add Labor Resource</button>
       </fieldset>
       
-      <!-- Work Elements Section -->
+      <!-- Work Elements -->
       <fieldset class="mb-4">
         <legend>Work Elements</legend>
         <div id="workElementsContainer"></div>
         <button type="button" class="btn btn-outline-primary mb-3" onclick="openLibraryModal()">Add Work Element</button>
       </fieldset>
       
-      <!-- Equipment Section -->
+      <!-- Equipment -->
       <fieldset class="mb-4">
         <legend>Equipment</legend>
         <div id="equipmentContainer"></div>
         <button type="button" class="btn btn-outline-warning mb-3" onclick="openEquipmentModal()">Add Equipment</button>
       </fieldset>
       
-      <!-- Production Efficiency Factors -->
+      <!-- Production Efficiency Factors (unchanged) -->
       <fieldset class="mb-4">
         <legend>Production Efficiency Factors</legend>
         <div id="efficiencyFactorsContainer" class="mb-3">
-          <!-- (Existing code for factors dropdowns remains unchanged) -->
           <div class="row mb-2">
             <div class="col-md-3"><strong>Workload</strong></div>
             <div class="col-md-3"><select id="factor-workload" class="form-select"></select></div>
@@ -308,19 +306,28 @@
       </div>
     </form>
 
-    <!-- CAS Summary Section -->
+    <!-- Construction Activity Summary Section -->
     <div id="casSummary">
       <h2>Construction Activity Summary Sheet</h2>
+      
+      <!-- Project & Activity Info -->
       <div class="section-header">Project & Activity Information</div>
-      <p><strong>Project Number:</strong> <span id="casProjectNumber">PH5-800</span> &nbsp;&nbsp; 
-         <strong>Project Title:</strong> <span id="casProjectTitle">CONSTRUCT SHED</span></p>
-      <p><strong>Activity Number:</strong> <span id="casActivityNumber">02200</span> &nbsp;&nbsp; 
-         <strong>Activity Title:</strong> <span id="casActivityTitle">EXCAVATE FOR FOOTERS</span></p>
+      <p>
+        <strong>Project Number:</strong> <span id="casProjectNumber">PH5-800</span>&nbsp;&nbsp;
+        <strong>Project Title:</strong> <span id="casProjectTitle">CONSTRUCT SHED</span>
+      </p>
+      <p>
+        <strong>Activity Number:</strong> <span id="casActivityNumber">02200</span>&nbsp;&nbsp;
+        <strong>Activity Title:</strong> <span id="casActivityTitle">EXCAVATE FOR FOOTERS</span>
+      </p>
+      
+      <!-- Work Details -->
       <div class="section-header">CA # 02200-1</div>
       <p><strong>DESCRIPTION OF WORK:</strong></p>
-      <p id="casDescription">EXCAVATE TRENCH 12" DEEP BY 18" WIDE. TOTAL LINEAR FEET IS 70.</p>
+      <p id="casDescription">[Static Description]</p>
       <p><strong>METHOD OF CONSTRUCTION/ASSUMPTIONS:</strong></p>
-      <p id="casMethod">[Enter Method of Construction]</p>
+      <p id="casMethod">[Static Method]</p>
+      
       <div class="section-header">LABOR RESOURCES</div>
       <table>
         <thead>
@@ -544,24 +551,25 @@
   
   <!-- Inline JavaScript -->
   <script>
+    // Global active row variables for modals.
     let activeWorkElementRow = null;
     let activeEquipmentRow = null;
     
-    function setActiveWorkElementRow(row) {
-      activeWorkElementRow = row;
+    // Function to update CAS Summary with user inputs.
+    function updateCASSummary() {
+      document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
+      document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
+      document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+      document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+      document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
+      document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
     }
     
-    // Populate dropdowns for Production Efficiency Factors.
+    // Production Efficiency Factors dropdowns.
     function populateFactorDropdowns() {
       const factorIds = [
-        "factor-workload",
-        "factor-site",
-        "factor-labor",
-        "factor-supervision",
-        "factor-job",
-        "factor-weather",
-        "factor-equipment",
-        "factor-tactical"
+        "factor-workload", "factor-site", "factor-labor", "factor-supervision",
+        "factor-job", "factor-weather", "factor-equipment", "factor-tactical"
       ];
       factorIds.forEach(id => {
         const select = document.getElementById(id);
@@ -591,14 +599,8 @@
     
     function recalcEfficiency() {
       const factorIds = [
-        "factor-workload",
-        "factor-site",
-        "factor-labor",
-        "factor-supervision",
-        "factor-job",
-        "factor-weather",
-        "factor-equipment",
-        "factor-tactical"
+        "factor-workload", "factor-site", "factor-labor", "factor-supervision",
+        "factor-job", "factor-weather", "factor-equipment", "factor-tactical"
       ];
       let sum = 0;
       factorIds.forEach(id => {
@@ -608,29 +610,15 @@
       document.getElementById("product-efficiency").textContent = avg.toFixed(1);
       const delay = (avg !== 0) ? (67 / avg) : 0;
       document.getElementById("delay-factor").textContent = delay.toFixed(2);
-      document.getElementById("casProductEfficiency").textContent = avg.toFixed(1);
-      document.getElementById("casDelayFactor").textContent = delay.toFixed(2);
     }
     
-    window.addEventListener("load", async () => {
-      try {
-        const res = await fetch("/activities");
-        const activities = await res.json();
-        const select = document.getElementById("activity_code");
-        activities.forEach(act => {
-          const opt = document.createElement("option");
-          opt.value = act.code;
-          opt.textContent = `${act.code} - ${act.title}`;
-          select.appendChild(opt);
-        });
-      } catch (error) {
-        console.error("Error fetching activities:", error);
-      }
+    window.addEventListener("load", () => {
       populateFactorDropdowns();
       populateAvailabilityDropdown();
       recalcEfficiency();
     });
     
+    // Labor Resources Functions
     function addLaborResource() {
       const container = document.getElementById("laborResourcesContainer");
       const row = document.createElement("div");
@@ -653,8 +641,6 @@
     window.addLaborResource = addLaborResource;
     
     // Work Elements Modal Functions
-    
-    // Create a placeholder row and set it as active.
     function addWorkElementPlaceholder() {
       const container = document.getElementById("workElementsContainer");
       const row = document.createElement("div");
@@ -670,7 +656,6 @@
       activeWorkElementRow = row;
     }
     
-    // Open Work Elements Modal
     function openLibraryModal() {
       addWorkElementPlaceholder();
       document.getElementById("modalSearchInput").value = "";
@@ -681,18 +666,16 @@
     }
     window.openLibraryModal = openLibraryModal;
     
-    // Fetch work elements for modal and populate table using event listeners.
     async function fetchWorkElementsForModal() {
       try {
         const res = await fetch("/work-elements");
         const results = await res.json();
         populateModalTable(results);
       } catch (error) {
-        console.error("Error fetching work elements library:", error);
+        console.error("Error fetching work elements:", error);
       }
     }
     
-    // Build work elements modal table dynamically.
     function populateModalTable(data) {
       const modalBody = document.getElementById("libraryModalBody");
       modalBody.innerHTML = "";
@@ -745,7 +728,6 @@
       modalBody.appendChild(table);
     }
     
-    // Filter work elements modal table.
     function filterModalTable() {
       const searchValue = document.getElementById("modalSearchInput").value.toLowerCase();
       const table = document.getElementById("modalTable");
@@ -761,7 +743,6 @@
       }
     }
     
-    // When a work element is selected, update the active row.
     function selectWorkElement(code, description, uom, multiplier) {
       if (activeWorkElementRow) {
         activeWorkElementRow.innerHTML = `
@@ -792,8 +773,6 @@
     window.selectWorkElement = selectWorkElement;
     
     // Equipment Modal Functions
-    
-    // Open Equipment Modal
     function openEquipmentModal() {
       addEquipmentPlaceholder();
       document.getElementById("equipmentModalSearchInput").value = "";
@@ -804,7 +783,6 @@
     }
     window.openEquipmentModal = openEquipmentModal;
     
-    // Create placeholder for equipment.
     function addEquipmentPlaceholder() {
       const container = document.getElementById("equipmentContainer");
       const row = document.createElement("div");
@@ -818,18 +796,16 @@
       activeEquipmentRow = row;
     }
     
-    // Fetch equipment for modal.
     async function fetchEquipmentForModal() {
       try {
         const res = await fetch("/equipment");
         const results = await res.json();
         populateEquipmentModalTable(results);
       } catch (error) {
-        console.error("Error fetching equipment list:", error);
+        console.error("Error fetching equipment:", error);
       }
     }
     
-    // Build equipment modal table dynamically.
     function populateEquipmentModalTable(data) {
       const modalBody = document.getElementById("equipmentModalBody");
       modalBody.innerHTML = "";
@@ -874,7 +850,6 @@
       modalBody.appendChild(table);
     }
     
-    // Filter equipment modal table.
     function filterEquipmentModalTable() {
       const searchValue = document.getElementById("equipmentModalSearchInput").value.toLowerCase();
       const table = document.getElementById("equipmentModalTable");
@@ -890,7 +865,6 @@
       }
     }
     
-    // When equipment is selected, update the active equipment row.
     function selectEquipment(id, description) {
       if (activeEquipmentRow) {
         activeEquipmentRow.innerHTML = `
@@ -916,39 +890,53 @@
     }
     window.selectEquipment = selectEquipment;
     
-    // Handle form submission.
+    // Form Submission Handler – integrate user inputs into CAS Summary before processing submission.
     document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+      
+      // Update the Construction Activity Summary with user inputs.
+      updateCASSummary();
+      
+      // Build payload.
       const form = e.target;
       const data = {
-        project_name: form.project_name.value,
-        project_date: form.project_date.value,
-        activity_code: form.activity_code.value,
+        project_number: form.project_number.value,
+        project_title: form.project_title.value,
+        activity_number: form.activity_number.value,
+        activity_title: form.activity_title.value,
         description_of_work: form.description_of_work.value,
         method_of_construction: form.method_of_construction.value,
         labor_resources: [],
         work_elements: [],
         equipment: []
       };
+      
+      // Gather Labor Resources.
       const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
       laborRows.forEach(row => {
         const skill = row.querySelector("select[name='labor_skill']").value;
         const quantity = parseInt(row.querySelector("input[name='labor_quantity']").value, 10);
         data.labor_resources.push({ skill, quantity });
       });
+      
+      // Gather Work Elements.
       const workRows = document.querySelectorAll("#workElementsContainer .input-group");
       workRows.forEach(row => {
         const codeAndDescription = row.querySelector("input[name='work_element_search']").value;
         const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value);
         data.work_elements.push({ code: codeAndDescription, description: codeAndDescription, quantity });
       });
+      
+      // Gather Equipment.
       const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
       equipRows.forEach(row => {
         const name = row.querySelector("input[name='equipment_search']").value;
         const quantity = parseFloat(row.querySelector("input[name='equipment_quantity']").value);
         data.equipment.push({ name, quantity });
       });
+      
       console.log("Payload:", data);
+      
       try {
         const res = await fetch("/final-estimate", {
           method: "POST",
