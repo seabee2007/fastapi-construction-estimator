@@ -608,7 +608,7 @@
         const parts = codeAndDesc.split(" - ");
         const code = parts[0] ? parts[0] : codeAndDesc;
         const description = parts[1] ? parts[1] : codeAndDesc;
-        const um = "N/A";
+        const uom = "N/A";
         const manHrsPerUnit = "N/A";
         const workMulti = "1.00";
         const estMDs = "N/A";
@@ -618,7 +618,7 @@
         const tdDesc = document.createElement("td");
         tdDesc.textContent = description;
         const tdUM = document.createElement("td");
-        tdUM.textContent = um;
+        tdUM.textContent = uom;
         const tdQty = document.createElement("td");
         tdQty.textContent = quantity;
         const tdManHrs = document.createElement("td");
@@ -629,7 +629,7 @@
         tdEstMDs.textContent = estMDs;
         tr.appendChild(tdCode);
         tr.appendChild(tdDesc);
-        tr.appendChild(tdUM);
+        tr.appendChild(tdUOM);
         tr.appendChild(tdQty);
         tr.appendChild(tdManHrs);
         tr.appendChild(tdWorkMulti);
