@@ -83,6 +83,14 @@ async def read_root():
 async def get_cass():
     return cass_records
 
+@app.get("/cass/{record_id}")
+async def get_cass_record(record_id: int):
+    for record in cass_records:
+        if record.get("id") == record_id:
+            return record
+    raise HTTPException(status_code=404, detail="Record not found")
+
+
 # ---------------------------
 # Pydantic Models (Schemas)
 # ---------------------------
