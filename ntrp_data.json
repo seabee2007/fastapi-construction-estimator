@@ -3,6 +3,7 @@
     { "code": "03100", "title": "Concrete Placement" },
     { "code": "03200", "title": "Concrete Finishing" },
     { "code": "03300", "title": "Formwork & Reinforcement" }
+    { "code": "04100", "title": "Masonry" }
   ],
   "work_elements": [
     { "code": "03 11 13.35", "multiplier": "0010", "description": "Flat plate, job-built form, to 15 ft high", "uom": "SF", "man_hours_per_unit": 0.156 },
@@ -167,19 +168,8 @@
     { "code": "03 39 13.50", "multiplier": "0010", "description": "Water curing (liquid membrane/burlap/water)", "uom": "SF", "man_hours_per_unit": 0.004 },
     { "code": "03 39 23.13", "multiplier": "0010", "description": "Sprayed membrane curing compound", "uom": "SF", "man_hours_per_unit": 0.0017 },
     { "code": "03 45 13.50", "multiplier": "0000", "description": "Precast concrete wall panels (average)", "uom": "SF", "man_hours_per_unit": 0.076 }
-  ],
-  {
-  "activities": [
-    { "code": "04", "title": "Masonry" }
-  ],
-  "work_elements": [
-    {
-      "code": "04 05 19.05",
-      "multiplier": "0010",
-      "description": "Anchor Bolts – Hooked, with nut and washer, 1/2-inch diameter, 8 and 12 inches long",
-      "uom": "Each",
-      "man_hours_per_unit": 0.053
-    },
+    { "code": "04 05 19.05", "multiplier": "0010", "description": "Anchor Bolts – Hooked, with nut and washer, 1/2-inch diameter, 8 and 12 inches long", "uom": "Each", "man_hours_per_unit": 0.053 },
+    { "code": "04 05 19.05", "multiplier": "0020", "description": "Anchor Bolts – Hooked, with nut and washer, 5/8-inch diameter, 8 and 12 inches long", "uom": "Each", "man_hours_per_unit": 0.058 },
     {
       "code": "04 05 19.05",
       "multiplier": "0020",
@@ -607,8 +597,9 @@
       "uom": "SF",
       "man_hours_per_unit": 0.286
     }
-  ]
-}
+  ],
+
+    
 
   "labor_resources": [
     { "name": "Crew Leader", "rate_per_hour": null },
