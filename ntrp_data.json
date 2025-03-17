@@ -229,36 +229,100 @@
     { "code": "04 22 10.19", "multiplier": "0120", "description": "Concrete Block, Partitions (Solid, not reinforced) – 4 inches thick", "uom": "SF", "man_hours_per_unit": 0.202 },
     { "code": "04 22 10.19", "multiplier": "0130", "description": "Concrete Block, Partitions (Solid, not reinforced) – 6 inches thick", "uom": "SF", "man_hours_per_unit": 0.216 },
     { "code": "04 22 10.19", "multiplier": "0140", "description": "Concrete Block, Partitions (Solid, not reinforced) – 8 inches thick", "uom": "SF", "man_hours_per_unit": 0.226 },
-    { "code": "04 22 10.19", "multiplier": "0150", "description": "Concrete Block, Partitions (Solid, not reinforced) – 12 inches thick", "uom": "SF", "man_hours_per_unit": 0.286 }
-    {"code": "31 11 10.10", "multiplier": "0010", "description": "Clear and Grub Site – light trees to 6-inch diameter; cut and chip trees using 3 CYD crawler loader, brush chipper, and chain saws", "uom": "Acre", "man_hours_per_unit": 64.0}
-    {"code": "31 11 10.10", "multiplier": "0020", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 16.0}
-    {"code": "31 11 10.10", "multiplier": "0030", "description": "Clear and Grub Site – medium trees to 12-inch diameter", "uom": "Acre", "man_hours_per_unit": 92.0}
-    {"code": "31 11 10.10", "multiplier": "0040", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 32.0}
-    {"code": "31 11 10.10", "multiplier": "0050", "description": "Clear and Grub Site – heavy trees to 24-inch diameter", "uom": "Acre", "man_hours_per_unit": 213.0}
-    {"code": "31 11 10.10", "multiplier": "0060", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 64.0}
-    {"code": "31 13 13.10", "multiplier": "0010", "description": "Selective Clearing – Clearing brush with brush saw", "uom": "Acre", "man_hours_per_unit": 42.6}
-    {"code": "31 13 13.10", "multiplier": "0020", "description": "Selective Clearing – Clearing by hand", "uom": "Acre", "man_hours_per_unit": 88.7}
-    {"code": "31 13 13.10", "multiplier": "0030", "description": "Selective Clearing – With dozer, ball and chain, light clearing", "uom": "Acre", "man_hours_per_unit": 10.6}
-    {"code": "31 13 13.10", "multiplier": "0040", "description": "Selective Clearing – Medium clearing", "uom": "Acre", "man_hours_per_unit": 14.2}
-    {"code": "31 13 13.10", "multiplier": "0050", "description": "Selective Clearing – With dozer, brush rake, light brush", "uom": "Acre", "man_hours_per_unit": 2.1}
-    {"code": "31 13 13.10", "multiplier": "0060", "description": "Selective Clearing – Medium brush to 4-inch diameter", "uom": "Acre", "man_hours_per_unit": 2.7}
-    {"code": "31 13 13.10", "multiplier": "0070", "description": "Selective Clearing – Heavy brush to 4-inch diameter", "uom": "Acre", "man_hours_per_unit": 3.3}
-    {"code": "31 13 13.10", "multiplier": "0080", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, light density", "uom": "Acre", "man_hours_per_unit": 5.3}
-    {"code": "31 13 13.10", "multiplier": "0090", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, medium density", "uom": "Acre", "man_hours_per_unit": 7.2}
-    {"code": "31 13 13.10", "multiplier": "0100", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, heavy density", "uom": "Acre", "man_hours_per_unit": 10.6}
-    {"code": "31 13 13.20", "multiplier": "0010", "description": "Selective Tree Removal – Remove selective trees (not including stumps) up to 6-inch diameter", "uom": "Each", "man_hours_per_unit": 3.547}
-    {"code": "31 13 13.20", "multiplier": "0020", "description": "Selective Tree Removal – Remove selective trees, 8- to 12-inch diameter", "uom": "Each", "man_hours_per_unit": 5.320}
-    {"code": "31 13 13.20", "multiplier": "0030", "description": "Selective Tree Removal – Remove selective trees, 13- to 24-inch diameter", "uom": "Each", "man_hours_per_unit": 6.384}
-    {"code": "31 13 13.20", "multiplier": "0040", "description": "Selective Tree Removal – Remove selective trees, 25- to 36-inch diameter", "uom": "Each", "man_hours_per_unit": 7.980}
-    {"code": "31 13 13.20", "multiplier": "0050", "description": "Selective Tree Removal – Stump removal onsite by hydraulic backhoe, 4- to 12-inch diameter", "uom": "Each", "man_hours_per_unit": 0.967}
-    {"code": "31 13 13.20", "multiplier": "0060", "description": "Selective Tree Removal – Stump removal onsite by hydraulic backhoe, 13- to 36-inch diameter", "uom": "Each", "man_hours_per_unit": 1.995}
-    {"code": "31 14 13.23", "multiplier": "0010", "description": "Topsoil Stripping and Stockpiling – Remove and stockpile loam/topsoil 6 inches deep with 200-foot haul", "uom": "CYD", "man_hours_per_unit": 0.020}
-    {"code": "31 20 00", "multiplier": "0010", "description": "Earthmoving – Rough grading and contouring", "uom": "Acre", "man_hours_per_unit": null}
-    {"code": "31 30 00", "multiplier": "0010", "description": "Excavation – Bulk excavation, sloping, and benching", "uom": "CY", "man_hours_per_unit": null}
-    {"code": "31 40 00", "multiplier": "0010", "description": "Shoring and Underpinning – Installation of temporary shoring and underpinning", "uom": "LF", "man_hours_per_unit": null}
-    {"code": "31 50 00", "multiplier": "0010", "description": "Trenching and Backfill – Excavation, backfill, and compaction of trenches", "uom": "LF", "man_hours_per_unit": null}
-    {"code": "31 60 00", "multiplier": "0010", "description": "Special Foundations – Bored piles and drilled shafts", "uom": "LF", "man_hours_per_unit": null}
-    {"code": "31 70 00", "multiplier": "0010", "description": "Tunneling and Mining – Blasting and slope protection (gabions, riprap)", "uom": "Each", "man_hours_per_unit": null}
+    { "code": "04 22 10.19", "multiplier": "0150", "description": "Concrete Block, Partitions (Solid, not reinforced) – 12 inches thick", "uom": "SF", "man_hours_per_unit": 0.286 },
+    {"code": "05 05 21.90", "multiplier": "0010", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, Single pass, 1/8 inch thick, 0.1 LB per LF", "uom": "LF", "man_hours_per_unit": 0.070},
+    {"code": "05 05 21.90", "multiplier": "0020", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, Single pass, 3/16 inch thick, 0.2 LB per LF", "uom": "LF", "man_hours_per_unit": 0.142},
+    {"code": "05 05 21.90", "multiplier": "0030", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, Single pass, 1/4 inch thick, 0.3 LB per LF", "uom": "LF", "man_hours_per_unit": 0.213},
+    {"code": "05 05 21.90", "multiplier": "0040", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, Single pass, 5/16 inch thick, 0.4 LB per LF", "uom": "LF", "man_hours_per_unit": 0.281},
+    {"code": "05 05 21.90", "multiplier": "0050", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, 3 passes, 3/8 inch thick, 0.5 LB per LF", "uom": "LF", "man_hours_per_unit": 0.355},
+    {"code": "05 05 21.90", "multiplier": "0060", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, 4 passes, 1/2 inch thick, 0.7 LB per LF", "uom": "LF", "man_hours_per_unit": 0.484},
+    {"code": "05 05 21.90", "multiplier": "0070", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, 5 to 6 passes, 3/4 inch thick, 1.3 LB per LF", "uom": "LF", "man_hours_per_unit": 0.887},
+    {"code": "05 05 21.90", "multiplier": "0080", "description": "Welding Steel, Structural – Continuous fillet, stick welding, including equipment, 8 to 11 passes, 1 inch thick, 2.4 LB per LF", "uom": "LF", "man_hours_per_unit": 1.773},
+    {"code": "05 05 21.90", "multiplier": "0090", "description": "Welding Steel, Structural – Cleaning and welding plates, bars, or rods to existing beams, columns, or trusses", "uom": "LF", "man_hours_per_unit": 0.887},
+    {"code": "05 05 22", "multiplier": "0010", "description": "Structural Steel Fabrication – Beams, Bolted connection", "uom": "Ton", "man_hours_per_unit": 10.4},
+    {"code": "05 05 22", "multiplier": "0015", "description": "Structural Steel Fabrication – Beams, Welded connection", "uom": "Ton", "man_hours_per_unit": 13.0},
+    {"code": "05 05 22", "multiplier": "0020", "description": "Structural Steel Fabrication – Columns, Bolted connection", "uom": "Ton", "man_hours_per_unit": 16.0},
+    {"code": "05 05 22", "multiplier": "0025", "description": "Structural Steel Fabrication – Columns, Welded connection", "uom": "Ton", "man_hours_per_unit": 20.0},
+    {"code": "05 05 22", "multiplier": "0030", "description": "Structural Steel Fabrication – Frames for openings, Bolted connection", "uom": "Ton", "man_hours_per_unit": 2.8},
+    {"code": "05 05 22", "multiplier": "0035", "description": "Structural Steel Fabrication – Frames for openings, Welded connection", "uom": "Ton", "man_hours_per_unit": 3.5},
+    {"code": "05 05 22", "multiplier": "0040", "description": "Structural Steel Fabrication – Girders, Bolted connection", "uom": "Ton", "man_hours_per_unit": 16.0},
+    {"code": "05 05 22", "multiplier": "0045", "description": "Structural Steel Fabrication – Girders, Welded connection", "uom": "Ton", "man_hours_per_unit": 20.0},
+    {"code": "05 05 22", "multiplier": "0050", "description": "Structural Steel Fabrication – Platforms, Bolted connection", "uom": "Ton", "man_hours_per_unit": 36.0},
+    {"code": "05 05 22", "multiplier": "0055", "description": "Structural Steel Fabrication – Platforms, Welded connection", "uom": "Ton", "man_hours_per_unit": 45.0},
+    {"code": "05 05 22", "multiplier": "0060", "description": "Structural Steel Fabrication – Purlins: girts and struts, Bolted connection", "uom": "Ton", "man_hours_per_unit": 12.8},
+    {"code": "05 05 22", "multiplier": "0065", "description": "Structural Steel Fabrication – Purlins: girts and struts, Welded connection", "uom": "Ton", "man_hours_per_unit": 16.0},
+    {"code": "05 05 22", "multiplier": "0070", "description": "Structural Steel Fabrication – Railings (simple tube pipe), Bolted connection", "uom": "LF", "man_hours_per_unit": 1.6},
+    {"code": "05 05 22", "multiplier": "0075", "description": "Structural Steel Fabrication – Railings (simple tube pipe), Welded connection", "uom": "LF", "man_hours_per_unit": 2.0},
+    {"code": "05 05 22", "multiplier": "0080", "description": "Structural Steel Fabrication – Stairs, Bolted connection", "uom": "Ton", "man_hours_per_unit": 28.0},
+    {"code": "05 05 22", "multiplier": "0085", "description": "Structural Steel Fabrication – Stairs, Welded connection", "uom": "Ton", "man_hours_per_unit": 35.0},
+    {"code": "05 05 22", "multiplier": "0090", "description": "Structural Steel Fabrication – Structural frames, Bolted connection", "uom": "Ton", "man_hours_per_unit": 16.0},
+    {"code": "05 05 22", "multiplier": "0095", "description": "Structural Steel Fabrication – Structural frames, Welded connection", "uom": "Ton", "man_hours_per_unit": 20.0},
+    {"code": "05 05 22", "multiplier": "0100", "description": "Structural Steel Fabrication – Trusses, Bolted connection", "uom": "Ton", "man_hours_per_unit": 8.0},
+    {"code": "05 05 22", "multiplier": "0105", "description": "Structural Steel Fabrication – Trusses, Welded connection", "uom": "Ton", "man_hours_per_unit": 10.0},
+    {"code": "05 12 23.00", "multiplier": "0010", "description": "Structural Steel For Buildings – Beams", "uom": "Ton", "man_hours_per_unit": 13.6},
+    {"code": "05 12 23.00", "multiplier": "0020", "description": "Structural Steel For Buildings – Bracing and tiers", "uom": "Ton", "man_hours_per_unit": 17.9},
+    {"code": "05 12 23.00", "multiplier": "0030", "description": "Structural Steel For Buildings – Columns", "uom": "Ton", "man_hours_per_unit": 13.6},
+    {"code": "05 12 23.00", "multiplier": "0040", "description": "Structural Steel For Buildings – Girders", "uom": "Ton", "man_hours_per_unit": 9.0},
+    {"code": "05 12 23.00", "multiplier": "0050", "description": "Structural Steel For Buildings – Grating", "uom": "SF", "man_hours_per_unit": 0.192},
+    {"code": "05 12 23.00", "multiplier": "0060", "description": "Structural Steel For Buildings – Light framing", "uom": "Ton", "man_hours_per_unit": 23.8},
+    {"code": "05 12 23.00", "multiplier": "0070", "description": "Structural Steel For Buildings – Purlins: girts and struts", "uom": "Ton", "man_hours_per_unit": 11.9},
+    {"code": "05 12 23.00", "multiplier": "0080", "description": "Structural Steel For Buildings – Trusses", "uom": "Ton", "man_hours_per_unit": 17.0},
+    {"code": "05 12 23.00", "multiplier": "0090", "description": "Structural Steel For Buildings – Steel wire rope", "uom": "LF", "man_hours_per_unit": 0.0030},
+    {"code": "05 41 13.10", "multiplier": "0010", "description": "Structural Metal Stud Framing Bridging – Solid between studs, 16 in OC, 16 GA, 4 in wide", "uom": "Each", "man_hours_per_unit": 0.0730},
+    {"code": "05 41 13.10", "multiplier": "0110", "description": "Structural Metal Stud Framing Bridging – Solid between studs, 16 in OC, 16 GA, 6 in wide", "uom": "Each", "man_hours_per_unit": 0.0760},
+    {"code": "05 41 13.10", "multiplier": "0120", "description": "Structural Metal Stud Framing Bridging – Solid between studs, 24 in OC, 16 GA, 6 in wide", "uom": "Each", "man_hours_per_unit": 0.0760},
+    {"code": "05 41 13.30", "multiplier": "0010", "description": "Structural Metal Stud Framing Stud Walls – 10 feet high, Top and bottom track, no openings, 16 GA, 3-5/8 inch studs at 16 inch OC", "uom": "LF", "man_hours_per_unit": 0.242},
+    {"code": "05 41 13.30", "multiplier": "0210", "description": "Structural Metal Stud Framing Stud Walls – 10 feet high, Top and bottom track, no openings, 16 GA, 6 inch studs at 16 inch OC", "uom": "LF", "man_hours_per_unit": 0.250},
+    {"code": "05 41 13.30", "multiplier": "0220", "description": "Structural Metal Stud Framing Stud Walls – 10 feet high, Top and bottom track, no openings, 16 GA, 6 inch studs at 24 inch OC", "uom": "LF", "man_hours_per_unit": 0.182},
+    {"code": "05 41 13.30", "multiplier": "0410", "description": "Structural Metal Stud Framing Stud Walls – 12 feet high, Top and bottom track, no openings, 16 GA, 6 inch studs at 16 inch OC", "uom": "LF", "man_hours_per_unit": 0.314},
+    {"code": "05 41 13.30", "multiplier": "0420", "description": "Structural Metal Stud Framing Stud Walls – 12 feet high, Top and bottom track, no openings, 16 GA, 6 inch studs at 24 inch OC", "uom": "LF", "man_hours_per_unit": 0.229},
+    {"code": "05 41 13.30", "multiplier": "0450", "description": "Structural Metal Stud Framing Stud Walls – 12 feet high, Top and bottom track, no openings, 14 GA, 3-5/8 inch studs at 16 inch OC", "uom": "LF", "man_hours_per_unit": 0.333},
+    {"code": "05 41 13.30", "multiplier": "0500", "description": "Structural Metal Stud Framing Stud Walls – 20 feet high, Top and bottom track, no openings, 14 GA, 3-5/8 inch studs at 16 inch OC", "uom": "LF", "man_hours_per_unit": 0.391},
+    {"code": "05 41 13.30", "multiplier": "0510", "description": "Structural Metal Stud Framing Stud Walls – 20 feet high, Top and bottom track, no openings, 14 GA, 6 inch studs at 16 inch OC", "uom": "LF", "man_hours_per_unit": 0.381},
+    {"code": "05 42 13.40", "multiplier": "0010", "description": "Cold Formed Metal Joist Framing – Installation to band joists, beams, or headers, 18 GA x 6 inch x 2 inch flange", "uom": "Each", "man_hours_per_unit": 0.145},
+    {"code": "05 42 23.05", "multiplier": "0010", "description": "Cold Formed Metal Roof Joist Framing Bracing – Framing, Bracing 16 GA x 1 1/2 inch channel thru trusses or rafters, 16 inch OC", "uom": "LF", "man_hours_per_unit": 0.0178},
+    {"code": "05 42 23.10", "multiplier": "0100", "description": "Cold Formed Metal Roof Joist Framing Bridging – Framing, Bridging, Solid between rafters, rafters at 16 inch OC, 18 GA by 4 inch deep", "uom": "Each", "man_hours_per_unit": 0.1333},
+    {"code": "05 42 23.60", "multiplier": "0100", "description": "Cold Formed Metal Roof Joist Framing Roof Rafters – Boxed ridge beam, 18 GA, 6 inches deep", "uom": "LF", "man_hours_per_unit": 0.1000},
+    {"code": "05 42 23.60", "multiplier": "0200", "description": "Cold Formed Metal Roof Joist Framing Roof Rafters – Rafters, 2 inch flange, 18 GA, 6 inches deep", "uom": "Each", "man_hours_per_unit": 0.4570},
+    {"code": "05 42 23.70", "multiplier": "0010", "description": "Cold Formed Metal Roof Joist Framing Soffits and Canopies – Continuous ledger track at wall, studs 16 inch OC, 18 GA x 6 inch wide", "uom": "LF", "man_hours_per_unit": 0.3200},
+    {"code": "05 42 23.70", "multiplier": "0100", "description": "Cold Formed Metal Roof Joist Framing Soffits and Canopies – Horizontal soffit and canopy members, 18 GA 1 5/8 inch flange by 6 inch deep", "uom": "Each", "man_hours_per_unit": 0.1450},
+    {"code": "05 44 13.60", "multiplier": "0010", "description": "Cold Formed Metal Roof Trusses – Fabrication of trusses on ground, 5 to 12 to 8 to 12 pitch, 18 GA by 4 inch chord, 16 feet span", "uom": "Each", "man_hours_per_unit": 1.6},
+    {"code": "05 44 13.60", "multiplier": "0020", "description": "Cold Formed Metal Roof Trusses – Fabrication of trusses on ground, 5 to 12 to 8 to 12 pitch, 18 GA by 4 inch chord, 20 feet span", "uom": "Each", "man_hours_per_unit": 1.7780},
+    {"code": "05 44 13.60", "multiplier": "0030", "description": "Cold Formed Metal Roof Trusses – Fabrication of trusses on ground, 5 to 12 to 8 to 12 pitch, 18 GA by 4 inch chord, 40 feet span", "uom": "Each", "man_hours_per_unit": 2.6670},
+    {"code": "05 44 13.60", "multiplier": "0040", "description": "Cold Formed Metal Roof Trusses – Fabrication of trusses on ground, 5 to 12 to 8 to 12 pitch, 18 GA by 4 inch chord, 50 feet span", "uom": "Each", "man_hours_per_unit": 3.2000},
+    {"code": "05 44 13.60", "multiplier": "0100", "description": "Cold Formed Metal Roof Trusses – Erection only of roof trusses, 5 to 12 to 8 to 12 pitch, 16 feet span", "uom": "Each", "man_hours_per_unit": 0.9520},
+    {"code": "05 44 13.60", "multiplier": "0110", "description": "Cold Formed Metal Roof Trusses – Erection only of roof trusses, 5 to 12 to 8 to 12 pitch, 20 feet span", "uom": "Each", "man_hours_per_unit": 1.000},
+    {"code": "05 44 13.60", "multiplier": "0120", "description": "Cold Formed Metal Roof Trusses – Erection only of roof trusses, 5 to 12 to 8 to 12 pitch, 40 feet span", "uom": "Each", "man_hours_per_unit": 1.3300},
+    {"code": "05 44 13.60", "multiplier": "0130", "description": "Cold Formed Metal Roof Trusses – Erection only of roof trusses, 5 to 12 to 8 to 12 pitch, 50 feet span", "uom": "Each", "man_hours_per_unit": 1.4290},
+    {"code": "31 11 10.10", "multiplier": "0010", "description": "Clear and Grub Site – light trees to 6-inch diameter; cut and chip trees using 3 CYD crawler loader, brush chipper, and chain saws", "uom": "Acre", "man_hours_per_unit": 64.0},
+    {"code": "31 11 10.10", "multiplier": "0020", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 16.0},
+    {"code": "31 11 10.10", "multiplier": "0030", "description": "Clear and Grub Site – medium trees to 12-inch diameter", "uom": "Acre", "man_hours_per_unit": 92.0},
+    {"code": "31 11 10.10", "multiplier": "0040", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 32.0},
+    {"code": "31 11 10.10", "multiplier": "0050", "description": "Clear and Grub Site – heavy trees to 24-inch diameter", "uom": "Acre", "man_hours_per_unit": 213.0},
+    {"code": "31 11 10.10", "multiplier": "0060", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 64.0},
+    {"code": "31 13 13.10", "multiplier": "0010", "description": "Selective Clearing – Clearing brush with brush saw", "uom": "Acre", "man_hours_per_unit": 42.6},
+    {"code": "31 13 13.10", "multiplier": "0020", "description": "Selective Clearing – Clearing by hand", "uom": "Acre", "man_hours_per_unit": 88.7},
+    {"code": "31 13 13.10", "multiplier": "0030", "description": "Selective Clearing – With dozer, ball and chain, light clearing", "uom": "Acre", "man_hours_per_unit": 10.6},
+    {"code": "31 13 13.10", "multiplier": "0040", "description": "Selective Clearing – Medium clearing", "uom": "Acre", "man_hours_per_unit": 14.2},
+    {"code": "31 13 13.10", "multiplier": "0050", "description": "Selective Clearing – With dozer, brush rake, light brush", "uom": "Acre", "man_hours_per_unit": 2.1},
+    {"code": "31 13 13.10", "multiplier": "0060", "description": "Selective Clearing – Medium brush to 4-inch diameter", "uom": "Acre", "man_hours_per_unit": 2.7},
+    {"code": "31 13 13.10", "multiplier": "0070", "description": "Selective Clearing – Heavy brush to 4-inch diameter", "uom": "Acre", "man_hours_per_unit": 3.3},
+    {"code": "31 13 13.10", "multiplier": "0080", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, light density", "uom": "Acre", "man_hours_per_unit": 5.3},
+    {"code": "31 13 13.10", "multiplier": "0090", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, medium density", "uom": "Acre", "man_hours_per_unit": 7.2},
+    {"code": "31 13 13.10", "multiplier": "0100", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, heavy density", "uom": "Acre", "man_hours_per_unit": 10.6},
+    {"code": "31 13 13.20", "multiplier": "0010", "description": "Selective Tree Removal – Remove selective trees (not including stumps) up to 6-inch diameter", "uom": "Each", "man_hours_per_unit": 3.547},
+    {"code": "31 13 13.20", "multiplier": "0020", "description": "Selective Tree Removal – Remove selective trees, 8- to 12-inch diameter", "uom": "Each", "man_hours_per_unit": 5.320},
+    {"code": "31 13 13.20", "multiplier": "0030", "description": "Selective Tree Removal – Remove selective trees, 13- to 24-inch diameter", "uom": "Each", "man_hours_per_unit": 6.384},
+    {"code": "31 13 13.20", "multiplier": "0040", "description": "Selective Tree Removal – Remove selective trees, 25- to 36-inch diameter", "uom": "Each", "man_hours_per_unit": 7.980},
+    {"code": "31 13 13.20", "multiplier": "0050", "description": "Selective Tree Removal – Stump removal onsite by hydraulic backhoe, 4- to 12-inch diameter", "uom": "Each", "man_hours_per_unit": 0.967},
+    {"code": "31 13 13.20", "multiplier": "0060", "description": "Selective Tree Removal – Stump removal onsite by hydraulic backhoe, 13- to 36-inch diameter", "uom": "Each", "man_hours_per_unit": 1.995},
+    {"code": "31 14 13.23", "multiplier": "0010", "description": "Topsoil Stripping and Stockpiling – Remove and stockpile loam/topsoil 6 inches deep with 200-foot haul", "uom": "CYD", "man_hours_per_unit": 0.020},
+    {"code": "31 20 00", "multiplier": "0010", "description": "Earthmoving – Rough grading and contouring", "uom": "Acre", "man_hours_per_unit": null},
+    {"code": "31 30 00", "multiplier": "0010", "description": "Excavation – Bulk excavation, sloping, and benching", "uom": "CY", "man_hours_per_unit": null},
+    {"code": "31 40 00", "multiplier": "0010", "description": "Shoring and Underpinning – Installation of temporary shoring and underpinning", "uom": "LF", "man_hours_per_unit": null},
+    {"code": "31 50 00", "multiplier": "0010", "description": "Trenching and Backfill – Excavation, backfill, and compaction of trenches", "uom": "LF", "man_hours_per_unit": null},
+    {"code": "31 60 00", "multiplier": "0010", "description": "Special Foundations – Bored piles and drilled shafts", "uom": "LF", "man_hours_per_unit": null},
+    {"code": "31 70 00", "multiplier": "0010", "description": "Tunneling and Mining – Blasting and slope protection (gabions, riprap)", "uom": "Each", "man_hours_per_unit": null},
 
   ],
   "labor_resources": [
