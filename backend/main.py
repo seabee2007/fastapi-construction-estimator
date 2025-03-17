@@ -2,7 +2,7 @@ import os
 import json
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -14,7 +14,7 @@ root_dir = os.getcwd()
 # Mount the "static" directory to serve HTML, CSS, JS files.
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Optionally, create endpoints to serve specific files without the /static prefix.
+# Serve specific files without the /static prefix.
 @app.get("/home.html", response_class=HTMLResponse)
 async def read_home():
     home_path = os.path.join(root_dir, "static", "home.html")
@@ -25,8 +25,27 @@ async def read_home():
     except Exception as e:
         raise HTTPException(status_code=404, detail="Home file not found")
 
-# Serve the monolithic index.html file (CAS input form) from the static folder.
-@app.get("/", response_class=HTMLResponse)
+@app.get("/cass_dashboard.html", response_class=HTMLResponse)
+async def read_cass_dashboard():
+    cass_dashboard_path = os.path.join(root_dir, "static", "cass_dashboard.html")
+    try:
+        with open(cass_dashboard_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return HTMLResponse(content=content, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail="CASS Dashboard file not found")
+
+@app.get("/gantt.html", response_class=HTMLResponse)
+async def read_gantt():
+    gantt_path = os.path.join(root_dir, "static", "gantt.html")
+    try:
+        with open(gantt_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return HTMLResponse(content=content, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail="Gantt file not found")
+
+@app.get("/index.html", response_class=HTMLResponse)
 async def read_index():
     index_path = os.path.join(root_dir, "static", "index.html")
     try:
@@ -35,6 +54,20 @@ async def read_index():
         return HTMLResponse(content=content, status_code=200)
     except Exception as e:
         raise HTTPException(status_code=404, detail="Index file not found")
+
+@app.get("/logic.html", response_class=HTMLResponse)
+async def read_logic():
+    index_path = os.path.join(root_dir, "static", "logic.html")
+    try:
+        with open(logic_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return HTMLResponse(content=content, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail="Index file not found")
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    return RedirectResponse(url="/static/home.html")
 
 # ---------------------------
 # Pydantic Models (Schemas)
