@@ -476,7 +476,19 @@
         if (modal) modal.hide();
       }
       window.selectEquipment = selectEquipment;
-      
+
+
+async function fetchCASRecords() {
+  try {
+    const response = await fetch("/cass");
+    const records = await response.json();
+    populateTable(records);
+  } catch (error) {
+    console.error("Error fetching CAS records:", error);
+  }
+}
+
+        
       // -----------------------------
       // Form Submission Handler
       // -----------------------------
