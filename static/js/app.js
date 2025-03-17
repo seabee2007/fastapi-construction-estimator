@@ -2,7 +2,40 @@
       // Global active row variables for modals.
       let activeWorkElementRow = null;
       let activeEquipmentRow = null;
-      
+
+document.addEventListener("DOMContentLoaded", async function() {
+  // Check if a record ID is present in the query parameters.
+  const urlParams = new URLSearchParams(window.location.search);
+  const recordId = urlParams.get("id");
+
+  if (recordId) {
+    try {
+      const response = await fetch(`/cass/${recordId}`);
+      if (response.ok) {
+        const record = await response.json();
+        // Prepopulate your form fields.
+        document.getElementById("project_number").value = record.project_number || "";
+        document.getElementById("project_title").value = record.project_title || "";
+        document.getElementById("activity_number").value = record.activity_number || "";
+        document.getElementById("activity_title").value = record.activity_title || "";
+        document.getElementById("description_of_work").value = record.description_of_work || "";
+        document.getElementById("method_of_construction").value = record.method_of_construction || "";
+        document.getElementById("labor_resources").value = record. labor_resources || "";   
+        document.getElementById("work_elements").value = record. work_elements || ""; 
+        document.getElementById("equipment").value = record. equipments || ""; 
+        // If you have additional fields (labor_resources, work_elements, equipment),
+        // you'll need to populate those as well.
+      } else {
+        console.error("Error fetching record for editing.");
+      }
+    } catch (error) {
+      console.error("Error fetching record:", error);
+    }
+  }
+});
+
+
+        
       // -----------------------------
       // Update CAS Summary Functions
       // -----------------------------
