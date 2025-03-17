@@ -120,6 +120,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
     document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
     document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+    document.getElementById("resultContent").innerText = JSON.stringify(result, null, 2);
+
     
     // Update Labor Resources first.
     const totalLabor = updateLaborResources();
