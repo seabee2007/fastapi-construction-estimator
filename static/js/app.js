@@ -577,9 +577,6 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
 
   console.log("Final Estimate Payload:", finalEstimateData);
 
-  // Option A: If you need the final estimate calculation, try to send to /final-estimate.
-  // Option B: Post the CAS record regardless of final estimate result.
-  // (If you don't need final-estimate, remove Option A.)
   const cassData = {
     project_number: form.project_number.value,
     project_title: form.project_title.value,
@@ -590,8 +587,7 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
     labor_resources: form.labor_resources.value,
     work_elements: form.work_elements.value,
     equipment: form.equipment.value,
-
-    };
+  };
 
   fetch("/cass", {
     method: "POST",
@@ -605,9 +601,7 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
       // window.location.href = "/static/cass_dashboard.html";
     })
     .catch(error => console.error("Error saving CAS record:", error));
-});
+});  // End of submit event listener
 
-      
-      // Attach search event listener to modal search input.
-      document.getElementById("modalSearchInput").addEventListener("input", filterModalTable);
-    });
+// Attach search event listener to modal search input.
+document.getElementById("modalSearchInput").addEventListener("input", filterModalTable);
