@@ -2,7 +2,7 @@
   "activities": [
     { "code": "03100", "title": "Concrete Placement" },
     { "code": "03200", "title": "Concrete Finishing" },
-    { "code": "03300", "title": "Formwork & Reinforcement" }
+    { "code": "03300", "title": "Formwork & Reinforcement" },
     { "code": "04100", "title": "Masonry" }
   ],
   "work_elements": [
