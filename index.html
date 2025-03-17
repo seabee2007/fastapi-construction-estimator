@@ -320,7 +320,12 @@
         <strong>Activity Number:</strong> <span id="casActivityNumber">02200</span>&nbsp;&nbsp;
         <strong>Activity Title:</strong> <span id="casActivityTitle">EXCAVATE FOR FOOTERS</span>
       </p>
-      
+      <p>
+        <strong>Duration Estimated:</strong> <span id="casDurationEstimated">0 Days</span>
+        &nbsp;&nbsp;&nbsp;
+        <strong>Mandays Estimated:</strong> <span id="casMandaysEstimated">0</span>
+      </p>
+
       <!-- Work Details -->
       <div class="section-header">CA # 02200-1</div>
       <p><strong>DESCRIPTION OF WORK:</strong></p>
@@ -562,75 +567,130 @@
       });
     }
     
-    function updateWorkElementsSummary() {
-      const workTable = document.getElementById("casWorkElements");
-      workTable.innerHTML = "";
-      // Get crew size from labor update.
-      const crewSize = parseFloat(document.getElementById("casTotalLabor").textContent) || 0;
-      const workRows = document.querySelectorAll("#workElementsContainer .input-group");
-      workRows.forEach(row => {
-        const codeAndDesc = row.querySelector("input[name='work_element_search']").value.trim();
-        const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value) || 0;
-        const parts = codeAndDesc.split(" - ");
-        const code = parts[0] ? parts[0] : codeAndDesc;
-        const description = parts[1] ? parts[1] : codeAndDesc;
-        // Retrieve additional fields.
-        const um = row.querySelector("span.um-field").textContent || "N/A";
-        const manHoursPerUnit = parseFloat(row.querySelector("span.man-hours-field").textContent) || 0;
-        const multiplier = parseFloat(row.querySelector("span.multiplier-field").textContent) || 1;
-        let estMDs = "N/A";
-        if (crewSize > 0 && manHoursPerUnit > 0) {
-          // Formula: MDs = (Quantity / Crew Size) × (ManHrs Per Unit / 8) × Multiplier
-          estMDs = ((quantity / crewSize) * (manHoursPerUnit / 8) * multiplier).toFixed(2);
-        }
-        const tr = document.createElement("tr");
-        const tdCode = document.createElement("td");
-        tdCode.textContent = code;
-        const tdDesc = document.createElement("td");
-        tdDesc.textContent = description;
-        const tdUM = document.createElement("td");
-        tdUM.textContent = um;
-        const tdQty = document.createElement("td");
-        tdQty.textContent = quantity;
-        const tdManHrs = document.createElement("td");
-        tdManHrs.textContent = manHoursPerUnit > 0 ? manHoursPerUnit : "N/A";
-        const tdWorkMulti = document.createElement("td");
-        tdWorkMulti.textContent = multiplier;
-        const tdEstMDs = document.createElement("td");
-        tdEstMDs.textContent = estMDs;
-        tr.appendChild(tdCode);
-        tr.appendChild(tdDesc);
-        tr.appendChild(tdUM);
-        tr.appendChild(tdQty);
-        tr.appendChild(tdManHrs);
-        tr.appendChild(tdWorkMulti);
-        tr.appendChild(tdEstMDs);
-        workTable.appendChild(tr);
-      });
+// Update Work Elements and return the sum of estimated mandays.
+function updateWorkElementsSummary() {
+  const workTable = document.getElementById("casWorkElements");
+  workTable.innerHTML = "";
+  let totalMandays = 0;
+  // Get crew size from the labor update.
+  const crewSize = parseFloat(document.getElementById("casTotalLabor").textContent) || 0;
+  const workRows = document.querySelectorAll("#workElementsContainer .input-group");
+  
+  workRows.forEach(row => {
+    const codeAndDesc = row.querySelector("input[name='work_element_search']").value.trim();
+    const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value) || 0;
+    const parts = codeAndDesc.split(" - ");
+    const code = parts[0] ? parts[0] : codeAndDesc;
+    const description = parts[1] ? parts[1] : codeAndDesc;
+    
+    // Retrieve additional fields from the row.
+    const um = row.querySelector("span.um-field").textContent || "N/A";
+    const manHoursPerUnit = parseFloat(row.querySelector("span.man-hours-field").textContent) || 0;
+    const multiplier = parseFloat(row.querySelector("span.multiplier-field").textContent) || 1;
+    
+    // Calculate estimated mandays for this work element row.
+    let estMDs = "N/A";
+    if (crewSize > 0 && manHoursPerUnit > 0) {
+      const md = (quantity / crewSize) * (manHoursPerUnit / 8) * multiplier;
+      estMDs = md.toFixed(2);
+      totalMandays += md;
     }
     
-    function updateCASSummary() {
-      // Update basic fields.
-      document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
-      document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
-      document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
-      document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
-      document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
-      document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
-      document.getElementById("modalSearchInput").addEventListener("input", filterModalTable);
-      // Update Production Efficiency Factors.
-      document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
-      document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
-      document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
-      document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
-      
-      // Update Labor Resources first.
-      updateLaborResources();
-      // Then update Work Elements (now using crew size from labor update).
-      updateWorkElementsSummary();
-      // Then update Equipment.
-      updateEquipmentSummary();
-    }
+    // Build the work element row in the summary table.
+    const tr = document.createElement("tr");
+    const tdCode = document.createElement("td");
+    tdCode.textContent = code;
+    const tdDesc = document.createElement("td");
+    tdDesc.textContent = description;
+    const tdUM = document.createElement("td");
+    tdUM.textContent = um;
+    const tdQty = document.createElement("td");
+    tdQty.textContent = quantity;
+    const tdManHrs = document.createElement("td");
+    tdManHrs.textContent = manHoursPerUnit > 0 ? manHoursPerUnit : "N/A";
+    const tdWorkMulti = document.createElement("td");
+    tdWorkMulti.textContent = multiplier;
+    const tdEstMDs = document.createElement("td");
+    tdEstMDs.textContent = estMDs;
+    
+    tr.appendChild(tdCode);
+    tr.appendChild(tdDesc);
+    tr.appendChild(tdUM);
+    tr.appendChild(tdQty);
+    tr.appendChild(tdManHrs);
+    tr.appendChild(tdWorkMulti);
+    tr.appendChild(tdEstMDs);
+    workTable.appendChild(tr);
+  });
+  
+  // Update the summary span for Mandays Estimated.
+  document.getElementById("casMandaysEstimated").textContent = totalMandays.toFixed(2);
+  return totalMandays;
+}
+
+// In your overall update function, update the CAS summary including Duration:
+function updateCASSummary() {
+  // Update basic fields.
+  document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
+  document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
+  document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+  document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+  document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
+  document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
+  
+  // Update Production Efficiency Factors.
+  document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
+  document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
+  document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
+  document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+  
+  // Update Labor Resources.
+  const totalLabor = updateLaborResources();
+  
+  // Update Work Elements and get total mandays.
+  const totalMandays = updateWorkElementsSummary();
+  
+  // Update Equipment.
+  updateEquipmentSummary();
+  
+  // Calculate Duration using: Duration = Mandays ÷ Crew Size ÷ Manday Equivalent ÷ (Availability Factor/100)
+  const crewSize = parseFloat(document.getElementById("casTotalLabor").textContent) || 0;
+  const mandayEquivalent = parseFloat(document.getElementById("manday-equivalent").value) || 1;
+  const availabilityFactor = parseFloat(document.getElementById("availability-factor").value) || 100;
+  const availDecimal = availabilityFactor / 100;
+  let duration = "N/A";
+  if (crewSize > 0 && mandayEquivalent > 0 && availDecimal > 0) {
+    duration = (totalMandays / crewSize / mandayEquivalent / availDecimal).toFixed(2);
+  }
+  document.getElementById("casDurationEstimated").textContent = duration + " Days";
+}
+
+// Make sure updateLaborResources() returns crew size:
+function updateLaborResources() {
+  const laborTable = document.getElementById("casLaborTable");
+  laborTable.innerHTML = "";
+  let totalLabor = 0;
+  const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
+  laborRows.forEach(row => {
+    const skill = row.querySelector("select[name='labor_skill']").value;
+    const quantity = parseFloat(row.querySelector("input[name='labor_quantity']").value) || 0;
+    totalLabor += quantity;
+    const tr = document.createElement("tr");
+    const tdSkill = document.createElement("td");
+    tdSkill.textContent = skill;
+    const tdQuantity = document.createElement("td");
+    tdQuantity.textContent = quantity;
+    const tdRemarks = document.createElement("td");
+    tdRemarks.textContent = "";
+    tr.appendChild(tdSkill);
+    tr.appendChild(tdQuantity);
+    tr.appendChild(tdRemarks);
+    laborTable.appendChild(tr);
+  });
+  document.getElementById("casTotalLabor").textContent = totalLabor;
+  return totalLabor;
+}
+
     
     // -----------------------------
     // Production Efficiency Functions
@@ -849,6 +909,10 @@
       const modalEl = document.getElementById("libraryModal");
       const modal = bootstrap.Modal.getInstance(modalEl);
       if (modal) modal.hide();
+      row.addEventListener("click", () => {
+  selectWorkElement(item.code, item.description, item.uom || "N/A", item.multiplier || "1.00", item.man_hours_per_unit || "0");
+});
+
     }
     window.selectWorkElement = selectWorkElement;
     
@@ -979,7 +1043,8 @@
       e.preventDefault();
       // Update the CAS Summary with current user inputs.
       updateCASSummary();
-      
+      Duration = (Total Mandays ÷ Crew Size) ÷ Manday Equivalent ÷ (Availability Factor/100)
+
       // Build the payload.
       const form = e.target;
       const data = {
