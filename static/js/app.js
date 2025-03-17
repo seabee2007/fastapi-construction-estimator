@@ -492,69 +492,78 @@ async function fetchCASRecords() {
       // -----------------------------
       // Form Submission Handler
       // -----------------------------
-      document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        // Update the CAS Summary with current user inputs.
-        updateCASSummary();
-        
-        // Build the payload.
-        const form = e.target;
-        const data = {
-          project_number: form.project_number.value,
-          project_title: form.project_title.value,
-          activity_number: form.activity_number.value,
-          activity_title: form.activity_title.value,
-          description_of_work: form.description_of_work.value,
-          method_of_construction: form.method_of_construction.value,
-          labor_resources: [],
-          work_elements: [],
-          equipment: []
-        };
-        
-        // Gather Labor Resources.
-        const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
-        laborRows.forEach(row => {
-          const skill = row.querySelector("select[name='labor_skill']").value;
-          const quantity = parseInt(row.querySelector("input[name='labor_quantity']").value, 10);
-          data.labor_resources.push({ skill, quantity });
-        });
-        
-        // Gather Work Elements.
-        const workRows = document.querySelectorAll("#workElementsContainer .input-group");
-        workRows.forEach(row => {
-          const codeAndDescription = row.querySelector("input[name='work_element_search']").value;
-          const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value);
-          data.work_elements.push({ code: codeAndDescription, description: codeAndDescription, quantity });
-        });
-        
-        // Gather Equipment.
-        const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
-        equipRows.forEach(row => {
-          const name = row.querySelector("input[name='equipment_search']").value;
-          const quantity = parseFloat(row.querySelector("input[name='equipment_quantity']").value);
-          data.equipment.push({ name, quantity });
-        });
-        
-        console.log("Payload:", data);
-        
-        try {
-          const res = await fetch("/final-estimate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-          });
-          const result = await res.json();
-          console.log("Final Estimate:", result);
-          document.getElementById("resultContent").innerText = JSON.stringify(result, null, 2);
-          const modal = new bootstrap.Modal(document.getElementById("resultModal"));
-          modal.show();
-        } catch (error) {
-          console.error("Error getting final estimate:", error);
-          document.getElementById("resultContent").innerText = "Error getting final estimate.";
-          const modal = new bootstrap.Modal(document.getElementById("resultModal"));
-          modal.show();
-        }
-      });
+document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  // Update the CAS Summary on the form
+  updateCASSummary();
+
+  const form = e.target;
+
+  // Build the payload for final estimate
+  const finalEstimateData = {
+    project_name: form.project_number.value, // adjust as needed if names differ
+    project_date: form.project_date ? form.project_date.value : "", // if available; otherwise make it optional
+    activity_code: form.activity_number.value,
+    description_of_work: form.description_of_work.value,
+    method_of_construction: form.method_of_construction.value,
+    labor_resources: [], // gather your labor rows
+    work_elements: [],   // gather your work elements rows
+    equipment: []        // gather your equipment rows
+  };
+
+  // Gather Labor Resources.
+  const laborRows = document.querySelectorAll("#laborResourcesContainer .input-group");
+  laborRows.forEach(row => {
+    const skill = row.querySelector("select[name='labor_skill']").value;
+    const quantity = parseInt(row.querySelector("input[name='labor_quantity']").value, 10);
+    finalEstimateData.labor_resources.push({ skill, quantity });
+  });
+
+  // Gather Work Elements.
+  const workRows = document.querySelectorAll("#workElementsContainer .input-group");
+  workRows.forEach(row => {
+    const codeAndDescription = row.querySelector("input[name='work_element_search']").value;
+    const quantity = parseFloat(row.querySelector("input[name='work_element_quantity']").value);
+    finalEstimateData.work_elements.push({ code: codeAndDescription, description: codeAndDescription, quantity });
+  });
+
+  // Gather Equipment.
+  const equipRows = document.querySelectorAll("#equipmentContainer .input-group");
+  equipRows.forEach(row => {
+    const name = row.querySelector("input[name='equipment_search']").value;
+    const quantity = parseFloat(row.querySelector("input[name='equipment_quantity']").value);
+    finalEstimateData.equipment.push({ name, quantity });
+  });
+
+  console.log("Final Estimate Payload:", finalEstimateData);
+
+  // Option A: If you need the final estimate calculation, try to send to /final-estimate.
+  // Option B: Post the CAS record regardless of final estimate result.
+  // (If you don't need final-estimate, remove Option A.)
+  const cassData = {
+    project_number: form.project_number.value,
+    project_title: form.project_title.value,
+    activity_number: form.activity_number.value,
+    activity_title: form.activity_title.value,
+    description_of_work: form.description_of_work.value,
+    method_of_construction: form.method_of_construction.value,
+    // Include additional fields (labor_resources, work_elements, equipment) if desired.
+  };
+
+  fetch("/cass", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(cassData)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log("CAS record saved:", data);
+      // Optionally, you can redirect to the dashboard:
+      // window.location.href = "/static/cass_dashboard.html";
+    })
+    .catch(error => console.error("Error saving CAS record:", error));
+});
+
       
       // Attach search event listener to modal search input.
       document.getElementById("modalSearchInput").addEventListener("input", filterModalTable);
