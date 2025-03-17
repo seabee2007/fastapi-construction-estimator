@@ -105,7 +105,7 @@ class FinalEstimationInput(BaseModel):
     work_elements: List[WorkElementRow]
     equipment: List[EquipmentRow]
 
-class FinalEstimationInput(BaseModel):
+class FinalEstimationOutput(BaseModel):
     project_name: str = Field(..., example="Project PH5-800")
     project_date: Optional[str] = Field(None, example="2025-03-15")
     activity_code: str = Field(..., example="02200")
