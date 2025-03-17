@@ -3,7 +3,7 @@
     { "code": "03100", "title": "Concrete Placement" },
     { "code": "03200", "title": "Concrete Finishing" },
     { "code": "03300", "title": "Formwork & Reinforcement" },
-    { "code": "04100", "title": "Masonry" }
+    { "code": "04100", "title": "Masonry" },
   ],
   "work_elements": [
     { "code": "03 11 13.35", "multiplier": "0010", "description": "Flat plate, job-built form, to 15 ft high", "uom": "SF", "man_hours_per_unit": 0.156 },
