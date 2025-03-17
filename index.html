@@ -819,7 +819,7 @@
         rows[i].style.display = rowText.indexOf(searchValue) > -1 ? "" : "none";
       }
     }
-    
+   document.getElementById("modalSearchInput").addEventListener("input", filterModalTable); 
     // The selectWorkElement function now accepts manHoursPerUnit.
     function selectWorkElement(code, description, uom, multiplier, manHoursPerUnit) {
       if (activeWorkElementRow) {
