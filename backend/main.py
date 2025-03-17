@@ -79,6 +79,10 @@ async def read_resource_leveling():
 async def read_root():
     return RedirectResponse(url="/static/home.html")
 
+@app.get("/cass")
+async def get_cass():
+    return cass_records
+
 # ---------------------------
 # Pydantic Models (Schemas)
 # ---------------------------
@@ -146,6 +150,8 @@ async def get_equipment():
     if not equipment:
         raise HTTPException(status_code=404, detail="No equipment found.")
     return equipment
+
+
 
 # ---------------------------
 # Load NTRP Data from JSON File
@@ -215,10 +221,6 @@ async def final_estimate(input_data: FinalEstimationInput):
 # In a production system, you would store these records in a database.
 # For demonstration, we'll use an in-memory list.
 cass_records = []
-
-@app.get("/cass")
-async def get_cass():
-    return cass_records
 
 @app.post("/cass")
 async def create_cass(record: dict):
