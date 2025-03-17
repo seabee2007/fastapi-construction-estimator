@@ -65,6 +65,16 @@ async def read_logic():
     except Exception as e:
         raise HTTPException(status_code=404, detail="Index file not found")
 
+@app.get("/resource_leveling.html", response_class=HTMLResponse)
+async def read_resource_leveling():
+    index_path = os.path.join(root_dir, "static", "resource_leveling.html")
+    try:
+        with open(resource_leveling_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return HTMLResponse(content=content, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail="ResourceLeveling file not found")
+
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
     return RedirectResponse(url="/static/home.html")
