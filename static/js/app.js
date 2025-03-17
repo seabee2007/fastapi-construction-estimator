@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   let activeWorkElementRow = null;
   let activeEquipmentRow = null;
 
-  // Parse the query parameters.
+  // Parse query parameters.
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
   console.log("Record ID from URL:", recordId);
@@ -19,26 +19,27 @@ document.addEventListener("DOMContentLoaded", async function() {
       }
       const record = await response.json();
       console.log("Fetched record:", record);
-        // Prepopulate your form fields.
-        document.getElementById("project_number").value = record.project_number || "";
-        document.getElementById("project_title").value = record.project_title || "";
-        document.getElementById("activity_number").value = record.activity_number || "";
-        document.getElementById("activity_title").value = record.activity_title || "";
-        document.getElementById("description_of_work").value = record.description_of_work || "";
-        document.getElementById("method_of_construction").value = record.method_of_construction || "";
-        document.getElementById("labor_resources").value = record. labor_resources || "";   
-        document.getElementById("work_elements").value = record. work_elements || ""; 
-        document.getElementById("equipment").value = record. equipments || ""; 
-        // If you have additional fields (labor_resources, work_elements, equipment),
-        // you'll need to populate those as well.
-      } else {
-        console.error("Error fetching record for editing.");
-      }
+      // Prepopulate your form fields.
+      document.getElementById("project_number").value = record.project_number || "";
+      document.getElementById("project_title").value = record.project_title || "";
+      document.getElementById("activity_number").value = record.activity_number || "";
+      document.getElementById("activity_title").value = record.activity_title || "";
+      document.getElementById("description_of_work").value = record.description_of_work || "";
+      document.getElementById("method_of_construction").value = record.method_of_construction || "";
+      document.getElementById("labor_resources").value = record.labor_resources || "";   
+      document.getElementById("work_elements").value = record.work_elements || ""; 
+      document.getElementById("equipment").value = record.equipments || ""; 
     } catch (error) {
       console.error("Error fetching record:", error);
     }
   }
+
+  // Add the rest of your initialization code here.
+  document.getElementById("addWorkElementBtn").addEventListener("click", openLibraryModal);
+  document.getElementById("addEquipmentBtn").addEventListener("click", openEquipmentModal);
+  // etc.
 });
+
 
 
         
