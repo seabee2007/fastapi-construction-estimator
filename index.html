@@ -174,7 +174,7 @@
 <body>
   <header class="py-4 bg-dark text-white text-center">
     <div class="container">
-      <h1>construction activity summary sheet</h1>
+      <h1>Construction Activity Summary Sheet</h1>
     </div>
   </header>
   
@@ -617,7 +617,7 @@
       document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
       document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
       document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
-      
+      document.getElementById("modalSearchInput").addEventListener("input", filterModalTable);
       // Update Production Efficiency Factors.
       document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
       document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
