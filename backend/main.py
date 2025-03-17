@@ -105,12 +105,15 @@ class FinalEstimationInput(BaseModel):
     work_elements: List[WorkElementRow]
     equipment: List[EquipmentRow]
 
-class FinalEstimationOutput(BaseModel):
-    project: str
-    total_labor_cost: float
-    total_material_cost: float
-    total_equipment_cost: float
-    total_estimated_cost: float
+class FinalEstimationInput(BaseModel):
+    project_name: str = Field(..., example="Project PH5-800")
+    project_date: Optional[str] = Field(None, example="2025-03-15")
+    activity_code: str = Field(..., example="02200")
+    description_of_work: str = Field(..., example="Excavate for footers")
+    method_of_construction: str = Field(..., example="Standard excavation using machinery.")
+    labor_resources: List[LaborRow]
+    work_elements: List[WorkElementRow]
+    equipment: List[EquipmentRow]
 
 # ---------------------------
 # API Endpoints to Supply NTRP Data
