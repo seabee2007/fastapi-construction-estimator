@@ -168,6 +168,448 @@
     { "code": "03 39 23.13", "multiplier": "0010", "description": "Sprayed membrane curing compound", "uom": "SF", "man_hours_per_unit": 0.0017 },
     { "code": "03 45 13.50", "multiplier": "0000", "description": "Precast concrete wall panels (average)", "uom": "SF", "man_hours_per_unit": 0.076 }
   ],
+  {
+  "activities": [
+    { "code": "04", "title": "Masonry" }
+  ],
+  "work_elements": [
+    {
+      "code": "04 05 19.05",
+      "multiplier": "0010",
+      "description": "Anchor Bolts – Hooked, with nut and washer, 1/2-inch diameter, 8 and 12 inches long",
+      "uom": "Each",
+      "man_hours_per_unit": 0.053
+    },
+    {
+      "code": "04 05 19.05",
+      "multiplier": "0020",
+      "description": "Anchor Bolts – Hooked, with nut and washer, 5/8-inch diameter, 8 and 12 inches long",
+      "uom": "Each",
+      "man_hours_per_unit": 0.058
+    },
+    {
+      "code": "04 05 19.05",
+      "multiplier": "0030",
+      "description": "Anchor Bolts – Hooked, with nut and washer, 3/4-inch diameter, 8 and 12 inches long",
+      "uom": "Each",
+      "man_hours_per_unit": 0.066
+    },
+    {
+      "code": "04 05 19.16",
+      "multiplier": "0010",
+      "description": "Masonry Anchors – Various types, average",
+      "uom": "HD",
+      "man_hours_per_unit": 1.000
+    },
+    {
+      "code": "04 05 19.26",
+      "multiplier": "0010",
+      "description": "Masonry Reinforcing Bars – Steel bars, placed horizontal, #3 and #4 bars",
+      "uom": "LB",
+      "man_hours_per_unit": 0.024
+    },
+    {
+      "code": "04 05 19.26",
+      "multiplier": "0020",
+      "description": "Masonry Reinforcing Bars – #5 and #6 bars, horizontal",
+      "uom": "LB",
+      "man_hours_per_unit": 0.013
+    },
+    {
+      "code": "04 05 19.26",
+      "multiplier": "0030",
+      "description": "Masonry Reinforcing Bars – Steel bars, placed vertical, #3 and #4 bars",
+      "uom": "LB",
+      "man_hours_per_unit": 0.031
+    },
+    {
+      "code": "04 05 19.26",
+      "multiplier": "0040",
+      "description": "Masonry Reinforcing Bars – #5 and #6 bars, vertical",
+      "uom": "LB",
+      "man_hours_per_unit": 0.016
+    },
+    {
+      "code": "04 05 19.26",
+      "multiplier": "0050",
+      "description": "Masonry Reinforcing Bars – Joint reinforcing (regular or cavity truss) to 6 inches wide",
+      "uom": "LF",
+      "man_hours_per_unit": 0.004
+    },
+    {
+      "code": "04 05 19.26",
+      "multiplier": "0060",
+      "description": "Masonry Reinforcing Bars – Joint reinforcing to 12 inches wide",
+      "uom": "LF",
+      "man_hours_per_unit": 0.005
+    },
+    {
+      "code": "04 05 23.13",
+      "multiplier": "0010",
+      "description": "Control Joint for double Wythe 8-inch minimum wall (brick/CMU), various types, average",
+      "uom": "LF",
+      "man_hours_per_unit": 0.033
+    },
+    {
+      "code": "04 05 23.19",
+      "multiplier": "0010",
+      "description": "Vent Box – Extruded aluminum and stainless steel ventilators, various types, average",
+      "uom": "Each",
+      "man_hours_per_unit": 0.400
+    },
+    {
+      "code": "04 05 23.95",
+      "multiplier": "0010",
+      "description": "Wall Plugs (for nailing to brickwork) – Galvanized, plain or wood-filled",
+      "uom": "HD",
+      "man_hours_per_unit": 1.000
+    },
+    {
+      "code": "04 21 13.13",
+      "multiplier": "0010",
+      "description": "Brick Veneer Masonry – Common bond, standard (4 x 2 2/3 x 8 in, 7.88 per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.500
+    },
+    {
+      "code": "04 21 13.13",
+      "multiplier": "0020",
+      "description": "Brick Veneer Masonry – Stack bond, standard (6.75 per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.400
+    },
+    {
+      "code": "04 21 13.13",
+      "multiplier": "0030",
+      "description": "Brick Veneer Masonry – Backup, running bond, standard brick (6.75 per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.334
+    },
+    {
+      "code": "04 21 26.10",
+      "multiplier": "0010",
+      "description": "Glazed Structural Clay Masonry Tile – Structural facing tile (excluding scaffolding, grout, reinforcing)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.250
+    },
+    {
+      "code": "04 21 29.10",
+      "multiplier": "0010",
+      "description": "Terra Cotta Masonry Components – Coping, split type, not glazed",
+      "uom": "LF",
+      "man_hours_per_unit": 0.356
+    },
+    {
+      "code": "04 21 29.20",
+      "multiplier": "0010",
+      "description": "Terra Cotta Tile – On walls, dry set, 1/2 inch thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.118
+    },
+    {
+      "code": "04 01 20.20",
+      "multiplier": "0010",
+      "description": "Pointing Masonry – Cut and repoint brick, hard mortar, running bond",
+      "uom": "SF",
+      "man_hours_per_unit": 0.150
+    },
+    {
+      "code": "04 01 20.20",
+      "multiplier": "0020",
+      "description": "Pointing Masonry – Repoint, mask, and grout method, running bond",
+      "uom": "SF",
+      "man_hours_per_unit": 0.126
+    },
+    {
+      "code": "04 01 20.20",
+      "multiplier": "0030",
+      "description": "Pointing Masonry – Scrub coat, sand grout on walls, minimum",
+      "uom": "SF",
+      "man_hours_per_unit": 0.101
+    },
+    {
+      "code": "04 01 30.20",
+      "multiplier": "0010",
+      "description": "Cleaning Masonry – Chemical cleaning (brush and wash, new construction)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.024
+    },
+    {
+      "code": "04 01 30.20",
+      "multiplier": "0020",
+      "description": "Cleaning Masonry – High-pressure water only",
+      "uom": "SF",
+      "man_hours_per_unit": 0.041
+    },
+    {
+      "code": "04 01 30.20",
+      "multiplier": "0030",
+      "description": "Cleaning Masonry – Steam cleaning",
+      "uom": "SF",
+      "man_hours_per_unit": 0.024
+    },
+    {
+      "code": "04 01 30.60",
+      "multiplier": "0010",
+      "description": "Brick Washing – Acid cleanser, smooth brick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.021
+    },
+    {
+      "code": "04 01 30.60",
+      "multiplier": "0020",
+      "description": "Brick Washing – Rough brick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.030
+    },
+    {
+      "code": "04 01 30.60",
+      "multiplier": "0030",
+      "description": "Brick Washing – Stone, acid wash",
+      "uom": "SF",
+      "man_hours_per_unit": 0.019
+    },
+    {
+      "code": "04 05 13.30",
+      "multiplier": "0010",
+      "description": "Mortar – Mixing",
+      "uom": "CF",
+      "man_hours_per_unit": 0.083
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0010",
+      "description": "Grouting – Bond beams and lintels, 8\" deep, 6\" thick (0.15 CF per LF)",
+      "uom": "LF",
+      "man_hours_per_unit": 0.15
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0020",
+      "description": "Grouting – 8\" thick (0.2 CF per LF)",
+      "uom": "LF",
+      "man_hours_per_unit": 0.2
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0030",
+      "description": "Grouting – 10\" thick (0.25 CF per LF)",
+      "uom": "LF",
+      "man_hours_per_unit": 0.25
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0040",
+      "description": "Grouting – 12\" thick (0.3 CF per LF)",
+      "uom": "LF",
+      "man_hours_per_unit": 0.3
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0050",
+      "description": "Grouting – Concrete block cores, solid, 4\" thick, by hand (0.067 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.067
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0060",
+      "description": "Grouting – 6\" thick, pumped (0.175 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.175
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0070",
+      "description": "Grouting – 8\" thick, pumped (0.258 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.258
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0080",
+      "description": "Grouting – 10\" thick, pumped (0.340 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.340
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0090",
+      "description": "Grouting – 12\" thick, pumped (0.422 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.422
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0100",
+      "description": "Grouting – Cavity walls, 2\" space, pumped (0.167 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.167
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0110",
+      "description": "Grouting – Cavity walls, 3\" space (0.250 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.250
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0120",
+      "description": "Grouting – Cavity walls, 4\" space (0.333 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.333
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0130",
+      "description": "Grouting – Cavity walls, 6\" space (0.500 CF per SF)",
+      "uom": "SF",
+      "man_hours_per_unit": 0.500
+    },
+    {
+      "code": "04 05 16.30",
+      "multiplier": "0140",
+      "description": "Grouting – Door frames, 3x7 ft opening (2.5 CF per opening)",
+      "uom": "Each",
+      "man_hours_per_unit": 2.5
+    },
+    {
+      "code": "04 22 10.14",
+      "multiplier": "0010",
+      "description": "Concrete Block, Back-up – Normal weight, 8x16 units, tooled one side, not reinforced, 8 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.200
+    },
+    {
+      "code": "04 22 10.14",
+      "multiplier": "0020",
+      "description": "Concrete Block, Back-up – Reinforced, alternate courses, 4 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.178
+    },
+    {
+      "code": "04 22 10.14",
+      "multiplier": "0030",
+      "description": "Concrete Block, Back-up – 8 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.202
+    },
+    {
+      "code": "04 22 10.14",
+      "multiplier": "0040",
+      "description": "Concrete Block, Back-up – 12 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.320
+    },
+    {
+      "code": "04 22 10.16",
+      "multiplier": "0010",
+      "description": "Concrete Block, Bond Beam – Regular block, 8 in. high with reinforcing and grout, 8 inches thick",
+      "uom": "LF",
+      "man_hours_per_unit": 0.266
+    },
+    {
+      "code": "04 22 10.16",
+      "multiplier": "0020",
+      "description": "Concrete Block, Bond Beam – 12 inches thick",
+      "uom": "LF",
+      "man_hours_per_unit": 0.384
+    },
+    {
+      "code": "04 22 10.18",
+      "multiplier": "0010",
+      "description": "Concrete Block, Column or Pilaster – 1-piece unit, 16x16 inches",
+      "uom": "LF",
+      "man_hours_per_unit": 1.230
+    },
+    {
+      "code": "04 22 10.18",
+      "multiplier": "0020",
+      "description": "Concrete Block, Column or Pilaster – 1-piece unit, 16x20 inches",
+      "uom": "LF",
+      "man_hours_per_unit": 1.334
+    },
+    {
+      "code": "04 22 10.18",
+      "multiplier": "0030",
+      "description": "Concrete Block, Column or Pilaster – 2-piece unit, 16x20 inches",
+      "uom": "LF",
+      "man_hours_per_unit": 1.454
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0010",
+      "description": "Concrete Block, Partitions (Regular block, tooled, two sides, excludes scaffold) – 8x16 units, 4 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.186
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0020",
+      "description": "Concrete Block, Partitions (Regular block) – 6 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.200
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0030",
+      "description": "Concrete Block, Partitions (Regular block) – 8 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.214
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0040",
+      "description": "Concrete Block, Partitions (Regular block) – 10 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.222
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0050",
+      "description": "Concrete Block, Partitions (Regular block) – 12 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.282
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0110",
+      "description": "Concrete Block, Partitions (Solid, not reinforced) – 8x16 units, 2 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.188
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0120",
+      "description": "Concrete Block, Partitions (Solid, not reinforced) – 4 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.202
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0130",
+      "description": "Concrete Block, Partitions (Solid, not reinforced) – 6 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.216
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0140",
+      "description": "Concrete Block, Partitions (Solid, not reinforced) – 8 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.226
+    },
+    {
+      "code": "04 22 10.19",
+      "multiplier": "0150",
+      "description": "Concrete Block, Partitions (Solid, not reinforced) – 12 inches thick",
+      "uom": "SF",
+      "man_hours_per_unit": 0.286
+    }
+  ]
+}
+
   "labor_resources": [
     { "name": "Crew Leader", "rate_per_hour": null },
     { "name": "Skilled Laborer", "rate_per_hour": null },
