@@ -545,30 +545,34 @@ document.addEventListener("DOMContentLoaded", function() {
       modal.show();
     }
     
-    // Save CAS record by sending a POST request to /cass.
-    // Make sure the variable 'form' is still in scope.
-    const cassData = {
-      project_number: form.project_number.value,
-      project_title: form.project_title.value,
-      activity_number: form.activity_number.value,
-      activity_title: form.activity_title.value,
-      description_of_work: form.description_of_work.value,
-      method_of_construction: form.method_of_construction.value,
-      // You can include additional fields if desired.
-    };
-    
-    fetch("/cass", {
+document.getElementById("estimatorForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  // Build payload from form inputs...
+  const cassData = {
+    project_number: form.project_number.value,
+    project_title: form.project_title.value,
+    activity_number: form.activity_number.value,
+    activity_title: form.activity_title.value,
+    description_of_work: form.description_of_work.value,
+    method_of_construction: form.method_of_construction.value,
+    // Additional fields if needed
+  };
+
+  try {
+    const res = await fetch("/cass", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(cassData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log("CAS record saved:", data);
-        // Optionally, update the UI or redirect.
-      })
-      .catch(error => console.error("Error saving CAS record:", error));
-  });
+    });
+    const data = await res.json();
+    console.log("CAS record saved:", data);
+    // Optionally, redirect to the dashboard:
+    window.location.href = "/static/cass_dashboard.html";
+  } catch (error) {
+    console.error("Error saving CAS record:", error);
+  }
+});
+
   
   // Attach search event listener to modal search input.
   document.getElementById("modalSearchInput").addEventListener("input", filterModalTable);
