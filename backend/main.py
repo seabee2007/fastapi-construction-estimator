@@ -2,7 +2,8 @@ import os
 import json
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -10,28 +11,30 @@ app = FastAPI()
 # Set repository root (assumed to be os.getcwd())
 root_dir = os.getcwd()
 
-# Serve the monolithic index.html file from the repository root.
+# Mount the "static" directory to serve HTML, CSS, JS files.
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Optionally, create endpoints to serve specific files without the /static prefix.
+@app.get("/home.html", response_class=HTMLResponse)
+async def read_home():
+    home_path = os.path.join(root_dir, "static", "home.html")
+    try:
+        with open(home_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return HTMLResponse(content=content, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail="Home file not found")
+
+# Serve the monolithic index.html file (CAS input form) from the static folder.
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    index_path = os.path.join(root_dir, "index.html")
-    print("Working Directory:", root_dir)
-    print("Index Path:", index_path)
+    index_path = os.path.join(root_dir, "static", "index.html")
     try:
         with open(index_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
     except Exception as e:
-        print("Error reading index.html:", e)
         raise HTTPException(status_code=404, detail="Index file not found")
-
-# Load NTRP data from the JSON file in the repository root.
-DATA_FILE = os.path.join(root_dir, "ntrp_data.json")
-try:
-    with open(DATA_FILE, "r") as f:
-        ntrp_data = json.load(f)
-except Exception as e:
-    ntrp_data = {}
-    print("Error loading NTRP data:", e)
 
 # ---------------------------
 # Pydantic Models (Schemas)
@@ -99,6 +102,17 @@ async def get_equipment():
     return equipment
 
 # ---------------------------
+# Load NTRP Data from JSON File
+# ---------------------------
+DATA_FILE = os.path.join(root_dir, "ntrp_data.json")
+try:
+    with open(DATA_FILE, "r") as f:
+        ntrp_data = json.load(f)
+except Exception as e:
+    ntrp_data = {}
+    print("Error loading NTRP data:", e)
+
+# ---------------------------
 # Estimation Calculation Logic
 # ---------------------------
 def calculate_estimate(input_data: FinalEstimationInput) -> dict:
@@ -108,7 +122,7 @@ def calculate_estimate(input_data: FinalEstimationInput) -> dict:
         rate = next((item["hourlyRate"] for item in ntrp_data.get("laborResources", [])
                      if item["role"] == lr.skill), None)
         if rate is None:
-            rate = 20
+            rate = 20  # Default hourly rate.
         labor_cost += rate * lr.quantity
 
     # Calculate material cost from work elements.
@@ -126,7 +140,7 @@ def calculate_estimate(input_data: FinalEstimationInput) -> dict:
         rate = next((item["hourlyRate"] for item in ntrp_data.get("equipment", [])
                      if item["name"] == eq.name), None)
         if rate is None:
-            rate = 50
+            rate = 50  # Default hourly rate.
         equipment_cost += rate * eq.quantity
 
     total_cost = labor_cost + material_cost + equipment_cost
