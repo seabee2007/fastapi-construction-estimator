@@ -1,7 +1,7 @@
-    document.addEventListener("DOMContentLoaded", function() {
-      // Global active row variables for modals.
-      let activeWorkElementRow = null;
-      let activeEquipmentRow = null;
+document.addEventListener("DOMContentLoaded", function() {
+  // Global active row variables for modals.
+  let activeWorkElementRow = null;
+  let activeEquipmentRow = null;
 
 document.addEventListener("DOMContentLoaded", async function() {
   // Check if a record ID is present in the query parameters.
@@ -10,9 +10,13 @@ document.addEventListener("DOMContentLoaded", async function() {
 
   if (recordId) {
     try {
-      const response = await fetch(`/cass/${recordId}`);
-      if (response.ok) {
-        const record = await response.json();
+      const response = await fetch("/cass/" + recordId);
+      if (!response.ok) {
+        console.error("Failed to fetch record with ID:", recordId);
+        return;
+      }
+      const record = await response.json();
+      console.log("Fetched record:", record);
         // Prepopulate your form fields.
         document.getElementById("project_number").value = record.project_number || "";
         document.getElementById("project_title").value = record.project_title || "";
