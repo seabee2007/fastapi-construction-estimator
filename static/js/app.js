@@ -1,9 +1,8 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
   // Global active row variables for modals.
   let activeWorkElementRow = null;
   let activeEquipmentRow = null;
 
-document.addEventListener("DOMContentLoaded", async function() {
   // Parse the query parameters.
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
