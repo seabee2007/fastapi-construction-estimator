@@ -3,7 +3,7 @@
     { "code": "03100", "title": "Concrete Placement" },
     { "code": "03200", "title": "Concrete Finishing" },
     { "code": "03300", "title": "Formwork & Reinforcement" },
-    { "code": "04100", "title": "Masonry" },
+    { "code": "04100", "title": "Masonry" }
   ],
   "work_elements": [
     { "code": "03 11 13.35", "multiplier": "0010", "description": "Flat plate, job-built form, to 15 ft high", "uom": "SF", "man_hours_per_unit": 0.156 },
@@ -322,8 +322,7 @@
     {"code": "31 40 00", "multiplier": "0010", "description": "Shoring and Underpinning – Installation of temporary shoring and underpinning", "uom": "LF", "man_hours_per_unit": null},
     {"code": "31 50 00", "multiplier": "0010", "description": "Trenching and Backfill – Excavation, backfill, and compaction of trenches", "uom": "LF", "man_hours_per_unit": null},
     {"code": "31 60 00", "multiplier": "0010", "description": "Special Foundations – Bored piles and drilled shafts", "uom": "LF", "man_hours_per_unit": null},
-    {"code": "31 70 00", "multiplier": "0010", "description": "Tunneling and Mining – Blasting and slope protection (gabions, riprap)", "uom": "Each", "man_hours_per_unit": null},
-
+    {"code": "31 70 00", "multiplier": "0010", "description": "Tunneling and Mining – Blasting and slope protection (gabions, riprap)", "uom": "Each", "man_hours_per_unit": null}
   ],
   "labor_resources": [
     { "name": "Crew Leader", "rate_per_hour": null },
