@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   }
 
   // Add the rest of your initialization code here.
-  document.getElementById("addLaborBtn").addEventListener("click", openLaborModal);
+  document.getElementById("addLaborBtn").addEventListener("click", addLaborResource);
   document.getElementById("addWorkElementBtn").addEventListener("click", openLibraryModal);
   document.getElementById("addEquipmentBtn").addEventListener("click", openEquipmentModal);
   // etc.
