@@ -4,15 +4,18 @@ document.addEventListener("DOMContentLoaded", function() {
   let activeEquipmentRow = null;
 
 document.addEventListener("DOMContentLoaded", async function() {
-  // Check if a record ID is present in the query parameters.
+  // Parse the query parameters.
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
+  console.log("Record ID from URL:", recordId);
 
+  // If a record ID is provided, fetch the record.
   if (recordId) {
     try {
       const response = await fetch("/cass/" + recordId);
+      console.log("Fetch response:", response);
       if (!response.ok) {
-        console.error("Failed to fetch record with ID:", recordId);
+        console.error("Error: Response not OK. Status:", response.status);
         return;
       }
       const record = await response.json();
@@ -584,8 +587,11 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
     activity_title: form.activity_title.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
-    // Include additional fields (labor_resources, work_elements, equipment) if desired.
-  };
+    labor_resources: form.labor_resources.value,
+    work_elements: form.work_elements.value,
+    equipment: form.equipment.value,
+
+    };
 
   fetch("/cass", {
     method: "POST",
