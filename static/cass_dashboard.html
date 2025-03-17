@@ -22,34 +22,25 @@
   </style>
 </head>
 <body>
+  <!-- Navigation Header (common to all pages) -->
   <header class="py-3 bg-dark text-white">
-  <div class="container">
-    <h1 class="h3 text-center">Construction Management Solutions</h1>
-    <nav>
-      <ul class="nav nav-pills justify-content-center">
-        <li class="nav-item"><a class="nav-link text-white" href="home.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="index.html">CASS Input Form</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="gantt.html">Gantt Chart</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="logic.html">Logic Network</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="man_day.html">Man-Day Estimating</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="resource_leveling.html">Resource Leveling</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="cass_dashboard.html">CAS Dashboard</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-  <header>
-    <h1>CAS Dashboard</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">CASS Input Form</a></li>
-        <li><a href="home.html">Home</a></li>
-        <li><a href="management.html">Management &amp; Scheduling</a></li>
-      </ul>
-    </nav>
+    <div class="container">
+      <h1 class="h3 text-center">Construction Management Solutions</h1>
+      <nav>
+        <ul class="nav nav-pills justify-content-center">
+          <li class="nav-item"><a class="nav-link text-white" href="home.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="index.html">CASS Input Form</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="gantt.html">Gantt Chart</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="logic.html">Logic Network</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="man_day.html">Man-Day Estimating</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="resource_leveling.html">Resource Leveling</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cass_dashboard.html">CAS Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
   
+  <!-- Main Content -->
   <div class="container">
     <div class="table-container">
       <h2 class="text-center mb-4">Construction Activity Summary Sheets</h2>
@@ -78,9 +69,11 @@
   
   <!-- Bootstrap Bundle with Popper from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Inline JavaScript -->
   <script>
     document.addEventListener("DOMContentLoaded", async function() {
-      // Function to fetch CAS records from the backend API.
+      // Fetch CAS records from the backend API.
       async function fetchCASRecords() {
         try {
           // Adjust the endpoint URL if necessary.
@@ -95,14 +88,14 @@
         }
       }
       
-      // Function to populate the table with CAS records.
+      // Populate the table with CAS records.
       function populateTable(records) {
         const tbody = document.querySelector("#cassTable tbody");
-        tbody.innerHTML = ""; // Clear existing table rows.
+        tbody.innerHTML = ""; // Clear any existing rows.
         records.forEach(record => {
           const tr = document.createElement("tr");
           
-          // Create table cells for record details.
+          // Create cells for record details.
           const tdId = document.createElement("td");
           tdId.textContent = record.id;
           
@@ -119,16 +112,15 @@
           tdActivityTitle.textContent = record.activity_title;
           
           const tdDateCreated = document.createElement("td");
-          // Format the date; adjust as necessary.
+          // Format the date (adjust as needed)
           tdDateCreated.textContent = new Date(record.date_created).toLocaleDateString();
           
           const tdActions = document.createElement("td");
-          // Create an Edit button that links to your CAS input form.
           const editBtn = document.createElement("button");
           editBtn.textContent = "Edit";
           editBtn.classList.add("btn", "btn-primary", "btn-sm");
+          // Redirect to the CAS input form (index.html) with record ID as a query parameter.
           editBtn.addEventListener("click", function() {
-            // Redirect to your editing page (index.html) with the record ID as a query parameter.
             window.location.href = "index.html?id=" + record.id;
           });
           tdActions.appendChild(editBtn);
@@ -147,10 +139,9 @@
         });
       }
       
-      // Fetch the records when the page loads.
+      // Fetch CAS records when the page loads.
       fetchCASRecords();
     });
   </script>
 </body>
 </html>
-
