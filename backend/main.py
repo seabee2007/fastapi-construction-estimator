@@ -195,6 +195,43 @@ async def final_estimate(input_data: FinalEstimationInput):
         raise HTTPException(status_code=500, detail=str(e))
     return {"project": input_data.project_name, **result}
 
+
+# ---------------------------
+# CAS Records Endpoints (for cass_dashboard)
+# ---------------------------
+# In a production system, you would store these records in a database.
+# For demonstration, we'll use an in-memory list.
+cass_records = []
+
+@app.get("/cass")
+async def get_cass():
+    return cass_records
+
+@app.post("/cass")
+async def create_cass(record: dict):
+    record_id = len(cass_records) + 1
+    record["id"] = record_id
+    cass_records.append(record)
+    return record
+
+@app.put("/cass/{record_id}")
+async def update_cass(record_id: int, updated_record: dict):
+    for index, record in enumerate(cass_records):
+        if record.get("id") == record_id:
+            updated_record["id"] = record_id
+            cass_records[index] = updated_record
+            return updated_record
+    raise HTTPException(status_code=404, detail="Record not found")
+
+@app.delete("/cass/{record_id}")
+async def delete_cass(record_id: int):
+    for index, record in enumerate(cass_records):
+        if record.get("id") == record_id:
+            del cass_records[index]
+            return {"detail": "Record deleted"}
+    raise HTTPException(status_code=404, detail="Record not found")
+
+
 # ---------------------------
 # Run the Application
 # ---------------------------
