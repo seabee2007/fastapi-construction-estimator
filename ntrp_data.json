@@ -230,6 +230,36 @@
     { "code": "04 22 10.19", "multiplier": "0130", "description": "Concrete Block, Partitions (Solid, not reinforced) – 6 inches thick", "uom": "SF", "man_hours_per_unit": 0.216 },
     { "code": "04 22 10.19", "multiplier": "0140", "description": "Concrete Block, Partitions (Solid, not reinforced) – 8 inches thick", "uom": "SF", "man_hours_per_unit": 0.226 },
     { "code": "04 22 10.19", "multiplier": "0150", "description": "Concrete Block, Partitions (Solid, not reinforced) – 12 inches thick", "uom": "SF", "man_hours_per_unit": 0.286 }
+    {"code": "31 11 10.10", "multiplier": "0010", "description": "Clear and Grub Site – light trees to 6-inch diameter; cut and chip trees using 3 CYD crawler loader, brush chipper, and chain saws", "uom": "Acre", "man_hours_per_unit": 64.0}
+    {"code": "31 11 10.10", "multiplier": "0020", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 16.0}
+    {"code": "31 11 10.10", "multiplier": "0030", "description": "Clear and Grub Site – medium trees to 12-inch diameter", "uom": "Acre", "man_hours_per_unit": 92.0}
+    {"code": "31 11 10.10", "multiplier": "0040", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 32.0}
+    {"code": "31 11 10.10", "multiplier": "0050", "description": "Clear and Grub Site – heavy trees to 24-inch diameter", "uom": "Acre", "man_hours_per_unit": 213.0}
+    {"code": "31 11 10.10", "multiplier": "0060", "description": "Clear and Grub Site – grub stumps and remove", "uom": "Acre", "man_hours_per_unit": 64.0}
+    {"code": "31 13 13.10", "multiplier": "0010", "description": "Selective Clearing – Clearing brush with brush saw", "uom": "Acre", "man_hours_per_unit": 42.6}
+    {"code": "31 13 13.10", "multiplier": "0020", "description": "Selective Clearing – Clearing by hand", "uom": "Acre", "man_hours_per_unit": 88.7}
+    {"code": "31 13 13.10", "multiplier": "0030", "description": "Selective Clearing – With dozer, ball and chain, light clearing", "uom": "Acre", "man_hours_per_unit": 10.6}
+    {"code": "31 13 13.10", "multiplier": "0040", "description": "Selective Clearing – Medium clearing", "uom": "Acre", "man_hours_per_unit": 14.2}
+    {"code": "31 13 13.10", "multiplier": "0050", "description": "Selective Clearing – With dozer, brush rake, light brush", "uom": "Acre", "man_hours_per_unit": 2.1}
+    {"code": "31 13 13.10", "multiplier": "0060", "description": "Selective Clearing – Medium brush to 4-inch diameter", "uom": "Acre", "man_hours_per_unit": 2.7}
+    {"code": "31 13 13.10", "multiplier": "0070", "description": "Selective Clearing – Heavy brush to 4-inch diameter", "uom": "Acre", "man_hours_per_unit": 3.3}
+    {"code": "31 13 13.10", "multiplier": "0080", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, light density", "uom": "Acre", "man_hours_per_unit": 5.3}
+    {"code": "31 13 13.10", "multiplier": "0090", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, medium density", "uom": "Acre", "man_hours_per_unit": 7.2}
+    {"code": "31 13 13.10", "multiplier": "0100", "description": "Selective Clearing – Brush mowing with tractor and rotary mower, heavy density", "uom": "Acre", "man_hours_per_unit": 10.6}
+    {"code": "31 13 13.20", "multiplier": "0010", "description": "Selective Tree Removal – Remove selective trees (not including stumps) up to 6-inch diameter", "uom": "Each", "man_hours_per_unit": 3.547}
+    {"code": "31 13 13.20", "multiplier": "0020", "description": "Selective Tree Removal – Remove selective trees, 8- to 12-inch diameter", "uom": "Each", "man_hours_per_unit": 5.320}
+    {"code": "31 13 13.20", "multiplier": "0030", "description": "Selective Tree Removal – Remove selective trees, 13- to 24-inch diameter", "uom": "Each", "man_hours_per_unit": 6.384}
+    {"code": "31 13 13.20", "multiplier": "0040", "description": "Selective Tree Removal – Remove selective trees, 25- to 36-inch diameter", "uom": "Each", "man_hours_per_unit": 7.980}
+    {"code": "31 13 13.20", "multiplier": "0050", "description": "Selective Tree Removal – Stump removal onsite by hydraulic backhoe, 4- to 12-inch diameter", "uom": "Each", "man_hours_per_unit": 0.967}
+    {"code": "31 13 13.20", "multiplier": "0060", "description": "Selective Tree Removal – Stump removal onsite by hydraulic backhoe, 13- to 36-inch diameter", "uom": "Each", "man_hours_per_unit": 1.995}
+    {"code": "31 14 13.23", "multiplier": "0010", "description": "Topsoil Stripping and Stockpiling – Remove and stockpile loam/topsoil 6 inches deep with 200-foot haul", "uom": "CYD", "man_hours_per_unit": 0.020}
+    {"code": "31 20 00", "multiplier": "0010", "description": "Earthmoving – Rough grading and contouring", "uom": "Acre", "man_hours_per_unit": null}
+    {"code": "31 30 00", "multiplier": "0010", "description": "Excavation – Bulk excavation, sloping, and benching", "uom": "CY", "man_hours_per_unit": null}
+    {"code": "31 40 00", "multiplier": "0010", "description": "Shoring and Underpinning – Installation of temporary shoring and underpinning", "uom": "LF", "man_hours_per_unit": null}
+    {"code": "31 50 00", "multiplier": "0010", "description": "Trenching and Backfill – Excavation, backfill, and compaction of trenches", "uom": "LF", "man_hours_per_unit": null}
+    {"code": "31 60 00", "multiplier": "0010", "description": "Special Foundations – Bored piles and drilled shafts", "uom": "LF", "man_hours_per_unit": null}
+    {"code": "31 70 00", "multiplier": "0010", "description": "Tunneling and Mining – Blasting and slope protection (gabions, riprap)", "uom": "Each", "man_hours_per_unit": null}
+
   ],
   "labor_resources": [
     { "name": "Crew Leader", "rate_per_hour": null },
