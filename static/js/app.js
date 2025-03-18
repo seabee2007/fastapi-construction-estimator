@@ -608,7 +608,7 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
     .then(data => {
       console.log("CAS record saved:", data);
       // Redirect to the dashboard if desired:
-      window.location.href = "/static/cass_dashboard.html";
+    //  window.location.href = "/static/cass_dashboard.html";
     })
     .catch(error => console.error("Error saving CAS record:", error));
 });
