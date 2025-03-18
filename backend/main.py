@@ -89,6 +89,44 @@ async def get_cass_record(record_id: int):
         if record.get("id") == record_id:
             return record
     raise HTTPException(status_code=404, detail="Record not found")
+@app.get("/gantt-tasks")
+async def get_gantt_tasks():
+    # If no CASS records exist, return sample tasks.
+    if not cass_records:
+        return [
+            {
+                "id": "1",
+                "name": "Excavate for Footers (02200)",
+                "start": "2025-03-20",
+                "end": "2025-03-25",
+                "progress": 50,
+                "dependencies": ""
+            },
+            {
+                "id": "2",
+                "name": "Pour Concrete (02201)",
+                "start": "2025-03-26",
+                "end": "2025-03-30",
+                "progress": 20,
+                "dependencies": "1"
+            }
+        ]
+    else:
+        # Convert cass_records into tasks.
+        tasks = []
+        for record in cass_records:
+            # Adjust keys as per your CASS record structure.
+            task = {
+                "id": str(record.get("id", "")),
+                "name": f'{record.get("activity_number", "")} {record.get("activity_title", "")}',
+                "start": record.get("start_date", "2025-03-20"),
+                "end": record.get("end_date", "2025-03-25"),
+                "progress": record.get("progress", 0),
+                "dependencies": record.get("dependencies", "")
+            }
+            tasks.append(task)
+        return tasks
+
 
 
 # ---------------------------
