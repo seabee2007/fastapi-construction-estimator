@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", async function() {
   let activeWorkElementRow = null;
   let activeEquipmentRow = null;
 
-  // --------------------------------
+  // -----------------------------
   // Helper Functions for Dynamic Sections
-  // --------------------------------
+  // -----------------------------
   function populateLaborResources(laborData) {
     const container = document.getElementById("laborResourcesContainer");
     container.innerHTML = "";
@@ -63,28 +63,30 @@ document.addEventListener("DOMContentLoaded", async function() {
     });
   }
 
-  // --------------------------------
+  // -----------------------------
   // Helper Function for Production Efficiency Factors
-  // --------------------------------
-  function populateEfficiencyFactors(prodEff) {
-    if (!prodEff) return;
-    document.getElementById("factor-workload").value = prodEff.factor_workload || "67";
-    document.getElementById("factor-site").value = prodEff.factor_site || "67";
-    document.getElementById("factor-labor").value = prodEff.factor_labor || "67";
-    document.getElementById("factor-supervision").value = prodEff.factor_supervision || "67";
-    document.getElementById("factor-job").value = prodEff.factor_job || "67";
-    document.getElementById("factor-weather").value = prodEff.factor_weather || "67";
-    document.getElementById("factor-equipment").value = prodEff.factor_equipment || "67";
-    document.getElementById("factor-tactical").value = prodEff.factor_tactical || "67";
-    document.getElementById("availability-factor").value = prodEff.availability_factor || "75";
-    document.getElementById("manday-equivalent").value = prodEff.manday_equivalent || "1.125";
-    document.getElementById("product-efficiency").textContent = prodEff.product_efficiency || "67.0";
-    document.getElementById("delay-factor").textContent = prodEff.delay_factor || "1.00";
+  // -----------------------------
+  function populateEfficiencyFactors(record) {
+    // Assumes the record contains a 'production_efficiency' object.
+    if (record.production_efficiency) {
+      document.getElementById("factor-workload").value = record.production_efficiency.factor_workload || "67";
+      document.getElementById("factor-site").value = record.production_efficiency.factor_site || "67";
+      document.getElementById("factor-labor").value = record.production_efficiency.factor_labor || "67";
+      document.getElementById("factor-supervision").value = record.production_efficiency.factor_supervision || "67";
+      document.getElementById("factor-job").value = record.production_efficiency.factor_job || "67";
+      document.getElementById("factor-weather").value = record.production_efficiency.factor_weather || "67";
+      document.getElementById("factor-equipment").value = record.production_efficiency.factor_equipment || "67";
+      document.getElementById("factor-tactical").value = record.production_efficiency.factor_tactical || "67";
+      document.getElementById("availability-factor").value = record.production_efficiency.availability_factor || "75";
+      document.getElementById("manday-equivalent").value = record.production_efficiency.manday_equivalent || "1.125";
+      document.getElementById("product-efficiency").textContent = record.production_efficiency.product_efficiency || "67";
+      document.getElementById("delay-factor").textContent = record.production_efficiency.delay_factor || "1.00";
+    }
   }
 
-  // --------------------------------
-  // Repopulation and Summary Update Flow
-  // --------------------------------
+  // -----------------------------
+  // Load and Repopulate Data When Editing
+  // -----------------------------
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
   console.log("Record ID from URL:", recordId);
@@ -99,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       const record = await response.json();
       console.log("Fetched record:", record);
 
-      // Repopulate static fields.
+      // Prepopulate static fields.
       document.getElementById("project_number").value = record.project_number || "";
       document.getElementById("project_title").value = record.project_title || "";
       document.getElementById("activity_number").value = record.activity_number || "";
@@ -107,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       document.getElementById("description_of_work").value = record.description_of_work || "";
       document.getElementById("method_of_construction").value = record.method_of_construction || "";
 
-      // Repopulate dynamic sections.
+      // Populate dynamic sections.
       if (record.labor_resources && record.labor_resources.length > 0) {
         populateLaborResources(record.labor_resources);
       }
@@ -118,21 +120,19 @@ document.addEventListener("DOMContentLoaded", async function() {
         populateEquipment(record.equipment);
       }
 
-      // Repopulate Production Efficiency Factors.
-      if (record.production_efficiency) {
-        populateEfficiencyFactors(record.production_efficiency);
-      }
+      // Populate Production Efficiency Factors.
+      populateEfficiencyFactors(record);
 
-      // Recalculate summary values (assumes updateCASSummary is defined elsewhere).
+      // Recalculate summary (assuming updateCASSummary is defined elsewhere).
       updateCASSummary();
     } catch (error) {
       console.error("Error fetching record:", error);
     }
   }
 
-  // --------------------------------
+  // -----------------------------
   // Attach Event Listeners for Adding New Rows
-  // --------------------------------
+  // -----------------------------
   const addLaborBtn = document.getElementById("addLaborBtn");
   if (addLaborBtn) {
     addLaborBtn.addEventListener("click", addLaborResource);
@@ -146,7 +146,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     addEquipmentBtn.addEventListener("click", openEquipmentModal);
   }
 });
-
 
         
       // -----------------------------
