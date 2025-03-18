@@ -51,17 +51,6 @@
   <!-- jsgantt-improved JS from unpkg -->
   <script src="https://unpkg.com/jsgantt-improved@2.7.0/dist/jsgantt.js"></script>
   <script>
-    /**
-     * Fetch tasks from the backend.
-     * Your backend endpoint (/gantt-tasks) should convert stored CASS records into tasks formatted per NTRP guidelines.
-     * Each task should have:
-     *   - id: Unique identifier.
-     *   - name: Combined activity number/title.
-     *   - start: Start date (YYYY-MM-DD).
-     *   - end: End date (YYYY-MM-DD) computed from the CASS duration.
-     *   - progress: Percentage complete.
-     *   - dependencies: (Optional) Comma-separated list of task IDs.
-     */
     async function fetchTasks() {
       try {
         const response = await fetch("/gantt-tasks");
@@ -100,7 +89,7 @@
       if(g.getDivId() != null) {
         g.setCaptionType('Complete'); // Options: None, Caption, Resource, Duration, Complete.
         g.setDateInputFormat('yyyy-mm-dd');
-        g.setDateDisplayFormat('mmm dd, yyyy');
+        // Removed setDateDisplayFormat call since it's not defined in this version.
 
         tasks.forEach(task => {
           g.AddTaskItem(
@@ -108,10 +97,10 @@
             task.name,         // Task Name
             task.start,        // Start Date
             task.end,          // End Date
-            "gtaskblue",       // CSS class for task bar
+            "gtaskblue",       // CSS class for styling the task bar
             "",                // Link (if any)
             0,                 // Milestone (0 = no)
-            "Resource",        // Resource (if available)
+            "Resource",        // Resource (can be replaced with actual resource data)
             task.progress,     // Percent Complete
             0,                 // Group (0 = no)
             0,                 // Parent (0 = none)
