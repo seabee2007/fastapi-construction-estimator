@@ -3,39 +3,113 @@ document.addEventListener("DOMContentLoaded", async function() {
   let activeWorkElementRow = null;
   let activeEquipmentRow = null;
 
-  // Parse query parameters.
+  // -----------------------------
+  // Helper Functions to Populate Dynamic Sections
+  // -----------------------------
+  function populateLaborResources(laborData) {
+    const container = document.getElementById("laborResourcesContainer");
+    container.innerHTML = "";
+    laborData.forEach(item => {
+      // Create a row for a labor resource.
+      const row = document.createElement("div");
+      row.className = "input-group mb-2";
+      row.innerHTML = `
+        <select name="labor_skill" class="form-select">
+          <option value="${item.skill}" selected>${item.skill}</option>
+          <option value="Builder">Builder</option>
+          <option value="Steel Worker">Steel Worker</option>
+          <option value="Utilitiesman">Utilitiesman</option>
+          <option value="Engineering Aid">Engineering Aid</option>
+          <option value="Construction Electrician">Construction Electrician</option>
+          <option value="Equipment Operator">Equipment Operator</option>
+          <option value="Construction Mechanic">Construction Mechanic</option>
+        </select>
+        <input type="number" name="labor_quantity" class="form-control" placeholder="Quantity" step="1" min="0" value="${item.quantity}" required>
+        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  function populateWorkElements(workElementsData) {
+    const container = document.getElementById("workElementsContainer");
+    container.innerHTML = "";
+    workElementsData.forEach(item => {
+      const row = document.createElement("div");
+      row.className = "input-group mb-2";
+      row.innerHTML = `
+        <input type="text" name="work_element_search" class="form-control" value="${item.code} - ${item.description}" readonly>
+        <span class="input-group-text">U/M: <span class="um-field">${item.uom || "N/A"}</span></span>
+        <span class="input-group-text">Man Hrs/Unit: <span class="man-hours-field">${item.man_hours_per_unit || 0}</span></span>
+        <span class="input-group-text">Multiplier: <span class="multiplier-field">${item.multiplier || 1}</span></span>
+        <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" value="${item.quantity}" required>
+        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  function populateEquipment(equipmentData) {
+    const container = document.getElementById("equipmentContainer");
+    container.innerHTML = "";
+    equipmentData.forEach(item => {
+      const row = document.createElement("div");
+      row.className = "input-group mb-2";
+      row.innerHTML = `
+        <input type="text" name="equipment_search" class="form-control" value="${item.name}" readonly>
+        <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="1" min="0" value="${item.quantity}" required>
+        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  // -----------------------------
+  // Load and Repopulate Data When Editing
+  // -----------------------------
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
   console.log("Record ID from URL:", recordId);
 
-  // If a record ID is provided, fetch the record.
   if (recordId) {
     try {
       const response = await fetch("/cass/" + recordId);
-      console.log("Fetch response:", response);
       if (!response.ok) {
         console.error("Error: Response not OK. Status:", response.status);
         return;
       }
       const record = await response.json();
       console.log("Fetched record:", record);
-      // Prepopulate your form fields.
+
+      // Prepopulate static fields.
       document.getElementById("project_number").value = record.project_number || "";
       document.getElementById("project_title").value = record.project_title || "";
       document.getElementById("activity_number").value = record.activity_number || "";
       document.getElementById("activity_title").value = record.activity_title || "";
       document.getElementById("description_of_work").value = record.description_of_work || "";
       document.getElementById("method_of_construction").value = record.method_of_construction || "";
-      document.getElementById("labor_resources").value = record.labor_resources || "";   
-      document.getElementById("work_elements").value = record.work_elements || ""; 
-      document.getElementById("equipment").value = record.equipments || ""; 
+
+      // Populate dynamic sections.
+      if (record.labor_resources && record.labor_resources.length > 0) {
+        populateLaborResources(record.labor_resources);
+      }
+      if (record.work_elements && record.work_elements.length > 0) {
+        populateWorkElements(record.work_elements);
+      }
+      if (record.equipment && record.equipment.length > 0) {
+        populateEquipment(record.equipment);
+      }
+
+      // Update the summary calculations.
+      updateCASSummary();
     } catch (error) {
       console.error("Error fetching record:", error);
     }
   }
-});
 
-  // Add event listeners only if the elements exist.
+  // -----------------------------
+  // Attach Event Listeners for Adding New Rows
+  // -----------------------------
   const addLaborBtn = document.getElementById("addLaborBtn");
   if (addLaborBtn) {
     addLaborBtn.addEventListener("click", addLaborResource);
@@ -50,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   if (addEquipmentBtn) {
     addEquipmentBtn.addEventListener("click", openEquipmentModal);
   }
-
+});
 
         
       // -----------------------------
