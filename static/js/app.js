@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", async function() {
       document.getElementById("activity_title").value = record.activity_title || "";
       document.getElementById("description_of_work").value = record.description_of_work || "";
       document.getElementById("method_of_construction").value = record.method_of_construction || "";
-      document.getElementById("labor_resources").value = record.labor_resources || "";   
-      document.getElementById("work_elements").value = record.work_elements || ""; 
-      document.getElementById("equipment").value = record.equipments || ""; 
+ //     document.getElementById("labor_resources").value = record.labor_resources || "";   
+//      document.getElementById("work_elements").value = record.work_elements || ""; 
+//      document.getElementById("equipment").value = record.equipments || ""; 
     } catch (error) {
       console.error("Error fetching record:", error);
     }
