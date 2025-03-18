@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logic Network / Precedence Diagram</title>
+  <!-- Bootstrap CSS for Navigation Menu -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Mermaid CSS and JS from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    // Initialize Mermaid once the page loads.
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .mermaid {
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <header class="py-3 bg-dark text-white">
+    <div class="container">
+      <h1 class="h3 text-center">Construction Management Solutions</h1>
+      <nav>
+        <ul class="nav nav-pills justify-content-center">
+          <li class="nav-item"><a class="nav-link text-white" href="home.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="index.html">CASS Input Form</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="gantt.html">Gantt Chart</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="logic.html">Logic Network</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="man_day.html">Man-Day Estimating</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="resource_leveling.html">Resource Leveling</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="cass_dashboard.html">CAS Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container my-5">
+    <h2 class="text-center">Logic Network / Precedence Diagram</h2>
+    <p class="text-center">
+      This diagram represents a sample logic network derived from CASS work elements using NTRP guidelines.
+      In practice, work elements and their dependencies would be generated from user input and calculation data.
+    </p>
+    <!-- Mermaid diagram container -->
+    <div class="mermaid">
+      graph TD
+        A[Excavate for Footers (02200)] --> B[Pour Concrete (02201)]
+        B --> C[Form Walls (02202)]
+        B --> D[Install Rebar (02203)]
+        C --> E[Finish Concrete (02204)]
+        D --> E
+    </div>
+  </main>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
