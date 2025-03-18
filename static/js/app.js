@@ -34,13 +34,21 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
   }
 
-  // Add the rest of your initialization code here.
-  document.getElementById("addLaborBtn").addEventListener("click", addLaborResource);
-  document.getElementById("addWorkElementBtn").addEventListener("click", openLibraryModal);
-  document.getElementById("addEquipmentBtn").addEventListener("click", openEquipmentModal);
-  // etc.
-});
+  // Add event listeners only if the elements exist.
+  const addLaborBtn = document.getElementById("addLaborBtn");
+  if (addLaborBtn) {
+    addLaborBtn.addEventListener("click", addLaborResource);
+  }
 
+  const addWorkElementBtn = document.getElementById("addWorkElementBtn");
+  if (addWorkElementBtn) {
+    addWorkElementBtn.addEventListener("click", openLibraryModal);
+  }
+
+  const addEquipmentBtn = document.getElementById("addEquipmentBtn");
+  if (addEquipmentBtn) {
+    addEquipmentBtn.addEventListener("click", openEquipmentModal);
+  }
 
 
         
