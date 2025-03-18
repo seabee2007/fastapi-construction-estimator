@@ -57,17 +57,17 @@ async def read_index():
 
 @app.get("/logic.html", response_class=HTMLResponse)
 async def read_logic():
-    index_path = os.path.join(root_dir, "static", "logic.html")
+    logic_path = os.path.join(root_dir, "static", "logic.html")
     try:
         with open(logic_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
     except Exception as e:
-        raise HTTPException(status_code=404, detail="Index file not found")
+        raise HTTPException(status_code=404, detail="Logic file not found")
 
 @app.get("/resource_leveling.html", response_class=HTMLResponse)
 async def read_resource_leveling():
-    index_path = os.path.join(root_dir, "static", "resource_leveling.html")
+    resource_leveling_path = os.path.join(root_dir, "static", "resource_leveling.html")
     try:
         with open(resource_leveling_path, "r", encoding="utf-8") as f:
             content = f.read()
@@ -89,6 +89,7 @@ async def get_cass_record(record_id: int):
         if record.get("id") == record_id:
             return record
     raise HTTPException(status_code=404, detail="Record not found")
+
 @app.get("/gantt-tasks")
 async def get_gantt_tasks():
     # If no CASS records exist, return sample tasks.
@@ -126,8 +127,6 @@ async def get_gantt_tasks():
             }
             tasks.append(task)
         return tasks
-
-
 
 # ---------------------------
 # Pydantic Models (Schemas)
@@ -197,8 +196,6 @@ async def get_equipment():
         raise HTTPException(status_code=404, detail="No equipment found.")
     return equipment
 
-
-
 # ---------------------------
 # Load NTRP Data from JSON File
 # ---------------------------
@@ -260,7 +257,6 @@ async def final_estimate(input_data: FinalEstimationInput):
         raise HTTPException(status_code=500, detail=str(e))
     return {"project": input_data.project_name, **result}
 
-
 # ---------------------------
 # CAS Records Endpoints (for cass_dashboard)
 # ---------------------------
@@ -291,7 +287,6 @@ async def delete_cass(record_id: int):
             del cass_records[index]
             return {"detail": "Record deleted"}
     raise HTTPException(status_code=404, detail="Record not found")
-
 
 # ---------------------------
 # Run the Application
