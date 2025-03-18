@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Logic Network using jsPlumb</title>
+  <title>Dynamic Logic Network using jsPlumb</title>
   <!-- Bootstrap CSS for Navigation Menu -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     #diagramContainer {
       position: relative;
       width: 100%;
-      height: 500px;
+      height: 600px;
       border: 1px solid #ccc;
       margin: 20px auto;
+      overflow: auto;
     }
     .box {
       position: absolute;
@@ -45,48 +46,115 @@
 
   <!-- Main Content -->
   <main class="container my-5">
-    <h2 class="text-center">Logic Network / Precedence Diagram</h2>
+    <h2 class="text-center">Dynamic Logic Network / Precedence Diagram</h2>
     <p class="text-center">
-      This diagram represents a sample logic network derived from CASS work elements according to NTRP guidelines.
+      This diagram dynamically generates work element nodes from CASS data and connects them based on dependencies.
     </p>
-    <div id="diagramContainer">
-      <!-- These boxes represent sample work elements. In a dynamic system, they would be generated from your data. -->
-      <div id="box1" class="box" style="top: 50px; left: 50px;">Excavate for Footers (02200)</div>
-      <div id="box2" class="box" style="top: 200px; left: 300px;">Pour Concrete (02201)</div>
-      <div id="box3" class="box" style="top: 350px; left: 50px;">Form Walls (02202)</div>
-    </div>
+    <div id="diagramContainer"></div>
   </main>
 
-  <!-- Include Bootstrap JS Bundle with Popper -->
+  <!-- Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Include jsPlumb from CDN -->
+  <!-- jsPlumb from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/js/jsplumb.min.js"></script>
   <script>
-    // Wait for jsPlumb to be ready.
-    jsPlumb.ready(function () {
-      var instance = jsPlumb.getInstance({
-        Connector: "Bezier",
-        PaintStyle: { stroke: "blue", strokeWidth: 2 },
-        Endpoint: "Dot",
-        EndpointStyle: { fill: "blue", radius: 5 },
-        Container: "diagramContainer"
-      });
+    // Helper: Get URL query parameter by name.
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
 
-      // Connect the boxes to represent task precedence.
-      // Box1 -> Box2
-      instance.connect({
-        source: "box1",
-        target: "box2",
-        anchors: ["Right", "Left"]
-      });
+    // Dynamically create nodes based on CASS work_elements data.
+    function createWorkElementNodes(workElements) {
+      const container = document.getElementById("diagramContainer");
+      container.innerHTML = "";
+      const positions = {};  // To store computed positions for later connection.
       
-      // Box2 -> Box3
-      instance.connect({
-        source: "box2",
-        target: "box3",
-        anchors: ["Bottom", "Top"]
+      // For simplicity, position nodes vertically with some spacing.
+      const topStart = 50;
+      const leftStart = 50;
+      const verticalSpacing = 100;
+      
+      workElements.forEach((element, index) => {
+        const div = document.createElement("div");
+        div.className = "box";
+        div.id = "box_" + element.id;
+        div.style.top = (topStart + index * verticalSpacing) + "px";
+        div.style.left = leftStart + "px";
+        div.innerText = element.description + " (" + element.id + ")";
+        container.appendChild(div);
+        positions[element.id] = div;
       });
-    });
+      return positions;
+    }
+
+    // Create connections based on dependencies.
+    function connectDependencies(workElements, positions, instance) {
+      workElements.forEach(element => {
+        if (element.dependencies && element.dependencies.length > 0) {
+          // Assume dependencies is an array of work element ids that must precede this element.
+          element.dependencies.forEach(depId => {
+            // Check if both elements exist.
+            if (positions[depId] && positions[element.id]) {
+              instance.connect({
+                source: positions[depId],
+                target: positions[element.id],
+                anchors: ["Right", "Left"],
+                overlays: [
+                  ["Arrow", { width:10, length:10, location:1 }]
+                ]
+              });
+            }
+          });
+        }
+      });
+    }
+
+    // Initialize the logic network diagram.
+    async function initLogicNetwork() {
+      const recordId = getQueryParam("id");
+      if (!recordId) {
+        console.warn("No record ID provided; cannot fetch CASS data.");
+        return;
+      }
+      
+      try {
+        const response = await fetch("/cass/" + recordId);
+        if (!response.ok) {
+          throw new Error("Failed to fetch CASS record: " + response.status);
+        }
+        const record = await response.json();
+        console.log("Fetched CASS record:", record);
+        
+        // Assume record.work_elements is an array of objects, e.g.:
+        // [{ id: "1", description: "Excavate for Footers", dependencies: [] },
+        //  { id: "2", description: "Pour Concrete", dependencies: ["1"] }, ...]
+        if (!record.work_elements || record.work_elements.length === 0) {
+          console.warn("No work elements found in record.");
+          return;
+        }
+        
+        // Dynamically create nodes.
+        const positions = createWorkElementNodes(record.work_elements);
+        
+        // Initialize jsPlumb.
+        jsPlumb.ready(function () {
+          var instance = jsPlumb.getInstance({
+            Connector: "Bezier",
+            PaintStyle: { stroke: "blue", strokeWidth: 2 },
+            Endpoint: "Dot",
+            EndpointStyle: { fill: "blue", radius: 5 },
+            Container: "diagramContainer"
+          });
+          // Create connections based on dependencies.
+          connectDependencies(record.work_elements, positions, instance);
+        });
+      } catch (error) {
+        console.error("Error initializing logic network:", error);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", initLogicNetwork);
   </script>
 </body>
 </html>
