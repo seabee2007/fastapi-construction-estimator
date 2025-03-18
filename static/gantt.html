@@ -1,1 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gantt Chart from CASS Data</title>
+  <!-- Bootstrap CSS for the nav menu -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Frappe Gantt CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/frappe-gantt/dist/frappe-gantt.css">
+  <style>
+    #gantt {
+      max-width: 100%;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <header class="py-3 bg-dark text-white">
+    <div class="container">
+      <h1 class="h3 text-center">Construction Management Solutions</h1>
+      <nav>
+        <ul class="nav nav-pills justify-content-center">
+          <li class="nav-item"><a class="nav-link text-white" href="home.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="index.html">CASS Input Form</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="gantt.html">Gantt Chart</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="logic.html">Logic Network</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="man_day.html">Man-Day Estimating</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="resource_leveling.html">Resource Leveling</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="cass_dashboard.html">CAS Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container my-5">
+    <h2 class="text-center">Gantt Chart from CASS Data</h2>
+    <p class="text-center">
+      This Gantt chart is built off the CASS records and scheduled per NTRP guidelines (Chapter 3).  
+      Each task represents a CASS activity with computed start/stop dates and duration.
+    </p>
+    <div id="gantt"></div>
+  </main>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Frappe Gantt JS -->
+  <script src="https://unpkg.com/frappe-gantt/dist/frappe-gantt.min.js"></script>
+  <script>
+    /**
+     * Fetch tasks from your backend endpoint.
+     * The endpoint (/gantt-tasks) should convert stored CASS records into task objects
+     * following NTRP guidelines. Each task should include:
+     *   - id: Unique identifier.
+     *   - name: Combined activity number/title.
+     *   - start: Start date (YYYY-MM-DD).
+     *   - end: End date (YYYY-MM-DD) computed from the CASS duration.
+     *   - progress: Percentage of completion.
+     *   - dependencies: (Optional) Comma-separated list of task IDs.
+     */
+    async function fetchTasks() {
+      try {
+        const response = await fetch("/gantt-tasks");
+        if (!response.ok) {
+          throw new Error("Failed to fetch tasks: " + response.status);
+        }
+        const tasks = await response.json();
+        return tasks;
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        // For testing purposes, return sample tasks if backend is unavailable.
+        return [
+          {
+            id: "1",
+            name: "Excavate for Footers (02200)",
+            start: "2025-03-20",
+            end: "2025-03-25",
+            progress: 50,
+            dependencies: ""
+          },
+          {
+            id: "2",
+            name: "Pour Concrete (02201)",
+            start: "2025-03-26",
+            end: "2025-03-30",
+            progress: 20,
+            dependencies: "1"
+          }
+        ];
+      }
+    }
+
+    async function initGantt() {
+      const tasks = await fetchTasks();
+      // Initialize the Gantt chart with tasks and attach event handlers.
+      const gantt = new Gantt("#gantt", tasks, {
+        on_click: function(task) {
+          console.log("Clicked task:", task);
+        },
+        on_date_change: function(task, start, end) {
+          console.log("Date changed:", task, start, end);
+        },
+        on_progress_change: function(task, progress) {
+          console.log("Progress changed:", task, progress);
+        },
+        on_view_change: function(mode) {
+          console.log("View mode changed:", mode);
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", initGantt);
+  </script>
+</body>
+</html>
 
