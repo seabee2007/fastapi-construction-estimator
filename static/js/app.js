@@ -542,8 +542,8 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
 
   // Build the payload for final estimate
   const finalEstimateData = {
-    project_name: form.project_number.value, // adjust as needed if names differ
-    project_date: form.project_date ? form.project_date.value : "", // if available; otherwise make it optional
+    project_name: form.project_number.value,
+    project_date: form.project_date ? form.project_date.value : "",
     activity_code: form.activity_number.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
@@ -578,6 +578,7 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
 
   console.log("Final Estimate Payload:", finalEstimateData);
 
+  // Build the payload to send, using finalEstimateData arrays for resources.
   const cassData = {
     project_number: form.project_number.value,
     project_title: form.project_title.value,
@@ -585,9 +586,9 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
     activity_title: form.activity_title.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
-    labor_resources: form.labor_resources.value,
-    work_elements: form.work_elements.value,
-    equipment: form.equipment.value,
+    labor_resources: finalEstimateData.labor_resources,
+    work_elements: finalEstimateData.work_elements,
+    equipment: finalEstimateData.equipment,
   };
 
   fetch("/cass", {
@@ -598,11 +599,8 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
     .then(response => response.json())
     .then(data => {
       console.log("CAS record saved:", data);
-      // Optionally, you can redirect to the dashboard:
-      // window.location.href = "/static/cass_dashboard.html";
+      // Redirect to the dashboard if desired:
+      window.location.href = "/static/cass_dashboard.html";
     })
     .catch(error => console.error("Error saving CAS record:", error));
-});  // End of submit event listener
-
-// Attach search event listener to modal search input.
-document.getElementById("modalSearchInput").addEventListener("input", filterModalTable);
+});
