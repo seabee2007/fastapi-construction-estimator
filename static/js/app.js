@@ -4,13 +4,12 @@ document.addEventListener("DOMContentLoaded", async function() {
   let activeEquipmentRow = null;
 
   // -----------------------------
-  // Helper Functions to Populate Dynamic Sections
+  // Helper Functions for Dynamic Sections
   // -----------------------------
   function populateLaborResources(laborData) {
     const container = document.getElementById("laborResourcesContainer");
     container.innerHTML = "";
     laborData.forEach(item => {
-      // Create a row for a labor resource.
       const row = document.createElement("div");
       row.className = "input-group mb-2";
       row.innerHTML = `
@@ -65,6 +64,27 @@ document.addEventListener("DOMContentLoaded", async function() {
   }
 
   // -----------------------------
+  // Helper Function for Production Efficiency Factors
+  // -----------------------------
+  function populateEfficiencyFactors(record) {
+    // Assumes the record contains a 'production_efficiency' object.
+    if (record.production_efficiency) {
+      document.getElementById("factor-workload").value = record.production_efficiency.factor_workload || "67";
+      document.getElementById("factor-site").value = record.production_efficiency.factor_site || "67";
+      document.getElementById("factor-labor").value = record.production_efficiency.factor_labor || "67";
+      document.getElementById("factor-supervision").value = record.production_efficiency.factor_supervision || "67";
+      document.getElementById("factor-job").value = record.production_efficiency.factor_job || "67";
+      document.getElementById("factor-weather").value = record.production_efficiency.factor_weather || "67";
+      document.getElementById("factor-equipment").value = record.production_efficiency.factor_equipment || "67";
+      document.getElementById("factor-tactical").value = record.production_efficiency.factor_tactical || "67";
+      document.getElementById("availability-factor").value = record.production_efficiency.availability_factor || "75";
+      document.getElementById("manday-equivalent").value = record.production_efficiency.manday_equivalent || "1.125";
+      document.getElementById("product-efficiency").textContent = record.production_efficiency.product_efficiency || "67";
+      document.getElementById("delay-factor").textContent = record.production_efficiency.delay_factor || "1.00";
+    }
+  }
+
+  // -----------------------------
   // Load and Repopulate Data When Editing
   // -----------------------------
   const urlParams = new URLSearchParams(window.location.search);
@@ -100,7 +120,10 @@ document.addEventListener("DOMContentLoaded", async function() {
         populateEquipment(record.equipment);
       }
 
-      // Update the summary calculations.
+      // Populate Production Efficiency Factors.
+      populateEfficiencyFactors(record);
+
+      // Recalculate summary (assuming updateCASSummary is defined elsewhere).
       updateCASSummary();
     } catch (error) {
       console.error("Error fetching record:", error);
@@ -114,12 +137,10 @@ document.addEventListener("DOMContentLoaded", async function() {
   if (addLaborBtn) {
     addLaborBtn.addEventListener("click", addLaborResource);
   }
-
   const addWorkElementBtn = document.getElementById("addWorkElementBtn");
   if (addWorkElementBtn) {
     addWorkElementBtn.addEventListener("click", openLibraryModal);
   }
-
   const addEquipmentBtn = document.getElementById("addEquipmentBtn");
   if (addEquipmentBtn) {
     addEquipmentBtn.addEventListener("click", openEquipmentModal);
