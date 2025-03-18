@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
   console.log("Record ID from URL:", recordId);
-  });
+
   // If a record ID is provided, fetch the record.
   if (recordId) {
     try {
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       console.error("Error fetching record:", error);
     }
   }
+});
 
   // Add event listeners only if the elements exist.
   const addLaborBtn = document.getElementById("addLaborBtn");
