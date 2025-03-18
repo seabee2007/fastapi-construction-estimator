@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
   console.log("Record ID from URL:", recordId);
-
+  });
   // If a record ID is provided, fetch the record.
   if (recordId) {
     try {
