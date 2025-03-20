@@ -2,16 +2,31 @@ import os
 import json
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 app = FastAPI()
 
-# Set repository root (assumed to be os.getcwd())
-root_dir = os.getcwd()
+# Define a global variable to store CASS records.
+# For testing, we add one default record.
+cass_records = [
+    {
+        "id": 1,
+        "project_number": "PH5-800",
+        "project_title": "CONSTRUCT SHED",
+        "activity_number": "02200",
+        "activity_title": "EXCAVATE FOR FOOTERS",
+        "date_created": "2025-03-20",
+        "start_date": "2025-03-20",
+        "end_date": "2025-03-25",
+        "progress": 50,
+        "dependencies": ""
+    }
+]
 
 # Mount the "static" directory to serve HTML, CSS, JS files.
+root_dir = os.getcwd()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Serve specific files without the /static prefix.
@@ -22,7 +37,7 @@ async def read_home():
         with open(home_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=404, detail="Home file not found")
 
 @app.get("/cass_dashboard.html", response_class=HTMLResponse)
@@ -32,7 +47,7 @@ async def read_cass_dashboard():
         with open(cass_dashboard_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=404, detail="CASS Dashboard file not found")
 
 @app.get("/gantt.html", response_class=HTMLResponse)
@@ -42,7 +57,7 @@ async def read_gantt():
         with open(gantt_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=404, detail="Gantt file not found")
 
 @app.get("/index.html", response_class=HTMLResponse)
@@ -52,7 +67,7 @@ async def read_index():
         with open(index_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=404, detail="Index file not found")
 
 @app.get("/logic.html", response_class=HTMLResponse)
@@ -62,7 +77,7 @@ async def read_logic():
         with open(logic_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=404, detail="Logic file not found")
 
 @app.get("/resource_leveling.html", response_class=HTMLResponse)
@@ -72,17 +87,19 @@ async def read_resource_leveling():
         with open(resource_leveling_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
-    except Exception as e:
-        raise HTTPException(status_code=404, detail="ResourceLeveling file not found")
+    except Exception:
+        raise HTTPException(status_code=404, detail="Resource Leveling file not found")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
     return RedirectResponse(url="/static/home.html")
 
+# GET all CASS records.
 @app.get("/cass")
 async def get_cass():
     return cass_records
 
+# GET a single CASS record by id.
 @app.get("/cass/{record_id}")
 async def get_cass_record(record_id: int):
     for record in cass_records:
@@ -90,9 +107,37 @@ async def get_cass_record(record_id: int):
             return record
     raise HTTPException(status_code=404, detail="Record not found")
 
+# Define the schema for a new CASS record input.
+class FinalEstimationInput(BaseModel):
+    project_name: str = Field(..., example="Project PH5-800")
+    project_date: str = Field(..., example="2025-03-15")
+    activity_code: str = Field(..., example="02200")
+    description_of_work: str = Field(..., example="Excavate for footers")
+    method_of_construction: str = Field(..., example="Standard excavation using machinery.")
+    # In a complete implementation, include labor_resources, work_elements, equipment, etc.
+
+# POST a new CASS record.
+@app.post("/cass")
+async def add_cass(record: FinalEstimationInput):
+    global cass_records
+    new_id = len(cass_records) + 1
+    new_record = record.dict()
+    new_record["id"] = new_id
+    # Use project_name as project_number and project_title.
+    new_record["project_number"] = new_record.pop("project_name", "Unknown")
+    new_record["project_title"] = new_record["project_number"]
+    # Set default dates and other fields.
+    new_record["date_created"] = record.project_date
+    new_record["start_date"] = record.project_date
+    new_record["end_date"] = record.project_date
+    new_record["progress"] = 0
+    new_record["dependencies"] = ""
+    cass_records.append(new_record)
+    return new_record
+
+# GET Gantt tasks based on CASS records.
 @app.get("/gantt-tasks")
 async def get_gantt_tasks():
-    # If no CASS records exist, return sample tasks.
     if not cass_records:
         return [
             {
@@ -113,13 +158,11 @@ async def get_gantt_tasks():
             }
         ]
     else:
-        # Convert cass_records into tasks.
         tasks = []
         for record in cass_records:
-            # Adjust keys as per your CASS record structure.
             task = {
                 "id": str(record.get("id", "")),
-                "name": f'{record.get("activity_number", "")} {record.get("activity_title", "")}',
+                "name": f'{record.get("activity_code", "")} {record.get("description_of_work", "")}',
                 "start": record.get("start_date", "2025-03-20"),
                 "end": record.get("end_date", "2025-03-25"),
                 "progress": record.get("progress", 0),
@@ -127,6 +170,7 @@ async def get_gantt_tasks():
             }
             tasks.append(task)
         return tasks
+
 
 # ---------------------------
 # Pydantic Models (Schemas)
