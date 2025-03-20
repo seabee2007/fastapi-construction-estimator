@@ -8,6 +8,9 @@ from pydantic import BaseModel, Field
 
 app = FastAPI()
 
+# ---------------------------
+# Global Variables
+# ---------------------------
 # Define a global variable to store CASS records.
 # For testing, we add one default record.
 cass_records = [
@@ -25,11 +28,12 @@ cass_records = [
     }
 ]
 
-# Mount the "static" directory to serve HTML, CSS, JS files.
+# ---------------------------
+# Static Files Setup
+# ---------------------------
 root_dir = os.getcwd()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Serve specific files without the /static prefix.
 @app.get("/home.html", response_class=HTMLResponse)
 async def read_home():
     home_path = os.path.join(root_dir, "static", "home.html")
@@ -42,9 +46,9 @@ async def read_home():
 
 @app.get("/cass_dashboard.html", response_class=HTMLResponse)
 async def read_cass_dashboard():
-    cass_dashboard_path = os.path.join(root_dir, "static", "cass_dashboard.html")
+    dashboard_path = os.path.join(root_dir, "static", "cass_dashboard.html")
     try:
-        with open(cass_dashboard_path, "r", encoding="utf-8") as f:
+        with open(dashboard_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
     except Exception:
@@ -82,9 +86,9 @@ async def read_logic():
 
 @app.get("/resource_leveling.html", response_class=HTMLResponse)
 async def read_resource_leveling():
-    resource_leveling_path = os.path.join(root_dir, "static", "resource_leveling.html")
+    resource_path = os.path.join(root_dir, "static", "resource_leveling.html")
     try:
-        with open(resource_leveling_path, "r", encoding="utf-8") as f:
+        with open(resource_path, "r", encoding="utf-8") as f:
             content = f.read()
         return HTMLResponse(content=content, status_code=200)
     except Exception:
@@ -94,12 +98,13 @@ async def read_resource_leveling():
 async def read_root():
     return RedirectResponse(url="/static/home.html")
 
-# GET all CASS records.
+# ---------------------------
+# CASS Records Endpoints
+# ---------------------------
 @app.get("/cass")
 async def get_cass():
     return cass_records
 
-# GET a single CASS record by id.
 @app.get("/cass/{record_id}")
 async def get_cass_record(record_id: int):
     for record in cass_records:
@@ -114,66 +119,12 @@ class FinalEstimationInput(BaseModel):
     activity_code: str = Field(..., example="02200")
     description_of_work: str = Field(..., example="Excavate for footers")
     method_of_construction: str = Field(..., example="Standard excavation using machinery.")
-    # In a complete implementation, include labor_resources, work_elements, equipment, etc.
-
-# POST a new CASS record.
-@app.post("/cass")
-async def add_cass(record: FinalEstimationInput):
-    global cass_records
-    new_id = len(cass_records) + 1
-    new_record = record.dict()
-    new_record["id"] = new_id
-    # Use project_name as project_number and project_title.
-    new_record["project_number"] = new_record.pop("project_name", "Unknown")
-    new_record["project_title"] = new_record["project_number"]
-    # Set default dates and other fields.
-    new_record["date_created"] = record.project_date
-    new_record["start_date"] = record.project_date
-    new_record["end_date"] = record.project_date
-    new_record["progress"] = 0
-    new_record["dependencies"] = ""
-    cass_records.append(new_record)
-    return new_record
-
-# GET Gantt tasks based on CASS records.
-@app.get("/gantt-tasks")
-async def get_gantt_tasks():
-    if not cass_records:
-        return [
-            {
-                "id": "1",
-                "name": "Excavate for Footers (02200)",
-                "start": "2025-03-20",
-                "end": "2025-03-25",
-                "progress": 50,
-                "dependencies": ""
-            },
-            {
-                "id": "2",
-                "name": "Pour Concrete (02201)",
-                "start": "2025-03-26",
-                "end": "2025-03-30",
-                "progress": 20,
-                "dependencies": "1"
-            }
-        ]
-    else:
-        tasks = []
-        for record in cass_records:
-            task = {
-                "id": str(record.get("id", "")),
-                "name": f'{record.get("activity_code", "")} {record.get("description_of_work", "")}',
-                "start": record.get("start_date", "2025-03-20"),
-                "end": record.get("end_date", "2025-03-25"),
-                "progress": record.get("progress", 0),
-                "dependencies": record.get("dependencies", "")
-            }
-            tasks.append(task)
-        return tasks
-
+    labor_resources: List["LaborRow"] = []
+    work_elements: List["WorkElementRow"] = []
+    equipment: List["EquipmentRow"] = []
 
 # ---------------------------
-# Pydantic Models (Schemas)
+# Additional Schemas
 # ---------------------------
 class LaborRow(BaseModel):
     skill: str = Field(..., example="Builder (Carpenter)")
@@ -188,16 +139,6 @@ class EquipmentRow(BaseModel):
     name: str = Field(..., example="EXCAVATOR")
     quantity: float = Field(..., gt=0, example=1)
 
-class FinalEstimationInput(BaseModel):
-    project_name: str = Field(..., example="Project PH5-800")
-    project_date: str = Field(..., example="2025-03-15")
-    activity_code: str = Field(..., example="02200")
-    description_of_work: str = Field(..., example="Excavate for footers")
-    method_of_construction: str = Field(..., example="Standard excavation using machinery.")
-    labor_resources: List[LaborRow]
-    work_elements: List[WorkElementRow]
-    equipment: List[EquipmentRow]
-
 class FinalEstimationOutput(BaseModel):
     project_name: str = Field(..., example="Project PH5-800")
     project_date: Optional[str] = Field(None, example="2025-03-15")
@@ -207,10 +148,74 @@ class FinalEstimationOutput(BaseModel):
     labor_resources: List[LaborRow]
     work_elements: List[WorkElementRow]
     equipment: List[EquipmentRow]
+    total_labor_cost: float
+    total_material_cost: float
+    total_equipment_cost: float
+    total_estimated_cost: float
+
+# POST a new CASS record.
+@app.post("/cass")
+async def add_cass(record: FinalEstimationInput):
+    global cass_records
+    new_id = len(cass_records) + 1
+    new_record = record.dict()
+    new_record["id"] = new_id
+    # Map project_name to project_number and project_title.
+    new_record["project_number"] = new_record.pop("project_name", "Unknown")
+    new_record["project_title"] = new_record["project_number"]
+    # Set default dates and other fields.
+    new_record["date_created"] = record.project_date
+    new_record["start_date"] = record.project_date
+    new_record["end_date"] = record.project_date
+    new_record["progress"] = 0
+    new_record["dependencies"] = ""
+    cass_records.append(new_record)
+    return new_record
+
+@app.put("/cass/{record_id}")
+async def update_cass(record_id: int, updated_record: dict):
+    for index, record in enumerate(cass_records):
+        if record.get("id") == record_id:
+            updated_record["id"] = record_id
+            cass_records[index] = updated_record
+            return updated_record
+    raise HTTPException(status_code=404, detail="Record not found")
+
+@app.delete("/cass/{record_id}")
+async def delete_cass(record_id: int):
+    for index, record in enumerate(cass_records):
+        if record.get("id") == record_id:
+            del cass_records[index]
+            return {"detail": "Record deleted"}
+    raise HTTPException(status_code=404, detail="Record not found")
+
+# GET Gantt tasks based on CASS records.
+@app.get("/gantt-tasks")
+async def get_gantt_tasks():
+    tasks = []
+    for record in cass_records:
+        task = {
+            "id": str(record.get("id", "")),
+            "name": f'{record.get("activity_code", "")} {record.get("description_of_work", "")}',
+            "start": record.get("start_date", "2025-03-20"),
+            "end": record.get("end_date", "2025-03-25"),
+            "progress": record.get("progress", 0),
+            "dependencies": record.get("dependencies", "")
+        }
+        tasks.append(task)
+    return tasks
 
 # ---------------------------
-# API Endpoints to Supply NTRP Data
+# NTRP Data Endpoints
 # ---------------------------
+DATA_FILE = os.path.join(root_dir, "ntrp_data.json")
+try:
+    with open(DATA_FILE, "r") as f:
+        ntrp_data = json.load(f)
+except Exception as e:
+    ntrp_data = {}
+    print("Error loading NTRP data:", e)
+
 @app.get("/activities")
 async def get_activities():
     activities = ntrp_data.get("activities", [])
@@ -241,17 +246,6 @@ async def get_equipment():
     return equipment
 
 # ---------------------------
-# Load NTRP Data from JSON File
-# ---------------------------
-DATA_FILE = os.path.join(root_dir, "ntrp_data.json")
-try:
-    with open(DATA_FILE, "r") as f:
-        ntrp_data = json.load(f)
-except Exception as e:
-    ntrp_data = {}
-    print("Error loading NTRP data:", e)
-
-# ---------------------------
 # Estimation Calculation Logic
 # ---------------------------
 def calculate_estimate(input_data: FinalEstimationInput) -> dict:
@@ -266,7 +260,7 @@ def calculate_estimate(input_data: FinalEstimationInput) -> dict:
 
     # Calculate material cost from work elements.
     material_cost = 0
-    cost_factor = 100  # Example factor converting man-hours to dollars.
+    cost_factor = 100  # Example conversion factor.
     for we in input_data.work_elements:
         element = next((item for item in ntrp_data.get("work_elements", [])
                         if item["code"] == we.code), None)
@@ -299,38 +293,17 @@ async def final_estimate(input_data: FinalEstimationInput):
         result = calculate_estimate(input_data)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    return {"project": input_data.project_name, **result}
-
-# ---------------------------
-# CAS Records Endpoints (for cass_dashboard)
-# ---------------------------
-# In a production system, you would store these records in a database.
-# For demonstration, we'll use an in-memory list.
-cass_records = []
-
-@app.post("/cass")
-async def create_cass(record: dict):
-    record_id = len(cass_records) + 1
-    record["id"] = record_id
-    cass_records.append(record)
-    return record
-
-@app.put("/cass/{record_id}")
-async def update_cass(record_id: int, updated_record: dict):
-    for index, record in enumerate(cass_records):
-        if record.get("id") == record_id:
-            updated_record["id"] = record_id
-            cass_records[index] = updated_record
-            return updated_record
-    raise HTTPException(status_code=404, detail="Record not found")
-
-@app.delete("/cass/{record_id}")
-async def delete_cass(record_id: int):
-    for index, record in enumerate(cass_records):
-        if record.get("id") == record_id:
-            del cass_records[index]
-            return {"detail": "Record deleted"}
-    raise HTTPException(status_code=404, detail="Record not found")
+    return {
+        "project_name": input_data.project_name,
+        "project_date": input_data.project_date,
+        "activity_code": input_data.activity_code,
+        "description_of_work": input_data.description_of_work,
+        "method_of_construction": input_data.method_of_construction,
+        "labor_resources": input_data.labor_resources,
+        "work_elements": input_data.work_elements,
+        "equipment": input_data.equipment,
+        **result
+    }
 
 # ---------------------------
 # Run the Application
