@@ -61,21 +61,21 @@
         return tasks;
       } catch (error) {
         console.error("Error fetching tasks:", error);
-        // Fallback sample tasks for testing.
+        // Fallback sample tasks with MM/DD/YYYY dates and valid dependency values.
         return [
           {
             id: "1",
             name: "Excavate for Footers (02200)",
-            start: "2025-03-20",
-            end: "2025-03-25",
+            start: "03/20/2025",
+            end: "03/25/2025",
             progress: 50,
-            dependencies: ""
+            dependencies: null
           },
           {
             id: "2",
             name: "Pour Concrete (02201)",
-            start: "2025-03-26",
-            end: "2025-03-30",
+            start: "03/26/2025",
+            end: "03/30/2025",
             progress: 20,
             dependencies: "1"
           }
@@ -86,27 +86,27 @@
     async function initGantt() {
       const tasks = await fetchTasks();
       var g = new JSGantt.GanttChart(document.getElementById("GanttChartDIV"), "day");
-      if(g.getDivId() != null) {
+      if (g.getDivId() != null) {
         g.setCaptionType('Complete'); // Options: None, Caption, Resource, Duration, Complete.
-        g.setDateInputFormat('yyyy-mm-dd');
-        // Removed setDateDisplayFormat call since it's not defined in this version.
+        g.setDateInputFormat('yyyy-mm-dd');  // This is only for input parsing; output format we use MM/DD/YYYY in our tasks.
+        // Removed setDateDisplayFormat since it's not defined.
 
         tasks.forEach(task => {
           g.AddTaskItem(
-            task.id,           // Task ID
+            task.id,           // Task ID (string)
             task.name,         // Task Name
-            task.start,        // Start Date
-            task.end,          // End Date
-            "gtaskblue",       // CSS class for styling the task bar
+            task.start,        // Start Date (MM/DD/YYYY)
+            task.end,          // End Date (MM/DD/YYYY)
+            "gtaskblue",       // CSS class for task styling
             "",                // Link (if any)
-            0,                 // Milestone (0 = no)
-            "Resource",        // Resource (can be replaced with actual resource data)
-            task.progress,     // Percent Complete
+            0,                 // Milestone flag (0 = no)
+            "Resource",        // Resource (if available)
+            task.progress,     // Percent Complete (number)
             0,                 // Group (0 = no)
             0,                 // Parent (0 = none)
-            1,                 // Open (1 = yes)
-            task.dependencies, // Dependencies (comma-separated list)
-            ""                 // Caption (if needed)
+            1,                 // Open flag (1 = yes)
+            task.dependencies, // Dependencies (string or null)
+            ""                 // Caption (optional)
           );
         });
         g.Draw();
