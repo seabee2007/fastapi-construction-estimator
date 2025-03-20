@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from pydantic import BaseModel, Field
 from typing import List
 
@@ -33,6 +34,7 @@ class EquipmentRow(BaseModel):
 class FinalEstimationInput(BaseModel):
     """
     Input data for generating a final construction estimate.
+    
     Fields:
       - project_name: Project identification.
       - project_date: The date of the project.
@@ -55,6 +57,7 @@ class FinalEstimationInput(BaseModel):
 class FinalEstimationOutput(BaseModel):
     """
     Output data from the final estimation calculation.
+    
     Contains totals for labor, material, equipment, and the overall estimated cost.
     """
     project: str
@@ -62,3 +65,38 @@ class FinalEstimationOutput(BaseModel):
     total_material_cost: float
     total_equipment_cost: float
     total_estimated_cost: float
+
+# ---------------------------
+# Test/Demonstration
+# ---------------------------
+if __name__ == '__main__':
+    # Create an example input instance.
+    example_input = FinalEstimationInput(
+        project_name="Project PH5-800",
+        project_date="2025-03-15",
+        activity_code="02200",
+        description_of_work="Excavate for footers",
+        method_of_construction="Standard excavation using machinery.",
+        labor_resources=[
+            LaborRow(skill="Builder (Carpenter)", quantity=2)
+        ],
+        work_elements=[
+            WorkElementRow(code="1302", description="EXCAVATE USING, TRACTOR MTD. BACKHOE", quantity=4)
+        ],
+        equipment=[
+            EquipmentRow(name="EXCAVATOR", quantity=1)
+        ]
+    )
+    print("Example Input JSON:")
+    print(example_input.json(indent=2))
+    
+    # Create an example output instance.
+    example_output = FinalEstimationOutput(
+        project="Project PH5-800",
+        total_labor_cost=1000.0,
+        total_material_cost=2000.0,
+        total_equipment_cost=500.0,
+        total_estimated_cost=3500.0
+    )
+    print("\nExample Output JSON:")
+    print(example_output.json(indent=2))
