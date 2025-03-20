@@ -84,25 +84,32 @@
       return nodePositions;
     }
     
-    // Create connections based on the dependencies of each work element.
-    function createConnections(workElements, nodePositions, instance) {
-      workElements.forEach(element => {
-        if (element.dependencies && element.dependencies.length > 0) {
-          element.dependencies.forEach(depId => {
-            if (nodePositions[depId] && nodePositions[element.id]) {
-              instance.connect({
-                source: nodePositions[depId],
-                target: nodePositions[element.id],
-                anchors: ["Right", "Left"],
-                overlays: [
-                  ["Arrow", { width:10, length:10, location:1 }]
-                ]
-              });
-            }
-          });
-        }
-      });
+function createConnections(workElements, nodePositions, instance) {
+  workElements.forEach(element => {
+    let deps = [];
+    if (element.dependencies) {
+      if (Array.isArray(element.dependencies)) {
+        deps = element.dependencies;
+      } else if (typeof element.dependencies === 'string') {
+        // If non-empty string, split by comma; otherwise, leave as empty array.
+        deps = element.dependencies.trim() ? element.dependencies.split(",") : [];
+      }
     }
+    deps.forEach(depId => {
+      if (nodePositions[depId] && nodePositions[element.id]) {
+        instance.connect({
+          source: nodePositions[depId],
+          target: nodePositions[element.id],
+          anchors: ["Right", "Left"],
+          overlays: [
+            ["Arrow", { width:10, length:10, location:1 }]
+          ]
+        });
+      }
+    });
+  });
+}
+
     
     // Fetch a CASS record based on the 'id' query parameter and generate the logic network.
     async function initLogicNetwork() {
