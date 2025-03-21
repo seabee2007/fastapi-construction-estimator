@@ -104,8 +104,8 @@ document.addEventListener("DOMContentLoaded", async function() {
       // Prepopulate static fields.
       document.getElementById("project_number").value = record.project_number || "";
       document.getElementById("project_title").value = record.project_title || "";
-      document.getElementById("activity_number").value = record.activity_number || "";
-      document.getElementById("activity_title").value = record.activity_title || "";
+ //     document.getElementById("activity_number").value = record.activity_number || "";
+  //    document.getElementById("activity_title").value = record.activity_title || "";
       document.getElementById("description_of_work").value = record.description_of_work || "";
       document.getElementById("method_of_construction").value = record.method_of_construction || "";
 
