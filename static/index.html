@@ -21,10 +21,6 @@
       <ul class="nav nav-pills justify-content-center">
         <li class="nav-item"><a class="nav-link text-white" href="home.html">Home</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="index.html">CASS Input Form</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="gantt.html">Gantt Chart</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="logic.html">Logic Network</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="man_day.html">Man-Day Estimating</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="resource_leveling.html">Resource Leveling</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="cass_dashboard.html">CAS Dashboard</a></li>
       </ul>
     </nav>
@@ -57,23 +53,13 @@
       
       <!-- Activity Details -->
       <fieldset class="mb-4">
-        <legend>Activity Details</legend>
-        <div class="mb-3 row">
-          <div class="col-md-6">
-            <label for="activity_number" class="form-label">Activity Number:</label>
-            <input type="text" id="activity_number" name="activity_number" class="form-control" placeholder="02200" required>
-          </div>
-          <div class="col-md-6">
-            <label for="activity_title" class="form-label">Activity Title:</label>
-            <input type="text" id="activity_title" name="activity_title" class="form-control" placeholder="EXCAVATE FOR FOOTERS" required>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="description_of_work" class="form-label">Description of Work:</label>
+        <legend>Project Details</legend>
+         <div class="mb-3">
+          <label for="description_of_work" class="form-label">Scop of Work:</label>
           <textarea id="description_of_work" name="description_of_work" class="form-control" rows="3" required></textarea>
         </div>
         <div class="mb-3">
-          <label for="method_of_construction" class="form-label">Method of Construction:</label>
+          <label for="method_of_construction" class="form-label">Comments:</label>
           <textarea id="method_of_construction" name="method_of_construction" class="form-control" rows="3" required></textarea>
         </div>
       </fieldset>
@@ -179,12 +165,7 @@
         <strong>Project Title:</strong> <span id="casProjectTitle">CONSTRUCT SHED</span>
         </div>
         </p>
-      <p>
-        <div style="text-align: center;">
-        <strong>Activity Number:</strong> <span id="casActivityNumber">02200</span>&nbsp;&nbsp;
-        <strong>Activity Title:</strong> <span id="casActivityTitle">EXCAVATE FOR FOOTERS</span>
-        </div>
-      </p>
+     
       <!-- New Section: Duration and Mandays Estimated -->
     <div style="text-align: center;">
       <strong>Duration Estimated:</strong> <span id="casDurationEstimated">0 Days</span>
@@ -193,9 +174,9 @@
     </div>
       <!-- Work Details -->
       <div class="section-header">CA # 02200-1</div>
-      <p style="text-align: center;"><strong>DESCRIPTION OF WORK:</strong></p>
+      <p style="text-align: center;"><strong>SCOPE OF WORK:</strong></p>
       <p id="casDescription">[Static Description]</p>
-      <p style="text-align: center;"><strong>METHOD OF CONSTRUCTION/ASSUMPTIONS:</strong></p>
+      <p style="text-align: center;"><strong>COMMENTS:</strong></p>
       <p id="casMethod">[Static Method]</p>
       
       <!-- Labor Resources -->
@@ -281,7 +262,7 @@
       </table>
       
       <!-- Materials (Static) -->
-      <div class="section-header" style="text-align: center;">MATERIALS</div>
+     <!-- <div class="section-header" style="text-align: center;">MATERIALS</div>
       <table>
         <thead>
           <tr>
@@ -311,7 +292,7 @@
       </table>
       
       <!-- Safety, Quality, Environmental -->
-      <div class="section-header" style="text-align: center;">SAFETY PLAN</div>
+    <!--  <div class="section-header" style="text-align: center;">SAFETY PLAN</div>
       <p><strong>Safety Hazard:</strong> OPEN TRENCHES &nbsp;&nbsp; <strong>Control Measure:</strong> CLEARLY MARKED/BARRICADED</p>
       <p><strong>Safety Hazard:</strong> UNDERGROUND/UTILITIES &nbsp;&nbsp; <strong>Control Measure:</strong> MARKED TO ENSURE VISIBILITY</p>
       <div class="section-header" style="text-align: center;">QUALITY CONTROL PLAN</div>
