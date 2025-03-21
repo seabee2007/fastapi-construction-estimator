@@ -12,7 +12,7 @@ app = FastAPI()
 # Global Variables
 # ---------------------------
 # Define a global variable to store CASS records.
-# For testing, we add one default record.
+# For testing, we add one default record including work_elements.
 cass_records = [
     {
         "id": 1,
@@ -24,7 +24,15 @@ cass_records = [
         "start_date": "2025-03-20",
         "end_date": "2025-03-25",
         "progress": 50,
-        "dependencies": ""
+        "dependencies": "",
+        "work_elements": [
+            {
+                "id": 101,
+                "code": "03 11 13.35",
+                "description": "Flat plate, job-built form, to 15 ft high",
+                "dependencies": ""
+            }
+        ]
     }
 ]
 
@@ -113,19 +121,6 @@ async def get_cass_record(record_id: int):
     raise HTTPException(status_code=404, detail="Record not found")
 
 # Define the schema for a new CASS record input.
-class FinalEstimationInput(BaseModel):
-    project_name: str = Field(..., example="Project PH5-800")
-    project_date: str = Field(..., example="2025-03-15")
-    activity_code: str = Field(..., example="02200")
-    description_of_work: str = Field(..., example="Excavate for footers")
-    method_of_construction: str = Field(..., example="Standard excavation using machinery.")
-    labor_resources: List["LaborRow"] = []
-    work_elements: List["WorkElementRow"] = []
-    equipment: List["EquipmentRow"] = []
-
-# ---------------------------
-# Additional Schemas
-# ---------------------------
 class LaborRow(BaseModel):
     skill: str = Field(..., example="Builder (Carpenter)")
     quantity: float = Field(..., gt=0, example=2)
@@ -138,6 +133,16 @@ class WorkElementRow(BaseModel):
 class EquipmentRow(BaseModel):
     name: str = Field(..., example="EXCAVATOR")
     quantity: float = Field(..., gt=0, example=1)
+
+class FinalEstimationInput(BaseModel):
+    project_name: str = Field(..., example="Project PH5-800")
+    project_date: str = Field(..., example="2025-03-15")
+    activity_code: str = Field(..., example="02200")
+    description_of_work: str = Field(..., example="Excavate for footers")
+    method_of_construction: str = Field(..., example="Standard excavation using machinery.")
+    labor_resources: List[LaborRow]
+    work_elements: List[WorkElementRow]
+    equipment: List[EquipmentRow]
 
 class FinalEstimationOutput(BaseModel):
     project_name: str = Field(..., example="Project PH5-800")
@@ -169,6 +174,9 @@ async def add_cass(record: FinalEstimationInput):
     new_record["end_date"] = record.project_date
     new_record["progress"] = 0
     new_record["dependencies"] = ""
+    # Ensure a work_elements property exists (even if empty).
+    if "work_elements" not in new_record:
+        new_record["work_elements"] = []
     cass_records.append(new_record)
     return new_record
 
