@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from pydantic import BaseModel, Field
 from typing import List
 
@@ -50,9 +49,9 @@ class FinalEstimationInput(BaseModel):
     activity_code: str = Field(..., example="02200")
     description_of_work: str = Field(..., example="Excavate for footers")
     method_of_construction: str = Field(..., example="Standard excavation using machinery.")
-    labor_resources: List[LaborRow]
-    work_elements: List[WorkElementRow]
-    equipment: List[EquipmentRow]
+    labor_resources: List[LaborRow] = []   # Default to empty list if not provided.
+    work_elements: List[WorkElementRow] = [] # Default to empty list if not provided.
+    equipment: List[EquipmentRow] = []       # Default to empty list if not provided.
 
 class FinalEstimationOutput(BaseModel):
     """
@@ -65,6 +64,7 @@ class FinalEstimationOutput(BaseModel):
     total_material_cost: float
     total_equipment_cost: float
     total_estimated_cost: float
+
 
 # ---------------------------
 # Test/Demonstration
