@@ -648,7 +648,7 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
   const finalEstimateData = {
     project_name: form.project_number.value,
     project_date: form.project_date ? form.project_date.value : "",
-    activity_code: form.activity_number.value,
+ //   activity_code: form.activity_number.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
     labor_resources: [], // gather your labor rows
