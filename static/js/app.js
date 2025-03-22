@@ -255,8 +255,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         // Update basic fields.
         document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
         document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
-        document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
-        document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+     //   document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+    //    document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
         document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
         document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
         
@@ -686,8 +686,8 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
   const cassData = {
     project_number: form.project_number.value,
     project_title: form.project_title.value,
-    activity_number: form.activity_number.value,
-    activity_title: form.activity_title.value,
+ //   activity_number: form.activity_number.value,
+//    activity_title: form.activity_title.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
     labor_resources: finalEstimateData.labor_resources,
