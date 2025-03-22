@@ -3,149 +3,54 @@ document.addEventListener("DOMContentLoaded", async function() {
   let activeWorkElementRow = null;
   let activeEquipmentRow = null;
 
-  // -----------------------------
-  // Helper Functions for Dynamic Sections
-  // -----------------------------
-  function populateLaborResources(laborData) {
-    const container = document.getElementById("laborResourcesContainer");
-    container.innerHTML = "";
-    laborData.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "input-group mb-2";
-      row.innerHTML = `
-        <select name="labor_skill" class="form-select">
-          <option value="${item.skill}" selected>${item.skill}</option>
-          <option value="Builder">Builder</option>
-          <option value="Steel Worker">Steel Worker</option>
-          <option value="Utilitiesman">Utilitiesman</option>
-          <option value="Engineering Aid">Engineering Aid</option>
-          <option value="Construction Electrician">Construction Electrician</option>
-          <option value="Equipment Operator">Equipment Operator</option>
-          <option value="Construction Mechanic">Construction Mechanic</option>
-        </select>
-        <input type="number" name="labor_quantity" class="form-control" placeholder="Quantity" step="1" min="0" value="${item.quantity}" required>
-        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
-      `;
-      container.appendChild(row);
-    });
-  }
-
-  function populateWorkElements(workElementsData) {
-    const container = document.getElementById("workElementsContainer");
-    container.innerHTML = "";
-    workElementsData.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "input-group mb-2";
-      row.innerHTML = `
-        <input type="text" name="work_element_search" class="form-control" value="${item.code} - ${item.description}" readonly>
-        <span class="input-group-text">U/M: <span class="um-field">${item.uom || "N/A"}</span></span>
-        <span class="input-group-text">Man Hrs/Unit: <span class="man-hours-field">${item.man_hours_per_unit || 0}</span></span>
-        <span class="input-group-text">Multiplier: <span class="multiplier-field">${item.multiplier || 1}</span></span>
-        <input type="number" name="work_element_quantity" class="form-control" placeholder="Quantity" step="0.1" min="0" value="${item.quantity}" required>
-        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
-      `;
-      container.appendChild(row);
-    });
-  }
-
-  function populateEquipment(equipmentData) {
-    const container = document.getElementById("equipmentContainer");
-    container.innerHTML = "";
-    equipmentData.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "input-group mb-2";
-      row.innerHTML = `
-        <input type="text" name="equipment_search" class="form-control" value="${item.name}" readonly>
-        <input type="number" name="equipment_quantity" class="form-control" placeholder="Quantity" step="1" min="0" value="${item.quantity}" required>
-        <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button>
-      `;
-      container.appendChild(row);
-    });
-  }
-
-  // -----------------------------
-  // Helper Function for Production Efficiency Factors
-  // -----------------------------
-  function populateEfficiencyFactors(record) {
-    // Assumes the record contains a 'production_efficiency' object.
-    if (record.production_efficiency) {
-      document.getElementById("factor-workload").value = record.production_efficiency.factor_workload || "67";
-      document.getElementById("factor-site").value = record.production_efficiency.factor_site || "67";
-      document.getElementById("factor-labor").value = record.production_efficiency.factor_labor || "67";
-      document.getElementById("factor-supervision").value = record.production_efficiency.factor_supervision || "67";
-      document.getElementById("factor-job").value = record.production_efficiency.factor_job || "67";
-      document.getElementById("factor-weather").value = record.production_efficiency.factor_weather || "67";
-      document.getElementById("factor-equipment").value = record.production_efficiency.factor_equipment || "67";
-      document.getElementById("factor-tactical").value = record.production_efficiency.factor_tactical || "67";
-      document.getElementById("availability-factor").value = record.production_efficiency.availability_factor || "75";
-      document.getElementById("manday-equivalent").value = record.production_efficiency.manday_equivalent || "1.125";
-      document.getElementById("product-efficiency").textContent = record.production_efficiency.product_efficiency || "67";
-      document.getElementById("delay-factor").textContent = record.production_efficiency.delay_factor || "1.00";
-    }
-  }
-
-  // -----------------------------
-  // Load and Repopulate Data When Editing
-  // -----------------------------
+  // Parse query parameters.
   const urlParams = new URLSearchParams(window.location.search);
   const recordId = urlParams.get("id");
   console.log("Record ID from URL:", recordId);
 
+  // If a record ID is provided, fetch the record.
   if (recordId) {
     try {
       const response = await fetch("/cass/" + recordId);
+      console.log("Fetch response:", response);
       if (!response.ok) {
         console.error("Error: Response not OK. Status:", response.status);
         return;
       }
       const record = await response.json();
       console.log("Fetched record:", record);
-
-      // Prepopulate static fields.
+      // Prepopulate your form fields.
       document.getElementById("project_number").value = record.project_number || "";
       document.getElementById("project_title").value = record.project_title || "";
- //     document.getElementById("activity_number").value = record.activity_number || "";
-  //    document.getElementById("activity_title").value = record.activity_title || "";
+      document.getElementById("activity_number").value = record.activity_number || "";
+      document.getElementById("activity_title").value = record.activity_title || "";
       document.getElementById("description_of_work").value = record.description_of_work || "";
       document.getElementById("method_of_construction").value = record.method_of_construction || "";
-
-      // Populate dynamic sections.
-      if (record.labor_resources && record.labor_resources.length > 0) {
-        populateLaborResources(record.labor_resources);
-      }
-      if (record.work_elements && record.work_elements.length > 0) {
-        populateWorkElements(record.work_elements);
-      }
-      if (record.equipment && record.equipment.length > 0) {
-        populateEquipment(record.equipment);
-      }
-
-      // Populate Production Efficiency Factors.
-      populateEfficiencyFactors(record);
-
-      // Recalculate summary (assuming updateCASSummary is defined elsewhere).
-      updateCASSummary();
+      document.getElementById("labor_resources").value = record.labor_resources || "";   
+      document.getElementById("work_elements").value = record.work_elements || ""; 
+      document.getElementById("equipment").value = record.equipments || ""; 
     } catch (error) {
       console.error("Error fetching record:", error);
     }
   }
+});
 
-  // -----------------------------
-  // Attach Event Listeners for Adding New Rows
-  // -----------------------------
+  // Add event listeners only if the elements exist.
   const addLaborBtn = document.getElementById("addLaborBtn");
   if (addLaborBtn) {
     addLaborBtn.addEventListener("click", addLaborResource);
   }
+
   const addWorkElementBtn = document.getElementById("addWorkElementBtn");
   if (addWorkElementBtn) {
     addWorkElementBtn.addEventListener("click", openLibraryModal);
   }
+
   const addEquipmentBtn = document.getElementById("addEquipmentBtn");
   if (addEquipmentBtn) {
     addEquipmentBtn.addEventListener("click", openEquipmentModal);
   }
-});
+
 
         
       // -----------------------------
@@ -251,77 +156,39 @@ document.addEventListener("DOMContentLoaded", async function() {
         return totalMandays;
       }
       
-function updateCASSummary() {
-  const projectNumberInput = document.getElementById("project_number");
-  const casProjectNumber = document.getElementById("casProjectNumber");
-  if (projectNumberInput && casProjectNumber) {
-    casProjectNumber.textContent = projectNumberInput.value;
-  }
-  
-  const projectTitleInput = document.getElementById("project_title");
-  const casProjectTitle = document.getElementById("casProjectTitle");
-  if (projectTitleInput && casProjectTitle) {
-    casProjectTitle.textContent = projectTitleInput.value;
-  }
-  
-  const descInput = document.getElementById("description_of_work");
-  const casDescription = document.getElementById("casDescription");
-  if (descInput && casDescription) {
-    casDescription.textContent = descInput.value;
-  }
-  
-  const methodInput = document.getElementById("method_of_construction");
-  const casMethod = document.getElementById("casMethod");
-  if (methodInput && casMethod) {
-    casMethod.textContent = methodInput.value;
-  }
-  
-  // Production Efficiency Factors
-  const prodEff = document.getElementById("product-efficiency");
-  const casProdEff = document.getElementById("casProductEfficiency");
-  if (prodEff && casProdEff) {
-    casProdEff.textContent = prodEff.textContent;
-  }
-  
-  const delayFactor = document.getElementById("delay-factor");
-  const casDelayFactor = document.getElementById("casDelayFactor");
-  if (delayFactor && casDelayFactor) {
-    casDelayFactor.textContent = delayFactor.textContent;
-  }
-  
-  const availFactor = document.getElementById("availability-factor");
-  const casAvailFactor = document.getElementById("casAvailabilityFactor");
-  if (availFactor && casAvailFactor) {
-    casAvailFactor.textContent = availFactor.value + "%";
-  }
-  
-  const mandayEquiv = document.getElementById("manday-equivalent");
-  const casMandayEquiv = document.getElementById("casMandayEquivalent");
-  if (mandayEquiv && casMandayEquiv) {
-    casMandayEquiv.textContent = mandayEquiv.value;
-  }
-  
-  // Update dynamic sections.
-  const totalLabor = updateLaborResources();
-  const totalMandays = updateWorkElementsSummary();
-  updateEquipmentSummary();
-  
-  // Calculate Duration = (Total Mandays ÷ Crew Size) ÷ Manday Equivalent ÷ (Availability Factor/100)
-  const casTotalLaborElem = document.getElementById("casTotalLabor");
-  const casDurationElem = document.getElementById("casDurationEstimated");
-  if (casTotalLaborElem && casDurationElem && mandayEquiv && availFactor) {
-    const crewSize = parseFloat(casTotalLaborElem.textContent) || 0;
-    const mandayEquivalent = parseFloat(mandayEquiv.value) || 1;
-    const availabilityFactor = parseFloat(availFactor.value) || 100;
-    const availDecimal = availabilityFactor / 100;
-    let duration = "N/A";
-    if (crewSize > 0 && mandayEquivalent > 0 && availDecimal > 0) {
-      duration = (totalMandays / crewSize / mandayEquivalent / availDecimal).toFixed(2);
-    }
-    casDurationElem.textContent = duration + " Days";
-  }
-}
-
+      function updateCASSummary() {
+        // Update basic fields.
+        document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
+        document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
+        document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+        document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+        document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
+        document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
+        
+        // Update Production Efficiency Factors.
+        document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
+        document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
+        document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
+        document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
+        
+        // Update Labor Resources first.
+        const totalLabor = updateLaborResources();
+        // Then update Work Elements.
+        const totalMandays = updateWorkElementsSummary();
+        // Then update Equipment.
+        updateEquipmentSummary();
+        
+        // Calculate Duration = (Total Mandays ÷ Crew Size) ÷ Manday Equivalent ÷ (Availability Factor/100)
+        const crewSize = parseFloat(document.getElementById("casTotalLabor").textContent) || 0;
+        const mandayEquivalent = parseFloat(document.getElementById("manday-equivalent").value) || 1;
+        const availabilityFactor = parseFloat(document.getElementById("availability-factor").value) || 100;
+        const availDecimal = availabilityFactor / 100;
+        let duration = "N/A";
+        if (crewSize > 0 && mandayEquivalent > 0 && availDecimal > 0) {
+          duration = (totalMandays / crewSize / mandayEquivalent / availDecimal).toFixed(2);
+        }
+        document.getElementById("casDurationEstimated").textContent = duration + " Days";
+      }
       
       // -----------------------------
       // Production Efficiency Functions
@@ -686,7 +553,7 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
   const finalEstimateData = {
     project_name: form.project_number.value,
     project_date: form.project_date ? form.project_date.value : "",
- //   activity_code: form.activity_number.value,
+    activity_code: form.activity_number.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
     labor_resources: [], // gather your labor rows
@@ -724,8 +591,8 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
   const cassData = {
     project_number: form.project_number.value,
     project_title: form.project_title.value,
- //   activity_number: form.activity_number.value,
-//    activity_title: form.activity_title.value,
+    activity_number: form.activity_number.value,
+    activity_title: form.activity_title.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
     labor_resources: finalEstimateData.labor_resources,
