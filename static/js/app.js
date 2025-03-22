@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async function() {
       // Prepopulate your form fields.
       document.getElementById("project_number").value = record.project_number || "";
       document.getElementById("project_title").value = record.project_title || "";
-      document.getElementById("activity_number").value = record.activity_number || "";
-      document.getElementById("activity_title").value = record.activity_title || "";
+  //    document.getElementById("activity_number").value = record.activity_number || "";
+  //    document.getElementById("activity_title").value = record.activity_title || "";
       document.getElementById("description_of_work").value = record.description_of_work || "";
       document.getElementById("method_of_construction").value = record.method_of_construction || "";
       document.getElementById("labor_resources").value = record.labor_resources || "";   
@@ -160,8 +160,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         // Update basic fields.
         document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
         document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
-        document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
-        document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
+     //   document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
+     //   document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
         document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
         document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
         
@@ -553,7 +553,7 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
   const finalEstimateData = {
     project_name: form.project_number.value,
     project_date: form.project_date ? form.project_date.value : "",
-    activity_code: form.activity_number.value,
+//    activity_code: form.activity_number.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
     labor_resources: [], // gather your labor rows
@@ -591,8 +591,8 @@ document.getElementById("estimatorForm").addEventListener("submit", async (e) =>
   const cassData = {
     project_number: form.project_number.value,
     project_title: form.project_title.value,
-    activity_number: form.activity_number.value,
-    activity_title: form.activity_title.value,
+//    activity_number: form.activity_number.value,
+//    activity_title: form.activity_title.value,
     description_of_work: form.description_of_work.value,
     method_of_construction: form.method_of_construction.value,
     labor_resources: finalEstimateData.labor_resources,
