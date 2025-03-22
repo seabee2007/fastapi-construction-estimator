@@ -251,39 +251,77 @@ document.addEventListener("DOMContentLoaded", async function() {
         return totalMandays;
       }
       
-      function updateCASSummary() {
-        // Update basic fields.
-        document.getElementById("casProjectNumber").textContent = document.getElementById("project_number").value;
-        document.getElementById("casProjectTitle").textContent = document.getElementById("project_title").value;
-     //   document.getElementById("casActivityNumber").textContent = document.getElementById("activity_number").value;
-    //    document.getElementById("casActivityTitle").textContent = document.getElementById("activity_title").value;
-        document.getElementById("casDescription").textContent = document.getElementById("description_of_work").value;
-        document.getElementById("casMethod").textContent = document.getElementById("method_of_construction").value;
-        
-        // Update Production Efficiency Factors.
-        document.getElementById("casProductEfficiency").textContent = document.getElementById("product-efficiency").textContent;
-        document.getElementById("casDelayFactor").textContent = document.getElementById("delay-factor").textContent;
-        document.getElementById("casAvailabilityFactor").textContent = document.getElementById("availability-factor").value + "%";
-        document.getElementById("casMandayEquivalent").textContent = document.getElementById("manday-equivalent").value;
-        
-        // Update Labor Resources first.
-        const totalLabor = updateLaborResources();
-        // Then update Work Elements.
-        const totalMandays = updateWorkElementsSummary();
-        // Then update Equipment.
-        updateEquipmentSummary();
-        
-        // Calculate Duration = (Total Mandays ÷ Crew Size) ÷ Manday Equivalent ÷ (Availability Factor/100)
-        const crewSize = parseFloat(document.getElementById("casTotalLabor").textContent) || 0;
-        const mandayEquivalent = parseFloat(document.getElementById("manday-equivalent").value) || 1;
-        const availabilityFactor = parseFloat(document.getElementById("availability-factor").value) || 100;
-        const availDecimal = availabilityFactor / 100;
-        let duration = "N/A";
-        if (crewSize > 0 && mandayEquivalent > 0 && availDecimal > 0) {
-          duration = (totalMandays / crewSize / mandayEquivalent / availDecimal).toFixed(2);
-        }
-        document.getElementById("casDurationEstimated").textContent = duration + " Days";
-      }
+function updateCASSummary() {
+  const projectNumberInput = document.getElementById("project_number");
+  const casProjectNumber = document.getElementById("casProjectNumber");
+  if (projectNumberInput && casProjectNumber) {
+    casProjectNumber.textContent = projectNumberInput.value;
+  }
+  
+  const projectTitleInput = document.getElementById("project_title");
+  const casProjectTitle = document.getElementById("casProjectTitle");
+  if (projectTitleInput && casProjectTitle) {
+    casProjectTitle.textContent = projectTitleInput.value;
+  }
+  
+  const descInput = document.getElementById("description_of_work");
+  const casDescription = document.getElementById("casDescription");
+  if (descInput && casDescription) {
+    casDescription.textContent = descInput.value;
+  }
+  
+  const methodInput = document.getElementById("method_of_construction");
+  const casMethod = document.getElementById("casMethod");
+  if (methodInput && casMethod) {
+    casMethod.textContent = methodInput.value;
+  }
+  
+  // Production Efficiency Factors
+  const prodEff = document.getElementById("product-efficiency");
+  const casProdEff = document.getElementById("casProductEfficiency");
+  if (prodEff && casProdEff) {
+    casProdEff.textContent = prodEff.textContent;
+  }
+  
+  const delayFactor = document.getElementById("delay-factor");
+  const casDelayFactor = document.getElementById("casDelayFactor");
+  if (delayFactor && casDelayFactor) {
+    casDelayFactor.textContent = delayFactor.textContent;
+  }
+  
+  const availFactor = document.getElementById("availability-factor");
+  const casAvailFactor = document.getElementById("casAvailabilityFactor");
+  if (availFactor && casAvailFactor) {
+    casAvailFactor.textContent = availFactor.value + "%";
+  }
+  
+  const mandayEquiv = document.getElementById("manday-equivalent");
+  const casMandayEquiv = document.getElementById("casMandayEquivalent");
+  if (mandayEquiv && casMandayEquiv) {
+    casMandayEquiv.textContent = mandayEquiv.value;
+  }
+  
+  // Update dynamic sections.
+  const totalLabor = updateLaborResources();
+  const totalMandays = updateWorkElementsSummary();
+  updateEquipmentSummary();
+  
+  // Calculate Duration = (Total Mandays ÷ Crew Size) ÷ Manday Equivalent ÷ (Availability Factor/100)
+  const casTotalLaborElem = document.getElementById("casTotalLabor");
+  const casDurationElem = document.getElementById("casDurationEstimated");
+  if (casTotalLaborElem && casDurationElem && mandayEquiv && availFactor) {
+    const crewSize = parseFloat(casTotalLaborElem.textContent) || 0;
+    const mandayEquivalent = parseFloat(mandayEquiv.value) || 1;
+    const availabilityFactor = parseFloat(availFactor.value) || 100;
+    const availDecimal = availabilityFactor / 100;
+    let duration = "N/A";
+    if (crewSize > 0 && mandayEquivalent > 0 && availDecimal > 0) {
+      duration = (totalMandays / crewSize / mandayEquivalent / availDecimal).toFixed(2);
+    }
+    casDurationElem.textContent = duration + " Days";
+  }
+}
+
       
       // -----------------------------
       // Production Efficiency Functions
