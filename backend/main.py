@@ -18,8 +18,6 @@ cass_records = [
         "id": 1,
         "project_number": "PH5-800",
         "project_title": "CONSTRUCT SHED",
-        "activity_number": "02200",
-        "activity_title": "EXCAVATE FOR FOOTERS",
         "date_created": "2025-03-20",
         "start_date": "2025-03-20",
         "end_date": "2025-03-25",
@@ -62,16 +60,6 @@ async def read_cass_dashboard():
     except Exception:
         raise HTTPException(status_code=404, detail="CASS Dashboard file not found")
 
-@app.get("/gantt.html", response_class=HTMLResponse)
-async def read_gantt():
-    gantt_path = os.path.join(root_dir, "static", "gantt.html")
-    try:
-        with open(gantt_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        return HTMLResponse(content=content, status_code=200)
-    except Exception:
-        raise HTTPException(status_code=404, detail="Gantt file not found")
-
 @app.get("/index.html", response_class=HTMLResponse)
 async def read_index():
     index_path = os.path.join(root_dir, "static", "index.html")
@@ -82,25 +70,6 @@ async def read_index():
     except Exception:
         raise HTTPException(status_code=404, detail="Index file not found")
 
-@app.get("/logic.html", response_class=HTMLResponse)
-async def read_logic():
-    logic_path = os.path.join(root_dir, "static", "logic.html")
-    try:
-        with open(logic_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        return HTMLResponse(content=content, status_code=200)
-    except Exception:
-        raise HTTPException(status_code=404, detail="Logic file not found")
-
-@app.get("/resource_leveling.html", response_class=HTMLResponse)
-async def read_resource_leveling():
-    resource_path = os.path.join(root_dir, "static", "resource_leveling.html")
-    try:
-        with open(resource_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        return HTMLResponse(content=content, status_code=200)
-    except Exception:
-        raise HTTPException(status_code=404, detail="Resource Leveling file not found")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
@@ -197,21 +166,6 @@ async def delete_cass(record_id: int):
             return {"detail": "Record deleted"}
     raise HTTPException(status_code=404, detail="Record not found")
 
-# GET Gantt tasks based on CASS records.
-@app.get("/gantt-tasks")
-async def get_gantt_tasks():
-    tasks = []
-    for record in cass_records:
-        task = {
-            "id": str(record.get("id", "")),
-            "name": f'{record.get("activity_code", "")} {record.get("description_of_work", "")}',
-            "start": record.get("start_date", "2025-03-20"),
-            "end": record.get("end_date", "2025-03-25"),
-            "progress": record.get("progress", 0),
-            "dependencies": record.get("dependencies", "")
-        }
-        tasks.append(task)
-    return tasks
 
 # ---------------------------
 # NTRP Data Endpoints
